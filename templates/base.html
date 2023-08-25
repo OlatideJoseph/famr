@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+<div class="container-fluid col-md-8">
+  {% with messages = get_flashed_messages(with_categories = True) %}
+      {% for category, message in messages %}
+          <p class = "alert alert-{{category}}">{{ message }}</p>
+      {% endfor %}
+  {% endwith %}
+  {% block content %}
+  {% endblock %}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block head%}
+<title>Add Form</title>
+{% endblock %}
+{% block content%}
+<fieldset>
+    <legend>Add Form</legend>
+    <form method = 'post' action = '#'>
+        {{form.csrf_token}}
+        {{form.course_name.label(class = "form-label")}}
+        {{form.course_name(class = "form-control")}}
+        {{form.subject1.label(class = "form-label")}}
+        {{form.subject1(class = "form-control")}}
+        {{form.subject2.label(class = "form-label")}}
+        {{form.subject2 (class = "form-control")}}
+        {{form.subject3.label(class = "form-label")}}
+        {{form.subject3 (class = "form-control")}}
+        {{form.subject4.label(class = "form-label")}}
+        {{form.subject4 (class = "form-control")}}
+        {{form.subject5.label(class = "form-label")}}
+        {{form.subject5 (class = "form-control")}}
+        {{form.subject6.label(class = "form-label")}}
+        {{form.subject6 (class = "form-control")}}
+        {{form.subject7.label(class = "form-label")}}
+        {{form.subject7 (class = "form-control")}}
+        {{form.subject8.label(class = "form-label")}}
+        {{form.subject8 (class = "form-control")}}
+        {{form.subject9.label(class = "form-label")}}
+        {{form.subject9 (class = "form-control")}}
+
+        {{form.submit(class = "btn btn-info mt-3")}}
+
+    </form>
+</fieldset>
+
+{% endblock %}
