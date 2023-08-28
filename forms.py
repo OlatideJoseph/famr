@@ -14,7 +14,7 @@ regexp = r""
 add_choice = [("","-------------")]
 add_choice += [(sub.name, sub.name) for sub in ss.query.all()]
 course_choice = [("","-------------")]
-course_choice = [(sub.course_title, sub.course_title) for sub in Course.query.all()]
+course_choice += [(sub.course_title, sub.course_title) for sub in Course.query.all()]
 
 
 
@@ -67,11 +67,11 @@ class AddCourseForm(FlaskForm):
     submit = SubmitField("Add Course")
 
     def validate_is_not_multiple(self,
-            f1=field1.data, f2=field2.data,
-            f3=field3.data, f4=field4.data,
-            f5=field5.data, f6=field6.data,
-            f7=field7.data, f8=field8.data,
-            f9=field9.data, 
+            f1=field1, f2=field2,
+            f3=field3, f4=field4,
+            f5=field5, f6=field6,
+            f7=field7, f8=field8,
+            f9=field9, 
         ):
         fields = [f1, f2, f3, f4, f5, f6, f7, f8, f9]
         d = duplicate(fields)
@@ -81,3 +81,4 @@ class AddCourseForm(FlaskForm):
 class AddGradeForm(FlaskForm):
     grade = StringField("Enter Grade Value:", validators=[DataRequired(), Length(min=2,max=2)])
     point = FloatField("Enter The Point:", validators=[DataRequired()])
+    submit = SubmitField("Add")

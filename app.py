@@ -1,4 +1,4 @@
-from flask import Flask, render_template as render, flash, request, make_response, jsonify, session
+from flask import Flask, render_template as render, flash, request, make_response, jsonify, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
@@ -16,7 +16,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sqlite.db"
 app.config["SQLALCHEMY_COMMIT_TEARDOWN"] = True
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 meta = MetaData(naming_convention=naming_convention)
-db = SQLAlchemy(app, metadata=meta)
+db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 import models
 # @app.shell_context_processor
@@ -67,14 +67,14 @@ def add_subject():
     """A request view that accept a request argument s and add it to the database
        Note: It is to keep It only adds subject to the database
     """
-    from models import WaecSubject
+    from models import Subject
     from forms import AddSubjectForm
     form = AddSubjectForm()
     if request.method == "POST" and request.is_json:
         print(dir(request))
         subject = request.args.get("s")
         if subject:
-            wsub = SecondarySubject(name=subject.title()) #Adds the subject to the database and it makes sure it starts with a capital letter
+            wsub = Subject(name=subject.title()) #Adds the subject to the database and it makes sure it starts with a capital letter
             try:
                 db.session.add(wsub)
                 db.session.commit()
@@ -83,7 +83,7 @@ def add_subject():
             return make_response(jsonify(added = True), 201)
     elif form.validate_on_submit():
         subject = form.name.data.title()
-        wsub = SecondarySubject(name=subject.title()) #Adds the subject to the database and it makes sure it starts with a capital letter
+        wsub = Subject(name=subject.title()) #Adds the subject to the database and it makes sure it starts with a capital letter
         try:
             db.session.add(wsub)
             db.session.commit()
@@ -105,12 +105,18 @@ def match():
 def course_grade():
     return render("grading.html")
 
-@app.route("/grade-add")
+@app.route("/grade-add", methods=["POST", "GET"])
 def grade_point():
     from models import Grade
     from forms import AddGradeForm
-    form = AddGradeForm
-    grade = Grade(grade=form.grade.data, point=form.point.data)   
+    form = AddGradeForm()
+    if form.validate_on_submit():
+        grade = Grade(grade=form.grade.data, point=form.point.data)
+        db.session.add(grade)
+        db.session.commit()
+        flash(f"Grade {grade.grade} added successfully!", "info")
+        return redirect("/")
+    return render("addgrade.html", form=form)
 if __name__ == "__main__":
     app.run(debug = True)
 

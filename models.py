@@ -37,8 +37,12 @@ class WaecSubject(db.Model, BaseMixin):
     def __repr__(self):
         return "%s %s" %(self.name, self._id)
 
+class Subject(db.Model, BaseMixin):
+    __tablename__ = "subject"
+    name = db.Column(db.String, nullable=False, unique=True)
+
 class Grade(db.Model, BaseMixin):
     __tablename__ = "grade"
-    grade = db.Column(db.String(2), nullable=False, default="A1")
+    grade = db.Column(db.String(2), nullable=False, default="A1", unique=True)
     point = db.Column(db.Float, nullable=False, default=4.00)
     waec = db.relationship(WaecSubject, backref="grade", lazy=True)

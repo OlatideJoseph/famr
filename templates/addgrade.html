@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block head%}
+<title>Add Form</title>
+{% endblock %}
+{% block content%}
+<fieldset>
+    <legend>Add Form</legend>
+    <form method = 'post' action = '#'>
+        {{form.csrf_token}}
+        {{form.grade.label(class = "form-label")}}
+        {{form.grade(class = "form-control")}}
+        {{form.point.label(class = "form-label")}}
+        {{form.point(class = "form-control")}}
+        {{form.submit(class = "btn btn-info mt-3")}}
+
+    </form>
+</fieldset>
+
+{% endblock %}
