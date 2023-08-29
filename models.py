@@ -12,17 +12,7 @@ class Course(db.Model, BaseMixin):
     __tablename__  = "course"
     course_title = db.Column(db.String(50), nullable = False, unique = True)
     course_code = db.Column(db.Integer, unique = True)
-    field1 = db.Column(db.String(2), nullable = False)
-    field2 = db.Column(db.String(2), nullable = False)
-    field3 = db.Column(db.String(2), nullable = False)
-    field4 = db.Column(db.String(2), nullable = False)
-    field5 = db.Column(db.String(2), nullable = False)
-    field6 = db.Column(db.String(2), nullable = False)
-    field7 = db.Column(db.String(2), nullable = False)
-    field8 = db.Column(db.String(2), nullable = True)
-    field9 = db.Column(db.String(2), nullable = True)
-
-    waec_id = db.Column(db.Integer, db.ForeignKey('waecsubject._id'), nullable=False)
+    waec = db.relationship("WaecSubject", backref="course", lazy=True)
 
     def __repr__(self):
         return "Lasustech <%s> Course" %(self.course_title)
@@ -31,7 +21,7 @@ class Course(db.Model, BaseMixin):
 class WaecSubject(db.Model, BaseMixin):
     __tablename__ = "waecsubject"
     name = db.Column(db.String(50), nullable = False)
-    course = db.relationship(Course, backref="waecsubject", lazy=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course._id'))
     grade_id = db.Column(db.Integer, db.ForeignKey('grade._id'))
 
     def __repr__(self):
@@ -43,6 +33,6 @@ class Subject(db.Model, BaseMixin):
 
 class Grade(db.Model, BaseMixin):
     __tablename__ = "grade"
-    grade = db.Column(db.String(2), nullable=False, default="A1", unique=True)
-    point = db.Column(db.Float, nullable=False, default=4.00)
+    grade = db.Column(db.String(2), nullable=False, unique=True)
+    point = db.Column(db.Integer, nullable=False, unique=True)
     waec = db.relationship(WaecSubject, backref="grade", lazy=True)

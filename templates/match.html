@@ -4,29 +4,107 @@
 {% endblock %}
 {% block content%}
 <fieldset>
-    <legend>Add Form</legend>
+    <legend>Enter Your Detail</legend>
     <form method = 'post' action = '#'>
         {{form.csrf_token}}
-        {{form.course_name.label(class = "form-label")}}
-        {{form.course_name(class = "form-control")}}
-        {{form.subject1.label(class = "form-label")}}
-        {{form.subject1(class = "form-control")}}
-        {{form.subject2.label(class = "form-label")}}
-        {{form.subject2 (class = "form-control")}}
-        {{form.subject3.label(class = "form-label")}}
-        {{form.subject3 (class = "form-control")}}
-        {{form.subject4.label(class = "form-label")}}
-        {{form.subject4 (class = "form-control")}}
-        {{form.subject5.label(class = "form-label")}}
-        {{form.subject5 (class = "form-control")}}
-        {{form.subject6.label(class = "form-label")}}
-        {{form.subject6 (class = "form-control")}}
-        {{form.subject7.label(class = "form-label")}}
-        {{form.subject7 (class = "form-control")}}
-        {{form.subject8.label(class = "form-label")}}
-        {{form.subject8 (class = "form-control")}}
-        {{form.subject9.label(class = "form-label")}}
-        {{form.subject9 (class = "form-control")}}
+        <div class="row">
+            <div class="col">
+                {{form.course_name.label(class = "form-label")}}
+                {{form.course_name(class = "form-select form-select-sm")}}
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.field1.label(class = "form-label")}}
+                {{form.field1(class = " form-select form-select-sm")}}
+            </div>
+            <div class="col">
+                {{form.grade_1.label(class="form-label")}}
+                {{form.grade_1(class="form-select form-select-sm")}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+            {{form.field2.label(class = "form-label")}}
+            {{form.field2 (class = "form-select form-select-sm")}}    
+            </div>
+            <div class="col">
+                {{form.grade_2.label(class="form-label")}}
+                {{form.grade_2(class="form-select form-select-sm")}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.field3.label(class = "form-label")}}
+                {{form.field3 (class = "form-select form-select-sm")}}
+            </div>
+            <div class="col">
+                {{form.grade_3.label(class="form-label")}}
+                {{form.grade_3(class="form-select-sm form-select")}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.field4.label(class = "form-label")}}
+                {{form.field4(class = "form-select form-select-sm")}}  
+            </div>
+            <div class="col">
+                {{form.grade_4.label(class="form-label")}}
+                {{form.grade_4(class="form-select form-select-sm")}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.field5.label(class = "form-label")}}
+                {{form.field5 (class = "form-select form-select-sm")}}  
+            </div>
+            <div class="col">
+                {{form.grade_5.label(class="form-label")}}
+                {{form.grade_5(class="form-select form-select-sm")}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.field6.label(class = "form-label")}}
+                {{form.field6 (class = "form-select form-select-sm")}}
+          
+            </div>
+            <div class="col">
+                {{form.grade_6.label(class="form-label")}}
+                {{form.grade_6(class="form-select form-select-sm")}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.field7.label(class="form-label")}}
+                {{form.field7 (class = "form-select form-select-sm")}}  
+            </div>
+            <div class="col">
+                {{form.grade_7.label(class="form-label")}}
+                {{form.grade_7(class="form-select form-select-sm")}} 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.field8.label(class="form-label")}}
+                {{form.field8 (class = "form-select form-select-sm")}}
+            </div>
+            <div class="col">
+                {{form.grade_8.label(class="form-label")}}
+                {{form.grade_8(class="form-select form-select-sm")}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{form.field9.label(class = "form-label")}}
+                {{form.field9 (class = "form-select form-select-sm")}}
+            </div>
+            <div class="col">
+                {{form.grade_9.label(class="form-label")}}
+                {{form.grade_9(class="form-select form-select-sm")}}
+            </div>
+        </div>
 
         {{form.submit(class = "btn btn-info mt-3")}}
 
