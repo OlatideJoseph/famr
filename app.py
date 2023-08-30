@@ -129,10 +129,27 @@ def add_subject():
 @app.route("/match-course")
 def match():
     from forms import MatchForm
+    from models import Course
     form = MatchForm()
     if form.validate_on_submit():
         course = form.course.data
-        
+        jamb = form.jamb.data
+        first = form.field1.data
+        second = form.field2.data
+        third = form.field3.data
+        fourth = form.field4.data
+        fifth = form.field5.data
+        course_mod = Course.query.filter_by(course_title = course).first()
+        if course.is_full:
+            return jsonify(course={
+                   "full":True,
+                   "score":80
+                })
+        if course:
+            resp = {
+                "course": true
+            }
+        print(dir(request))
     return render("match.html", form=form)
     
 @app.route("/grade-course")

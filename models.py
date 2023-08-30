@@ -12,6 +12,9 @@ class Course(db.Model, BaseMixin):
     __tablename__  = "course"
     course_title = db.Column(db.String(50), nullable = False, unique = True)
     course_code = db.Column(db.Integer, unique = True)
+    is_full = db.Column(db.Boolean, default=False)
+    max_candidate = db.Column(db.Integer, default=200)
+    jamb = db.relationship("AdminJamb", backref="course", lazy=True)
     waec = db.relationship("WaecSubject", backref="course", lazy=True)
 
     def __repr__(self):
@@ -21,6 +24,7 @@ class Course(db.Model, BaseMixin):
 class WaecSubject(db.Model, BaseMixin):
     __tablename__ = "waecsubject"
     name = db.Column(db.String(50), nullable = False)
+    is_compulsory = db.Column(db.Boolean, default=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course._id'))
     grade_id = db.Column(db.Integer, db.ForeignKey('grade._id'))
 
@@ -36,3 +40,8 @@ class Grade(db.Model, BaseMixin):
     grade = db.Column(db.String(2), nullable=False, unique=True)
     point = db.Column(db.Integer, nullable=False, unique=True)
     waec = db.relationship(WaecSubject, backref="grade", lazy=True)
+
+class AdminJamb(db.Model, BaseMixin):
+    __tablename__ = "adminjamb"
+    min_score = db.Column(db.Integer)
+    course_id = db.Column(db.Integer, db.ForeignKey("course._id"))

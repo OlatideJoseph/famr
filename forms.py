@@ -11,7 +11,7 @@ subjects = [
         ("Government", "Government"),
 ]
 regexp = r""
-grades_choice = [("","---")]
+grades_choice = [(0,"---")]
 grades_choice += [(grd.point, grd.grade) for grd in Grade.query.all()]
 add_choice = [("","-------------")]
 add_choice += [(sub.name, sub.name) for sub in ss.query.all()]
@@ -22,43 +22,44 @@ course_choice += [(sub.course_title, sub.course_title) for sub in Course.query.a
 
 
 class MatchForm(FlaskForm):
+    jamb_score = IntegerField("Jamb Score", validators=[DataRequired()])
     course_name = SelectField("Choose Your Course", validators = [DataRequired()],
                          choices = course_choice)
     field1 = SelectField("Subject 1", validators = [DataRequired()],
                    choices = add_choice)
-    grade_1 = SelectField("Grade *", validators = [DataRequired()],
+    grade_1 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field2 = SelectField("Subject 2", validators = [DataRequired()],
                    choices = add_choice)
-    grade_2 = SelectField("Grade *", validators = [DataRequired()],
+    grade_2 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field3 = SelectField("Subject 3", validators = [DataRequired()],
                    choices = add_choice)
-    grade_3 = SelectField("Grade *", validators = [DataRequired()],
+    grade_3 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field4 = SelectField("Subject 4", validators = [DataRequired()],
                    choices = add_choice)
-    grade_4 = SelectField("Grade *", validators = [DataRequired()],
+    grade_4 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field5 = SelectField("Subject 5", validators = [DataRequired()],
                    choices = add_choice)
-    grade_5 = SelectField("Grade *", validators = [DataRequired()],
+    grade_5 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
-    field6 = SelectField("Subject 6", validators = [DataRequired()],
+    field6 = SelectField("Subject 6",
                    choices = add_choice)
-    grade_6 = SelectField("Grade *", validators = [DataRequired()],
+    grade_6 = SelectField("Grade *", coerce=int,
                    choices = grades_choice)
-    field7 = SelectField("Subject 7", validators = [DataRequired()],
+    field7 = SelectField("Subject 7",
                    choices = add_choice)
-    grade_7 = SelectField("Grade", validators = [DataRequired()],
+    grade_7 = SelectField("Grade",
                    choices = grades_choice)
-    field8 = SelectField("Subject 8", validators = [DataRequired()],
+    field8 = SelectField("Subject 8",
                    choices = add_choice)
-    grade_8 = SelectField("Grade", validators = [DataRequired()],
+    grade_8 = SelectField("Grade",
                    choices = grades_choice)
-    field9 = SelectField("Subject 9", validators = [DataRequired()],
+    field9 = SelectField("Subject 9",
                    choices = add_choice)
-    grade_9 = SelectField("Grade", validators = [DataRequired()],
+    grade_9 = SelectField("Grade",
                    choices = grades_choice)
     submit = SubmitField("Check")
 
@@ -75,27 +76,27 @@ class AddCourseForm(FlaskForm):
     course_name = StringField("Course Name *", validators = [DataRequired()])
     field1 = SelectField("Subject 1", validators = [DataRequired()],
                    choices = add_choice)
-    grade_1 = SelectField("Grade *", validators = [DataRequired()],
+    grade_1 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field2 = SelectField("Subject 2", validators = [DataRequired()],
                    choices = add_choice)
-    grade_2 = SelectField("Grade *", validators = [DataRequired()],
+    grade_2 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field3 = SelectField("Subject 3", validators = [DataRequired()],
                    choices = add_choice)
-    grade_3 = SelectField("Grade *", validators = [DataRequired()],
+    grade_3 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field4 = SelectField("Subject 4", validators = [DataRequired()],
                    choices = add_choice)
-    grade_4 = SelectField("Grade *", validators = [DataRequired()],
+    grade_4 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field5 = SelectField("Subject 5", validators = [DataRequired()],
                    choices = add_choice)
-    grade_5 = SelectField("Grade *", validators = [DataRequired()],
+    grade_5 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field6 = SelectField("Subject 6", validators = [DataRequired()],
                    choices = add_choice)
-    grade_6 = SelectField("Grade *", validators = [DataRequired()],
+    grade_6 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field7 = SelectField("Subject 7", validators = [DataRequired()],
                    choices = add_choice)
