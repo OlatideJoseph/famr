@@ -12,7 +12,10 @@
                 {{form.course_name.label(class = "form-label")}}
                 {{form.course_name(class = "form-control")}}
             </div>            
-            
+            <div class="col">
+                {{form.jamb_score.label(class="form-label", max=400)}}
+                {{form.jamb_score(class="form-control")}}
+            </div>
         </div>
         <div class="row">
             <div class="col">
@@ -64,7 +67,8 @@
                 {{form.grade_5(class="form-select form-select-sm")}}
             </div>
         </div>
-        <div class="row">
+        {#
+        <!-- <div class="row">
             <div class="col">
                 {{form.field6.label(class = "form-label")}}
                 {{form.field6 (class = "form-select form-select-sm")}}
@@ -105,7 +109,8 @@
                 {{form.grade_9.label(class="form-label")}}
                 {{form.grade_9(class="form-select form-select-sm")}}
             </div>
-        </div>
+        </div> -->
+        #}
         {{form.submit(class = "btn btn-info mt-3")}}
 
     </form>

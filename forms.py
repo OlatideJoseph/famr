@@ -45,22 +45,22 @@ class MatchForm(FlaskForm):
                    choices = add_choice)
     grade_5 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
-    field6 = SelectField("Subject 6",
-                   choices = add_choice)
-    grade_6 = SelectField("Grade *", coerce=int,
-                   choices = grades_choice)
-    field7 = SelectField("Subject 7",
-                   choices = add_choice)
-    grade_7 = SelectField("Grade",
-                   choices = grades_choice)
-    field8 = SelectField("Subject 8",
-                   choices = add_choice)
-    grade_8 = SelectField("Grade",
-                   choices = grades_choice)
-    field9 = SelectField("Subject 9",
-                   choices = add_choice)
-    grade_9 = SelectField("Grade",
-                   choices = grades_choice)
+    # field6 = SelectField("Subject 6",
+    #                choices = add_choice)
+    # grade_6 = SelectField("Grade *", coerce=int,
+    #                choices = grades_choice)
+    # field7 = SelectField("Subject 7",
+    #                choices = add_choice)
+    # grade_7 = SelectField("Grade",
+    #                choices = grades_choice)
+    # field8 = SelectField("Subject 8",
+    #                choices = add_choice)
+    # grade_8 = SelectField("Grade",
+    #                choices = grades_choice)
+    # field9 = SelectField("Subject 9",
+    #                choices = add_choice)
+    # grade_9 = SelectField("Grade",
+    #                choices = grades_choice)
     submit = SubmitField("Check")
 
 class CourseForm(FlaskForm):
@@ -74,6 +74,7 @@ class AddSubjectForm(FlaskForm):
     
 class AddCourseForm(FlaskForm):
     course_name = StringField("Course Name *", validators = [DataRequired()])
+    jamb_score = IntegerField("Min Jamb Score *", validators =[DataRequired()])
     field1 = SelectField("Subject 1", validators = [DataRequired()],
                    choices = add_choice)
     grade_1 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
@@ -94,32 +95,30 @@ class AddCourseForm(FlaskForm):
                    choices = add_choice)
     grade_5 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
-    field6 = SelectField("Subject 6", validators = [DataRequired()],
-                   choices = add_choice)
-    grade_6 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
-                   choices = grades_choice)
-    field7 = SelectField("Subject 7", validators = [DataRequired()],
-                   choices = add_choice)
-    grade_7 = SelectField("Grade", validators = [DataRequired()],
-                   choices = grades_choice)
-    field8 = SelectField("Subject 8", validators = [DataRequired()],
-                   choices = add_choice)
-    grade_8 = SelectField("Grade", validators = [DataRequired()],
-                   choices = grades_choice)
-    field9 = SelectField("Subject 9", validators = [DataRequired()],
-                   choices = add_choice)
-    grade_9 = SelectField("Grade", validators = [DataRequired()],
-                   choices = grades_choice)
+    # field6 = SelectField("Subject 6", validators = [DataRequired()],
+    #                choices = add_choice)
+    # grade_6 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
+    #                choices = grades_choice)
+    # field7 = SelectField("Subject 7", validators = [DataRequired()],
+    #                choices = add_choice)
+    # grade_7 = SelectField("Grade", validators = [DataRequired()],
+    #                choices = grades_choice)
+    # field8 = SelectField("Subject 8", validators = [DataRequired()],
+    #                choices = add_choice)
+    # grade_8 = SelectField("Grade", validators = [DataRequired()],
+    #                choices = grades_choice)
+    # field9 = SelectField("Subject 9", validators = [DataRequired()],
+    #                choices = add_choice)
+    # grade_9 = SelectField("Grade", validators = [DataRequired()],
+    #                choices = grades_choice)
     submit = SubmitField("Add Course")
 
     def validate_is_not_multiple(self,
             f1=field1, f2=field2,
             f3=field3, f4=field4,
-            f5=field5, f6=field6,
-            f7=field7, f8=field8,
-            f9=field9, 
+            f5=field5
         ):
-        fields = [f1, f2, f3, f4, f5, f6, f7, f8, f9]
+        fields = [f1, f2, f3, f4, f5]
         d = duplicate(fields)
         if d:
             raise ValidationError(f"This {d} exist either twice or more")

@@ -14,7 +14,7 @@ class Course(db.Model, BaseMixin):
     course_code = db.Column(db.Integer, unique = True)
     is_full = db.Column(db.Boolean, default=False)
     max_candidate = db.Column(db.Integer, default=200)
-    jamb = db.relationship("AdminJamb", backref="course", lazy=True)
+    jamb = db.relationship("AdminJamb", backref="course", lazy=True, uselist = False)
     waec = db.relationship("WaecSubject", backref="course", lazy=True)
 
     def __repr__(self):

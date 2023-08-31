@@ -1,5 +1,6 @@
 from flask import (Flask, render_template as render,
-                flash, request, make_response, jsonify, redirect)
+                flash, request, make_response,
+                jsonify, redirect, abort)
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
@@ -16,8 +17,8 @@ naming_convention = {
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8b9562889f24968e91ebdb6c2af18ba8cada1b34cfcccb1c64b5db118bf67143"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sqlite.db"
-app.config["SQLALCHEMY_COMMIT_TEARDOWN"] = False
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_COMMIT_TEARDOWN"] = True
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 meta = MetaData(naming_convention=naming_convention)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -33,15 +34,16 @@ def index():
     form = CourseForm()
     return render("index.html")
 
-@app.route("/add-form", methods = ["GET", "POST"])
+@app.route("/add-form/", methods = ["GET", "POST"])
 def add_form():
     from forms import AddCourseForm
-    from models import Course, WaecSubject, Grade
+    from models import Course, WaecSubject, Grade, AdminJamb
     form = AddCourseForm()
     print(form.errors)
     if form.validate_on_submit():
         course_title = form.course_name.data.title()
         print(course_title)
+        jamb_score = int(form.jamb_score.data)
         field1 = form.field1.data.title()
         grade_1 = form.grade_1.data
         field2 = form.field2.data.title()
@@ -52,15 +54,16 @@ def add_form():
         grade_4 = form.grade_4.data
         field5 = form.field5.data.title()
         grade_5 = form.grade_5.data
-        field6 = form.field6.data.title()
-        grade_6 = form.grade_6.data
-        field7 = form.field7.data.title()
-        grade_7 = form.grade_7.data
-        field8 = form.field8.data.title()
-        grade_8 = form.grade_8.data
-        field9 = form.field9.data.title()
-        grade_9 = form.grade_9.data
+        # field6 = form.field6.data.title()
+        # grade_6 = form.grade_6.data
+        # field7 = form.field7.data.title()
+        # grade_7 = form.grade_7.data
+        # field8 = form.field8.data.title()
+        # grade_8 = form.grade_8.data
+        # field9 = form.field9.data.title()
+        # grade_9 = form.grade_9.data
         course = Course(course_title=course_title)
+        jamb = AdminJamb(min_score = jamb_score, course = course)
         c_sub = [
                 WaecSubject(course=course, name=field1,
                          grade=Grade.query.filter_by(point=grade_1).first()),
@@ -72,27 +75,27 @@ def add_form():
                          grade=Grade.query.filter_by(point=grade_4).first()),
                 WaecSubject(course=course, name=field5,
                          grade=Grade.query.filter_by(point=grade_5).first()),
-                WaecSubject(course=course, name=field6,
-                         grade=Grade.query.filter_by(point=grade_6).first()),
-                WaecSubject(course=course, name=field7,
-                         grade=Grade.query.filter_by(point=grade_7).first()),
-                WaecSubject(course=course, name=field8,
-                         grade=Grade.query.filter_by(point=grade_8).first()),
-                WaecSubject(course=course, name=field9,
-                         grade=Grade.query.filter_by(point=grade_9).first())
+                # WaecSubject(course=course, name=field6,
+                #          grade=Grade.query.filter_by(point=grade_6).first()),
+                # WaecSubject(course=course, name=field7,
+                #          grade=Grade.query.filter_by(point=grade_7).first()),
+                # WaecSubject(course=course, name=field8,
+                #          grade=Grade.query.filter_by(point=grade_8).first()),
+                # WaecSubject(course=course, name=field9,
+                #          grade=Grade.query.filter_by(point=grade_9).first())
             ]
 
-        try:
-            db.session.add(course)
-            db.session.commit()
-            db.session.add_all(c_sub)
-            db.session.commit()
-            flash(f"{form.course_title} added successfully", "info")
-            return redirect("/")
-        except IntegrityError:
-            flash(f"{form.course_title} is already created", "warning")
-        else:
-            flash("DatabaseError", "error")
+        db.session.add(course)
+        db.session.add(jamb)
+        db.session.commit()
+        db.session.add_all(c_sub)
+        db.session.commit()
+        flash(f"{form.course_name.data} added successfully", "info")
+        return redirect("/")
+        # except IntegrityError:
+        #     flash(f"{form.course_title} is already created", "warning")
+        # else:
+        #     flash("DatabaseError", "error")
 
     return render("addform.html", form=form)
 
@@ -126,9 +129,10 @@ def add_subject():
             flash('DatabaseError')
     return render("subject.html", form = form )
     
-@app.route("/match-course")
+@app.route("/match-course/")
 def match():
     from forms import MatchForm
+
     from models import Course
     form = MatchForm()
     if form.validate_on_submit():
@@ -151,12 +155,19 @@ def match():
             }
         print(dir(request))
     return render("match.html", form=form)
-    
-@app.route("/grade-course")
+@app.route("/course/")
+def cause():
+    from models import Course
+    course = request.args.get("c")
+    course = Course.query.filter_by(course_title=course).first()
+    if course:
+        return {"subject":[sub.name for sub in course.waec], "score":course.jamb.min_score}
+    abort(404)
+@app.route("/grade-course/")
 def course_grade():
     return render("grading.html")
 
-@app.route("/grade-add", methods=["POST", "GET"])
+@app.route("/grade-add/", methods=["POST", "GET"])
 def grade_point():
     from models import Grade
     from forms import AddGradeForm

@@ -44,5 +44,43 @@ form.addEventListener('submit',function(e)
             class:"bg-success card pt-3 p-3 mt-4 text-light",
         id:"agg"});
     }
-    let field=$("#field1").prepend(aggregate);
+    let field=$("#form").prepend(aggregate);
 });
+$("#course_name").on('input',function(){
+    let c = $(this).val()
+    $.getJSON(
+        `/course/?c=${c}`,
+        function(data)
+        {
+            let subject = data["subject"];
+            let span = "Subject <ol>";
+            let ali = "";
+            for (let i = 0; i <= subject.length-1; i++){
+                let li = "\n<li style='display:inline;'>" + subject[i] + "</li>"
+                ali += li;
+            }
+            span += ali;
+            span += "</ol>";
+            console.log(subject);
+            console.log(span);
+            let subj = $('#sub');
+            if ($("#sub").html() !== undefined)
+            {
+               subj.html(span);
+               return '';
+            }else
+            {
+                subj=$(span);
+                subj.attr({
+                    class:"bg-info card pt-3 pl-3 pb-3 text-light",
+                id:"sub"});
+                let field=$("#form").prepend(subj);
+                return '';
+            }
+            $("li").each(function(){
+                $("this").attr({
+                    "style": "display:inline;list-style-type:none;"
+                })});
+        }
+    );
+})
