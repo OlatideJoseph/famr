@@ -58,7 +58,7 @@ $("#course_name").on('input',function(){
             let span = "<ul>Subject: ";
             let ali = "";
             for (let i = 0; i <= subject.length-1; i++){
-                let li = "\n<li style='display:inline;'>" + subject[i] + "</li>"
+                let li = "\n<li>" + subject[i] + "</li>"
                 ali += li;
             }
             span += ali;
@@ -69,23 +69,18 @@ $("#course_name").on('input',function(){
             if ($("#sub").html() !== undefined)
             {
                subj.html(span);
-               subj.attr({
-                    class:"bg-info card pt-3 pl-3 pb-3 text-dark mt-3",
-                id:"sub", display:"inline"});
-               return '';
             }else
             {
                 subj=$(span);
                 subj.attr({
-                    class:"alert alert-primary card pt-3 pl-3 pb-3 text-dark mt-3",
+                    class:"bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
                 id:"sub", display:"inline"});
                 let field=$("#form").prepend(subj);
                 return '';
             }
-            $("li").each(function(){
-                $("this").attr({
-                    "style": "display:inline;"
-                })});
+            subj.attr({
+                    class:"bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
+                id:"sub", display:"inline"});
         }
     );
 })

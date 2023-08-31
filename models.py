@@ -1,12 +1,78 @@
+from datetime import datetime, timedelta
+from flask import current_app
+from werkzeug.security import generate_password_hash as g_pass, check_password_hash as c_pass
 from app import db
+
+
+
 
 class BaseMixin:
     _id = db.Column(db.Integer, primary_key=True)
+
+
     @property
     def pk(self):
         return self._id
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.__class__.__name__} <{self.pk}>"
+
+
+class UserAdminMixin(BaseMixin):
+    is_admin = db.Column(db.Boolean, default=False)
+
+
+
+class User(UserAdminMixin):
+    """The User table"""
+    __tablename__ = "users"
+    username = db.Column(db.String(15), nullable=False)
+    password = db.Column(db.Text(), nullable=False)
+    token = db.relationship("Token", backref='user', lazy=True)
+
+
+    def __repr__(self) -> str:
+        return repr(self.username)
+
+    @staticmethod
+    def gen_pass(password) -> str:
+        """A static method that generates users password"""
+        return g_pass(password)
+
+    def check_pass(self, password):
+        return c_pass(self.password, password)
+
+    def check_token(self):
+        pass
+
+
+
+class Token(BaseMixin):
+    __tablename__ = "tokens"
+    token = db.Column(db.Text(), nullable=False, unique=True)
+    exp = db.Column(db.DateTime, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users._id'))
+
+    @staticmethod
+    def gen_token(_id) -> str:
+        import jwt
+        expires = datetime.utcnow() + timedelta(days = 366)
+        key = current_app.config['SECRET_KEY']
+        tok = jwt.encode({"id": _id,
+            "exp": expires}, key)
+        return tok
+    @classmethod
+    def decode_token(cls, token: str) -> dict:
+        import jwt
+        key = current_app['SECRET_KEY']
+        b = jwt.decode(token, key)
+
+        return b
+    @classmethod    
+    def verify_token(cls, token: str) -> bool:
+        t = cls.query.filter_by(token = token).first()
+        if t is not None:
+            return False
+        return True
 
 class Course(db.Model, BaseMixin):
     __tablename__  = "course"

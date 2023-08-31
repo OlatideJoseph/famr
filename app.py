@@ -2,6 +2,7 @@ from flask import (Flask, render_template as render,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for)
 from flask_sqlalchemy import SQLAlchemy
+from flask_httpauth import HTTPBasicAuth
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
 from sqlalchemy.exc import IntegrityError
@@ -22,12 +23,20 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 meta = MetaData(naming_convention=naming_convention)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+auth = HTTPBasicAuth(app)
 import models
 # @app.shell_context_processor
 # def context_processor():
 #     return {""}
 
-    
+@app.before_request
+@auth.login_required
+def authenticate():
+    pass
+
+@auth.verify_password
+def verify_password(user, password):
+    pass
 @app.route("/")
 def index():
     from forms import CourseForm
@@ -162,8 +171,13 @@ def cause():
     course = request.args.get("c")
     course = Course.query.filter_by(course_title=course).first()
     if course:
-        return {"subject":[sub.name for sub in course.waec], "score":course.jamb.min_score}
+        return {
+            "subject":[{sub.name:sub.grade.point} for sub in course.waec],
+            "score":course.jamb.min_score,
+        }
     abort(404)
+
+
 @app.route("/grade-course/")
 def course_grade():
     return render("grading.html")
@@ -180,6 +194,7 @@ def grade_point():
         flash(f"Grade {grade.grade} added successfully!", "info")
         return redirect("/")
     return render("addgrade.html", form=form)
+
 if __name__ == "__main__":
     app.run(debug = True)
 
