@@ -24,6 +24,7 @@ let calculator=(...args)=>
 let sum=(a, b)=>{
     return (toInt(a)+toInt(b));
 }
+//Updating for aggregate data
 form.addEventListener('submit',function(e)
 {
     e.preventDefault();//Stop The Form Default Action
@@ -41,11 +42,12 @@ form.addEventListener('submit',function(e)
     {
         aggregate=$("<span>Aggregate: <code>"+score+"%</code></span>");
         aggregate.attr({
-            class:"bg-success card pt-3 p-3 mt-4 text-light",
+            class:"alert-primary alert card pt-3 p-3 mt-4 text-dark",
         id:"agg"});
     }
     let field=$("#form").prepend(aggregate);
 });
+//Querying for course data
 $("#course_name").on('input',function(){
     let c = $(this).val()
     $.getJSON(
@@ -53,33 +55,36 @@ $("#course_name").on('input',function(){
         function(data)
         {
             let subject = data["subject"];
-            let span = "Subject <ol>";
+            let span = "<ul>Subject: ";
             let ali = "";
             for (let i = 0; i <= subject.length-1; i++){
                 let li = "\n<li style='display:inline;'>" + subject[i] + "</li>"
                 ali += li;
             }
             span += ali;
-            span += "</ol>";
+            span += "</ul>";
             console.log(subject);
             console.log(span);
             let subj = $('#sub');
             if ($("#sub").html() !== undefined)
             {
                subj.html(span);
+               subj.attr({
+                    class:"bg-info card pt-3 pl-3 pb-3 text-dark mt-3",
+                id:"sub", display:"inline"});
                return '';
             }else
             {
                 subj=$(span);
                 subj.attr({
-                    class:"bg-info card pt-3 pl-3 pb-3 text-light",
-                id:"sub"});
+                    class:"alert alert-primary card pt-3 pl-3 pb-3 text-dark mt-3",
+                id:"sub", display:"inline"});
                 let field=$("#form").prepend(subj);
                 return '';
             }
             $("li").each(function(){
                 $("this").attr({
-                    "style": "display:inline;list-style-type:none;"
+                    "style": "display:inline;"
                 })});
         }
     );

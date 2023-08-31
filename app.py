@@ -1,6 +1,6 @@
 from flask import (Flask, render_template as render,
                 flash, request, make_response,
-                jsonify, redirect, abort)
+                jsonify, redirect, abort, url_for)
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
@@ -32,6 +32,7 @@ import models
 def index():
     from forms import CourseForm
     form = CourseForm()
+    return redirect(url_for("match"))
     return render("index.html")
 
 @app.route("/add-form/", methods = ["GET", "POST"])
