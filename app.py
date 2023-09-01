@@ -31,11 +31,13 @@ import models
 
 @auth.verify_token
 def verify_password(token):
-    import jwt
-    from models import User, Token
-    user_id = Token.decode_token(token)["id"]
-    if user_id:
-        return user_id
+    if token:
+        print(token)
+        import jwt
+        from models import User, Token
+        user_id = Token.decode_token(token)["id"]
+        if user_id:
+            return user_id
     abort(401)
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -86,6 +88,24 @@ def login():
             "msg": ["Invalid User Credentials ", "warning"]
         }, 401, headers)
     return render("login.html", form=form)
+
+
+@app.route("/sign-up/")
+def sign_up():
+    from werkzeug.security import generate_password_hash as gph
+    from forms import UserCreationForm
+    from models import User
+    form = UserCreationForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        hashed = gph(password)
+        user = User(username=username, password=password)
+        db.session.add(user)
+        db.session.commit()
+    return render("signup.html", form=form)
+
+
 
 @app.route("/")
 @auth.login_required

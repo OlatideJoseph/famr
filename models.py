@@ -63,14 +63,18 @@ class Token(db.Model, BaseMixin):
         import jwt
         expires = datetime.utcnow() + timedelta(days = 366)
         key = current_app.config['SECRET_KEY']
-        tok = jwt.encode({"id": _id,
-            "exp": expires}, key)
+        tok = jwt.encode(
+            {
+                "id": _id,
+                "exp": expires
+            }, key, algorithms=["HS256"]
+        )
         return tok
     @classmethod
     def decode_token(cls, token: str) -> dict:
         import jwt
-        key = current_app['SECRET_KEY']
-        b = jwt.decode(token, key)
+        key = current_app.config['SECRET_KEY']
+        b = jwt.decode(token, key, algorithms=["HS256"])
 
         return b
     @classmethod    

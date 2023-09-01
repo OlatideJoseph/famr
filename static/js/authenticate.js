@@ -46,15 +46,24 @@ $(document).ready(
             });
         });
         // signup link event listener
+        let bloader = $('.bloader');
         $('.link').on('click', function(e)
             {
                 e.preventDefault();
+                bloader.css('display', 'flex');
+                let form = $("#form");
+                let body = $("body");
+                body.css('overflow','hidden');
+                form.hide()
                 let href = $(this).attr('href');
-                $.get(`${window.origin}/${href}#form`,function(data)
-                {
-                    alert(data);
-                }
-                );
+                $('.ajx').load(`${window.origin}/${href} #form`,function(resp){
+                    window.history.pushState(null, null, href);
+                    $('title').text('Sign Up !');
+                    bloader.fadeOut(1000);
+                    form.show();
+                    body.css('overflow','hidden');
+                    
+                });
             }
         );
 
