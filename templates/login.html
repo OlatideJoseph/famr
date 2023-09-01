@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head%}
+<title>Log in</title>
+{% endblock %}
+{% block content%}
+<fieldset class="form card mt-3 bg-secondary text-light" style="max-width: 24rem;">
+    <legend class="card-header text-center">Login Form</legend>
+    <form method = 'post' action = '#' class="card-body">
+        {{form.csrf_token}}
+        <div class="row">
+            <div class="col">
+                {{form.username.label(class = "form-label")}}
+                {{form.username(class = "form-control")}}
+            </div>            
+            <div class="col">
+                {{form.password.label(class="form-label")}}
+                {{form.password(class="form-control")}}
+            </div>
+        </div>
+        <div class="row">
+        	{{form.login(class="btn btn-primary btn-sm mt-3")}}
+        	<div class="card-footer">
+        		Create an account ? <a href="#" class="link text-light">Sign up!</a>
+        	</div>
+        </div>
+    </form>
+</fieldset>
+<script type="text/javascript" src="{{url_for('static', filename='js/authenticate.js')}}"></script>
+{% endblock %}

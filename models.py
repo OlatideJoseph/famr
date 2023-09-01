@@ -22,7 +22,7 @@ class UserAdminMixin(BaseMixin):
 
 
 
-class User(UserAdminMixin):
+class User(db.Model, UserAdminMixin):
     """The User table"""
     __tablename__ = "users"
     username = db.Column(db.String(15), nullable=False)
@@ -33,24 +33,30 @@ class User(UserAdminMixin):
     def __repr__(self) -> str:
         return repr(self.username)
 
-    @staticmethod
-    def gen_pass(password) -> str:
-        """A static method that generates users password"""
-        return g_pass(password)
+    # def gen_on_pass(self, password):
+    #     """It generate with the"""
+    #     chk = c_pass(se, password)
 
-    def check_pass(self, password):
+    def check_pass(self, password: str) -> bool:
         return c_pass(self.password, password)
 
     def check_token(self):
         pass
+        
+    @staticmethod
+    def gen_pass(password: str) -> str:
+        return g_pass(password)
 
 
 
-class Token(BaseMixin):
+class Token(db.Model, BaseMixin):
     __tablename__ = "tokens"
     token = db.Column(db.Text(), nullable=False, unique=True)
     exp = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users._id'))
+
+
+
 
     @staticmethod
     def gen_token(_id) -> str:

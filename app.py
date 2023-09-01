@@ -2,7 +2,7 @@ from flask import (Flask, render_template as render,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for)
 from flask_sqlalchemy import SQLAlchemy
-from flask_httpauth import HTTPBasicAuth
+from flask_httpauth import HTTPTokenAuth
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
 from sqlalchemy.exc import IntegrityError
@@ -23,21 +23,72 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 meta = MetaData(naming_convention=naming_convention)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-auth = HTTPBasicAuth(app)
+auth = HTTPTokenAuth(scheme="Bearer")
 import models
 # @app.shell_context_processor
 # def context_processor():
 #     return {""}
 
-@app.before_request
-@auth.login_required
-def authenticate():
-    pass
+@auth.verify_token
+def verify_password(token):
+    import jwt
+    from models import User, Token
+    user_id = Token.decode_token(token)["id"]
+    if user_id:
+        return user_id
+    abort(401)
 
-@auth.verify_password
-def verify_password(user, password):
-    pass
+@app.route("/login", methods = ["GET", "POST"])
+def login():
+    from forms import UserLoginForm
+    from models import User, Token
+    form = UserLoginForm()
+    headers = {"Content-Type":"application/json"}
+    #creates an auth token if the request is an 
+    if (request.method == "POST") and (request.is_json):
+        js_data = request.get_json()
+        u = js_data['username']
+        usr = User.query.filter_by(username=u).first()
+        if usr and usr.check_pass(js_data["password"]):
+
+            token = Token.gen_token(usr.pk)
+            tock = Token(token=token, user=usr)
+            db.session.add(tock)
+            db.session.commit()
+            return {
+                "refresh_token": token,
+                "msg": ["User logged successfully","info"],
+                "code": 200
+                }
+        return {
+            "code": 401,
+            "msg": ["Invalid User Credentials ", "warning"]
+        }, 401
+    #validates based on form and gen token
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        usr = User.query.filter_by(username=username).first()
+        if usr and usr.check_pass(password):
+
+            token = Token.gen_token(usr.pk)
+            tock = Token(token=token, user=usr)
+            db.session.add(tock)
+            db.session.commit()
+            return make_response({
+                "refresh_token": token,
+                "msg": ["User logged successfully","info"],
+                "code": 200
+                }, 200, headers)
+            
+        return make_response({
+            "code": 401,
+            "msg": ["Invalid User Credentials ", "warning"]
+        }, 401, headers)
+    return render("login.html", form=form)
+
 @app.route("/")
+@auth.login_required
 def index():
     from forms import CourseForm
     form = CourseForm()

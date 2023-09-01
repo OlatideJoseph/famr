@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectField, StringField, SubmitField, IntegerField
+from wtforms import SelectField, StringField, SubmitField, IntegerField, PasswordField
 from wtforms.validators import DataRequired, Regexp, Length
 from models import Subject as ss, Course, WaecSubject, Grade
 from utils.main import duplicate
@@ -127,3 +127,8 @@ class AddGradeForm(FlaskForm):
     grade = StringField("Enter Grade Value:", validators=[DataRequired(), Length(min=2,max=2)])
     point = IntegerField("Enter The Point:", validators=[DataRequired()])
     submit = SubmitField("Add")
+
+class UserLoginForm(FlaskForm):
+    username = StringField("Username: ", validators=[DataRequired()])
+    password = PasswordField("Password: ", validators=[DataRequired()])
+    login = SubmitField("Login")
