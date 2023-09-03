@@ -3,6 +3,11 @@ from wtforms import SelectField, StringField, SubmitField, IntegerField, Passwor
 from wtforms.validators import DataRequired, Regexp, Length
 from models import Subject as ss, Course, WaecSubject, Grade
 from utils.main import duplicate
+from app import app
+ctx = app.app_context()
+ctx.push()
+
+
 subjects = [
         ("English", "English"),
         ("Mathematics", "Math"),
@@ -136,4 +141,4 @@ class UserLoginForm(FlaskForm):
 class UserCreationForm(FlaskForm):
     username = StringField("Username: ", validators=[DataRequired()])
     password = PasswordField("Password: ", validators=[DataRequired()])
-    login = SubmitField("Login")
+    signup = SubmitField("Sign Up")

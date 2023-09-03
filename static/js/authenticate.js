@@ -36,6 +36,10 @@ $(document).ready(
                 {
                     localStorage.setItem("refresh", data["refresh_token"]);
                     showAlert(data["msg"][0], data["msg"][1]);
+                    $.ajaxSetup({
+                        headers:{Authorization: `Bearer ${localStorage.getItem("refresh")}`}
+                    });
+                    $(".ajx").load("/match-course #form");
                 },
                 error: function(data)
                 {

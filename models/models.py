@@ -54,8 +54,22 @@ class Token(db.Model, BaseMixin):
     token = db.Column(db.Text(), nullable=False, unique=True)
     exp = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users._id'))
-
-
+    
+    @classmethod
+    def active_token(cls):
+        """\
+            it returns the all the active token of the model class
+        """
+        active = []
+        a = cls.query.all()
+        if a:
+            for actve in a:
+                try:
+                    cls.decode_token(actve.token)
+                    active.append(actve)
+                except:
+                    pass
+        return active
 
 
     @staticmethod
@@ -67,7 +81,7 @@ class Token(db.Model, BaseMixin):
             {
                 "id": _id,
                 "exp": expires
-            }, key, algorithms=["HS256"]
+            }, key
         )
         return tok
     @classmethod
