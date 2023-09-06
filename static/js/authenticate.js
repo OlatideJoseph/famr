@@ -2,14 +2,6 @@
 $(document).ready(
     function()
     {
-        const showAlert = (msg, category)=>{
-            let alert = `<p class="alert alert-${category} `
-            alert += `alert-dismissible mt-2 mb-2 pl-3 pl- fade show">${msg}`
-            alert += `<span class="btn-close" data-bs-dismiss="alert"`
-            alert += ` aria-label="Close">&times</span></p>`;
-            // $("#loader").fadeOut(500);
-            $("nav").after(alert);
-        }
         //setting the form to the center
         $(".ajx").css(
         {
@@ -22,51 +14,52 @@ $(document).ready(
             e.preventDefault();
             let form = $(this).serialize();
             let spinner = `<img alt="spinner" id="loader/>`;
-            alert(form);
             $.ajax(
             {
-                url:window.location,
+                url: `${window.location.pathname}`,
                 type:"POST",
                 data:form,
                 beforeSend: function(data)
                 {
-                    $('.login').after(spinner);
+                    showLoader();
                 },
                 success: function(data)
                 {
                     localStorage.setItem("refresh", data["refresh_token"]);
                     showAlert(data["msg"][0], data["msg"][1]);
-                    $.ajaxSetup({
-                        headers:{Authorization: `Bearer ${localStorage.getItem("refresh")}`}
-                    });
-                    $(".ajx").load("/match-course #form");
+                    $(".ajx").load("ajax/v1.0/match-course #form");
+                    hideLoader("Match", "/match-course");
                 },
                 error: function(data)
                 {
                     console.log(data.responseJSON);
                     let resp = data.responseJSON;
                     showAlert( resp["msg"][0], resp["msg"][1]);
+                    hideLoader("Login", "/login/");
                 }
             });
         });
         // signup link event listener
-        let bloader = $('.bloader');
         $('.link').on('click', function(e)
             {
                 e.preventDefault();
-                bloader.css('display', 'flex');
+                showLoader();
                 let form = $("#form");
                 let body = $("body");
-                body.css('overflow','hidden');
-                form.hide()
+                let title = $(this).text();
                 let href = $(this).attr('href');
-                $('.ajx').load(`${window.origin}/${href} #form`,function(resp){
-                    window.history.pushState(null, null, href);
-                    $('title').text('Sign Up !');
-                    bloader.fadeOut(1000);
-                    form.show();
-                    body.css('overflow','hidden');
-                    
+                $.ajax({
+                    url: href,
+                    type: "GET",
+                    success:function(data, textStatus, jqXHR){
+                        var bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
+                        $('body').html(bodyText);
+                        hideLoader(title, href);
+                        // bloader.fadeOut(1000);
+                        // form.show();
+                        // window.history.pushState(null, null, href);
+                        // body.css('overflow','auto');
+                    }
                 });
             }
         );

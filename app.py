@@ -32,13 +32,13 @@ auth = HTTPTokenAuth(scheme="Bearer")
 
 from users import users
 from school import school
-#from auth import  auth as at
+from ajax import  ajax
 from models import model as md
 from forms import form as fm
 
 app.register_blueprint(users)
 app.register_blueprint(school)
-#app.register_blueprint(at)
+app.register_blueprint(ajax, url_prefix="/ajax/v1.0/")
 app.register_blueprint(md, url_prefix="/models/")
 app.register_blueprint(fm, url_prefix="/forms/")
 
@@ -47,4 +47,3 @@ app.register_blueprint(fm, url_prefix="/forms/")
 
 if __name__ == "__main__":
     app.run(debug = True)
-

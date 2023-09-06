@@ -4,10 +4,10 @@ from flask import (render_template as render,
 from werkzeug.security import generate_password_hash as gph
 from forms import UserLoginForm, UserCreationForm
 from models import User, Token
-from app import db
+from app import db, auth
 from . import users
 
-@users.route("/login", methods = ["GET", "POST"])
+@users.route("/login/", methods = ["GET", "POST"])
 def login():
     form = UserLoginForm()
     headers = {"Content-Type":"application/json"}
@@ -58,12 +58,27 @@ def login():
 
 
 
-@users.route("/sign-up/")
+@users.route("/sign-up/", methods=["POST", "GET"])
 def sign_up():
     form = UserCreationForm()
     headers = {
         "Content-Type": "application/json"
     }
+    if ((request.method == "POST") and (request.is_json)):
+        js = request.get_json()
+        username = js.get("username")
+        password = gph(js.get("auth"))
+        if username and password:
+            user  = User(username=username, password=password)
+            db.session.add(user)
+            db.session.commit()
+        return make_response({
+            "msg": [
+                f"User {username} added successfully !", "success"
+            ], 
+            "code": 201,
+            "redirect": url_for("users.login")
+        }, 201, headers)
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
@@ -71,11 +86,13 @@ def sign_up():
         user = User(username=username, password=password)
         db.session.add(user)
         db.session.commit()
-        return make_response({
-            "msg": [
-                f"User {username} added successfully !", "success"
-            ], 
-            "code": 201,
-            "redirect": url_for("login")
-        }, 201, headers)
+        flash(f"User {username} added successfully !", "success")
     return render("signup.html", form=form)
+
+
+@users.route("/list-users/")
+@auth.login_required
+def list_users():
+    return jsonify(
+        users=[user.username for user in User.query.all()]
+    )

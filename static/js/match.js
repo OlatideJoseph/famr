@@ -3,7 +3,8 @@
 //data storage space
 let jamb=document.getElementById('jamb_score');
 let btn=document.getElementById('submit');
-let form=document.getElementsByTagName('form')[0];
+let url = window.origin;
+let urlpath = window.location.pathname;
 let grade1=document.getElementById('grade_1');
 let grade2=document.getElementById('grade_2');
 let grade3=document.getElementById('grade_3');
@@ -24,63 +25,67 @@ let calculator=(...args)=>
 let sum=(a, b)=>{
     return (toInt(a)+toInt(b));
 }
-//Updating for aggregate data
-form.addEventListener('submit',function(e)
-{
-    e.preventDefault();//Stop The Form Default Action
-    let score=calculator(grade1.value, grade2.value, grade3.value,
-     grade4.value,
-      grade5.value);
-    console.log(score);
-    let aggregate = $('#agg');
-    if ($("#agg").html() !== undefined)
+$.ajaxSetup({url:`ajax/v1.0${window.location.pathname} #content`});
+$("#content").load(`${window.origin}/ajax/v1.0${urlpath} #content`);
+$(document).ready(()=>{
+    //Updating for aggregate data
+    $('form').on('submit',function(e)
     {
-        let code = aggregate.children('code');
-        code.attr("class","text-info");
-        code.first().text(score+"%");
-    }else
-    {
-        aggregate=$("<span>Aggregate: <code>"+score+"%</code></span>");
-        aggregate.attr({
-            class:"alert-primary alert card pt-3 p-3 mt-4 text-dark",
-        id:"agg"});
-    }
-    let field=$("#form").prepend(aggregate);
-});
-//Querying for course data
-$("#course_name").on('input',function(){
-    let c = $(this).val()
-    $.getJSON(
-        `/course/?c=${c}`,
-        function(data)
+        e.preventDefault();//Stop The Form Default Action
+        let score=calculator(grade1.value, grade2.value, grade3.value,
+         grade4.value,
+          grade5.value);
+        console.log(score);
+        let aggregate = $('#agg');
+        if ($("#agg").html() !== undefined)
         {
-            let subject = data["subject"];
-            let span = "<ul>Subject: ";
-            let ali = "";
-            for (let i = 0; i <= subject.length-1; i++){
-                let li = "\n<li>" + subject[i] + "</li>"
-                ali += li;
-            }
-            span += ali;
-            span += "</ul>";
-            console.log(subject);
-            console.log(span);
-            let subj = $('#sub');
-            if ($("#sub").html() !== undefined)
-            {
-               subj.html(span);
-            }else
-            {
-                subj=$(span);
-                subj.attr({
-                    class:"bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
-                id:"sub", display:"inline"});
-                let field=$("#form").prepend(subj);
-                return '';
-            }
-            subj.attr({
-                    class:"bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
-                id:"sub", display:"inline"});
+            let code = aggregate.children('code');
+            code.attr("class","text-info");
+            code.first().text(score+"%");
+        }else
+        {
+            aggregate=$("<span>Aggregate: <code>"+score+"%</code></span>");
+            aggregate.attr({
+                class:"alert-primary alert card pt-3 p-3 mt-4 text-dark",
+            id:"agg"});
         }
-    );
-})
+        let field=$("#form").prepend(aggregate);
+    });
+    //Querying for course data
+    $("#course_name").on('input',function(){
+        let c = $(this).val()
+        $.getJSON(
+            `/course/?c=${c}`,
+            function(data)
+            {
+                let subject = data["subject"];
+                let span = "<ul>Subject: ";
+                let ali = "";
+                for (let i = 0; i <= subject.length-1; i++){
+                    let li = "\n<li>" + subject[i] + "</li>"
+                    ali += li;
+                }
+                span += ali;
+                span += "</ul>";
+                console.log(subject);
+                console.log(span);
+                let subj = $('#sub');
+                if ($("#sub").html() !== undefined)
+                {
+                   subj.html(span);
+                }else
+                {
+                    subj=$(span);
+                    subj.attr({
+                        class:"bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
+                    id:"sub", display:"inline"});
+                    let field=$("#form").prepend(subj);
+                    return '';
+                }
+                subj.attr({
+                        class:"bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
+                    id:"sub", display:"inline"});
+            }
+        );
+    })
+});
