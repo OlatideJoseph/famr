@@ -21,10 +21,10 @@ const getHtml = (url, title)=>{
         type: "GET",
         success:function(data, textStatus, jqXHR)
         {
-            let bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
+            let bodyText = jqXHR.responseText.match(/<fieldset[^>]*>([\s\S]*)<\/fieldset>/i)[1];
             let msg = "success";
             let dat = data;
-            $('body').html(bodyText);
+            $('fieldset').html(bodyText);
             hideLoader(title, url.split('0')[1]);
         }
     });
@@ -74,7 +74,7 @@ const hideLoader = (title, url)=>{
     nav.show();
     body.css('overflow','auto');
     window.history.pushState(null, null, url);
-}
+}// hides the loader icon
 
 const linkOpener = (tag)=>{
 $(tag).on('click',
@@ -101,12 +101,34 @@ $(tag).on('click',
     }
 );
 }
+const eventNavLink = ()=>{
+    $('.sp').click(function(e){
+        e.preventDefault();
+        let a = $(this);
+        let active = $('a.active');
+        let href = a.attr('href');
+        let title = a.text();
+        let lco = window.location.pathname;
+        if (lco === "/"){
+            console.log("home");
+            let fieldset = `<fieldset class='form mt-3'></fieldset>`;
+            $("#home-content").html(fieldset);
+        }
+        showLoader();
+        getHtml(`/ajax/v1.0${href}`, title);
+        hideLoader(title, href);
 
-    // const showAlert = (msg, category)=>{
-    //     let alert = `<p class="alert alert-${category} `
-    //     alert += `alert-dismissible mt-2 mb-2 pl-3 pl- fade show">${msg}`
-    //     alert += `<span class="btn-close" data-bs-dismiss="alert"`
-    //     alert += ` aria-label="Close">&times</span></p>`;
-    //     // $("#loader").fadeOut(500);
-    //     $("nav").after(alert);
-    // }
+    }
+    );
+}// set an event listener for all anchor tag applied sp
+$(document).ready(function(){
+    eventNavLink();
+    if (token)
+    {
+        $(".usp").hide(1);//hide  views required for not authenticated
+        $(".auth").show(1);//shows views required for authentication 
+    }else{
+        $(".usp").show(1);//vice versa
+        $(".auth").hide(1);//vice versa
+    }
+});

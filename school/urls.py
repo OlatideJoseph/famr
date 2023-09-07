@@ -167,3 +167,4 @@ def grade_point():
     #     return redirect("/")
     return render("addgrade.html")
 
+

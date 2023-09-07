@@ -3,7 +3,7 @@
 <title>Add Form</title>
 {% endblock %}
 {% block content%}
-<fieldset class="form">
+<fieldset class="form mt-3">
     <legend>Register Course</legend>
     <form method = 'post' action = '#'>
         {{form.csrf_token}}
@@ -115,5 +115,4 @@
 
     </form>
 </fieldset>
-<script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
 {% endblock %}

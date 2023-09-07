@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/base.css')}}">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
@@ -27,10 +27,22 @@
               <a class="nav-link active" aria-current="page" href="{{url_for('school.index')}}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('school.match')}}">Match</a>
+              <a class="nav-link sp auth" href="{{url_for('school.match')}}">Match</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('school.add_form')}}">Add Course</a>
+              <a class="nav-link sp auth" href="{{url_for('school.add_form')}}">Add Course</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link sp auth" href="{{url_for('school.add_subject')}}">Add Subject</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link sp auth" href="{{url_for('school.grade_point')}}">Grade Point</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link usp" href="{{url_for('users.login')}}">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link auth" href="{{url_for('users.log_out')}}">Log Out</a>
             </li>
             <li class="nav-item">
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -40,7 +52,7 @@
       </div>
     </nav>
     
-    <div class="container-fluid col-md-8 mb-5 ajx">
+    <div class="container-fluid col-md-8 mb-5 pl-5 pr-5 ajx">
       {% with messages = get_flashed_messages(with_categories = True) %}
           {% for category, message in messages %}
               <p class = "alert alert-{{category}}">{{ message }}</p>
@@ -50,7 +62,7 @@
       {% endblock %}
     </div>
   
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
 {% macro scripts(one)%}
     {% for name in varargs %}

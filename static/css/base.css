@@ -2,8 +2,9 @@
 	width: 100vw;
 	z-index:1;
 	display: none;
-	background: var(--bs-white);
+	background: var(--bs-grey);
 	display: none;
+	position: absolute;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;

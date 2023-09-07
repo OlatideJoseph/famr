@@ -96,3 +96,7 @@ def list_users():
     return jsonify(
         users=[user.username for user in User.query.all()]
     )
+
+@users.route("/log-out/")
+def log_out():
+    return render("logout.html")
