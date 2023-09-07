@@ -15,20 +15,36 @@ const showAlert = (msg, category)=>{
     // $("#loader").fadeOut(500);
     $("nav").after(alert);
 };
+const getHtml = (url, title)=>{
+    $.ajax({
+        url: url,
+        type: "GET",
+        success:function(data, textStatus, jqXHR)
+        {
+            let bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
+            let msg = "success";
+            let dat = data;
+            $('body').html(bodyText);
+            hideLoader(title, url.split('0')[1]);
+        }
+    });
+}// only to be used when the user is logged in
 let token = localStorage.getItem("refresh");
-if (token){
+if (token !== null){
     $.ajaxSetup({
         headers:{Authorization: `Bearer ${localStorage.getItem("refresh")}`}
     });
-    $('#content').load("/ajax/v1.0/match-course/ #content", function(data)
-    {
-        showAlert("Already Logged In", "info");
+    let location = window.location.pathname;
+    if (location === "/login/" || location === "/sign-up/"){
+        let resp = getHtml('/match-course/', 'Match');
+        // $("#body").html(resp.bodyText);
     }
-    );
+    
 
 }else
-{ 
-    if (window.location.pathname !== "/login/" && window.location.pathname !== "/sign-up/")
+{
+    let location = window.location.pathname;
+    if (location !== "/login/" && location !== "/sign-up/")
     {
         window.location.pathname = "/login/";// redirect users to the login page
     }else
@@ -39,22 +55,27 @@ if (token){
 const showLoader = ()=>{
     let content = $("#content");
     let body = $("body");
+    let nav = $("#nav");
     let bloader = $('.bloader');
     bloader.css('display', 'flex');
     body.css('overflow','hidden');
+    nav.hide();
     content.hide();
 }
 
 const hideLoader = (title, url)=>{
     let bloader = $('.bloader');
     let content = $("#content");
+    let nav = $("#nav");
     let body = $("body");
     $('title').text(title);
     bloader.fadeOut(1000);
     content.show();
+    nav.show();
     body.css('overflow','auto');
     window.history.pushState(null, null, url);
 }
+
 const linkOpener = (tag)=>{
 $(tag).on('click',
     function(e)

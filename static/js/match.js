@@ -1,8 +1,11 @@
 "use strict";
-
 //data storage space
-let jamb=document.getElementById('jamb_score');
-let btn=document.getElementById('submit');
+showLoader();
+let mlocation = window.location.pathname;
+getHtml(`/ajax/v1.0${mlocation}`);
+hideLoader('Match', '/match-course/');
+let jamb = document.getElementById('jamb_score');
+let btn = document.getElementById('submit');
 let url = window.origin;
 let urlpath = window.location.pathname;
 let grade1=document.getElementById('grade_1');
@@ -12,6 +15,7 @@ let grade4=document.getElementById('grade_4');
 let grade5=document.getElementById('grade_5');
 let grade6=document.getElementById('grade_6');
 let grade7=document.getElementById('grade_7');
+
 
 let toInt=(a)=>
 {
@@ -25,7 +29,6 @@ let calculator=(...args)=>
 let sum=(a, b)=>{
     return (toInt(a)+toInt(b));
 }
-$.ajaxSetup({url:`ajax/v1.0${window.location.pathname} #content`});
 $("#content").load(`${window.origin}/ajax/v1.0${urlpath} #content`);
 $(document).ready(()=>{
     //Updating for aggregate data

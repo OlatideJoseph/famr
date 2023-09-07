@@ -2,7 +2,7 @@
 	width: 100vw;
 	z-index:1;
 	display: none;
-	background: var(--bs-orange);
+	background: var(--bs-white);
 	display: none;
 	justify-content: center;
 	align-items: center;

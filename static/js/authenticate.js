@@ -13,7 +13,6 @@ $(document).ready(
         $("form").first().on('submit',function(e){
             e.preventDefault();
             let form = $(this).serialize();
-            let spinner = `<img alt="spinner" id="loader/>`;
             $.ajax(
             {
                 url: `${window.location.pathname}`,
@@ -23,19 +22,20 @@ $(document).ready(
                 {
                     showLoader();
                 },
-                success: function(data)
+                success: function(data, textStatus, jqXHR)
                 {
                     localStorage.setItem("refresh", data["refresh_token"]);
+                    let resp = getHtml("/match-course/");
+                    $('body').html(resp["bodyText"]);
+                    hideLoader("Match", "/match-course/");
                     showAlert(data["msg"][0], data["msg"][1]);
-                    $(".ajx").load("ajax/v1.0/match-course #form");
-                    hideLoader("Match", "/match-course");
                 },
                 error: function(data)
                 {
                     console.log(data.responseJSON);
                     let resp = data.responseJSON;
-                    showAlert( resp["msg"][0], resp["msg"][1]);
                     hideLoader("Login", "/login/");
+                    showAlert( resp["msg"][0], resp["msg"][1]);
                 }
             });
         });
@@ -52,7 +52,7 @@ $(document).ready(
                     url: href,
                     type: "GET",
                     success:function(data, textStatus, jqXHR){
-                        var bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
+                        let bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
                         $('body').html(bodyText);
                         hideLoader(title, href);
                         // bloader.fadeOut(1000);
