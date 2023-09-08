@@ -36,7 +36,7 @@ if (token !== null){
     });
     let location = window.location.pathname;
     if (location === "/login/" || location === "/sign-up/"){
-        let resp = getHtml('/match-course/', 'Match');
+        let resp = getHtml(`/ajax/v1.0/match-course/`, 'Match');
         // $("#body").html(resp.bodyText);
     }
     

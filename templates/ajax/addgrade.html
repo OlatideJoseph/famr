@@ -1,19 +1,17 @@
 {% extends "base.html" %}
 {% block head%}
-<title>Add Form</title>
+<title>Grade Point</title>
 {% endblock %}
 {% block content%}
 <fieldset>
     <legend>Add Form</legend>
-    <form method = 'post' action = '#'>
+    <form method = 'post' action = 'javascript:void(0)'>
         {{form.csrf_token}}
         {{form.grade.label(class = "form-label")}}
         {{form.grade(class = "form-control")}}
         {{form.point.label(class = "form-label")}}
         {{form.point(class = "form-control")}}
         {{form.submit(class = "btn btn-info mt-3")}}
-
     </form>
 </fieldset>
-<script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
 {% endblock %}

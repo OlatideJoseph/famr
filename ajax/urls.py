@@ -151,9 +151,9 @@ def grade_point():
         grade = Grade(grade=form.grade.data, point=form.point.data)
         db.session.add(grade)
         db.session.commit()
-        if request.is_json:
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return {
-                "msg": f"The grade '{grade.grade} added successfully'",
+                "msg": [f"The grade '{grade.grade}' added successfully", "success"],
                 "redirect": url_for("school.match")
             }
         flash(f"Grade {grade.grade} added successfully!", "info")

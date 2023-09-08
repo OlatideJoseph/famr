@@ -9,6 +9,13 @@ $(document).ready(
 	            "flex-direction":"column"
 	        }
         );
+        $("form").on("submit", function(e)
+        {
+            e.preventDefault();
+            let data = $(this).serialize();
+            console.log(data);
+        }
+        );
         $('.link').on('click', function(e)
             {
                 e.preventDefault();

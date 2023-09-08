@@ -25,8 +25,14 @@ $(document).ready(
                 success: function(data, textStatus, jqXHR)
                 {
                     localStorage.setItem("refresh", data["refresh_token"]);
-                    let resp = getHtml("/match-course/");
-                    $('body').html(resp["bodyText"]);
+                    $.ajaxSetup({
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("refresh")}`
+                        }
+                    });//sets the default req header
+                    $('form').hide();
+                    let resp = getHtml(`/ajax/v1.0/match-course/`);
+                    $('form').show();
                     hideLoader("Match", "/match-course/");
                     showAlert(data["msg"][0], data["msg"][1]);
                 },
@@ -37,7 +43,7 @@ $(document).ready(
                     hideLoader("Login", "/login/");
                     showAlert( resp["msg"][0], resp["msg"][1]);
                 }
-            });
+            });// ajax requests ends here
         });
         // signup link event listener
         $('.link').on('click', function(e)
