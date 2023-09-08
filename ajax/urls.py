@@ -151,7 +151,9 @@ def grade_point():
         grade = Grade(grade=form.grade.data, point=form.point.data)
         db.session.add(grade)
         db.session.commit()
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        xhr = request.headers.get("X-Requested-With")
+        print(xhr)
+        if xhr == "XMLHttpRequest":
             return {
                 "msg": [f"The grade '{grade.grade}' added successfully", "success"],
                 "redirect": url_for("school.match")
