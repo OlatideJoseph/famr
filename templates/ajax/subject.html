@@ -5,7 +5,7 @@
 {% block content%}
 <fieldset>
     <legend>Add Form</legend>
-    <form method = 'post' action = '#'>
+    <form method = 'post' action='javascript:void(0);'>
         {{form.csrf_token}}
         {{form.name.label(class = "form-label")}}
         {{form.name(class = "form-control")}}

@@ -24,8 +24,8 @@ const getHtml = (url, title)=>{
             let bodyText = jqXHR.responseText.match(/<fieldset[^>]*>([\s\S]*)<\/fieldset>/i)[1];
             let msg = "success";
             let dat = data;
-            $('fieldset').html(bodyText);
-            hideLoader(title, url.split('0')[1]);
+            hideLoader(title, url.split("0")[1]);
+            $("fieldset").html(bodyText);
         }
     });
 }// only to be used when the user is logged in
@@ -36,7 +36,10 @@ if (token !== null){
     });
     let location = window.location.pathname;
     if (location === "/login/" || location === "/sign-up/"){
-        let resp = getHtml(`/ajax/v1.0/match-course/`, 'Match');
+        let resp = getHtml(`/ajax/v1.0/match-course/`, "Match");
+        let form = $("form");
+        form.css("class", "mt-3");
+        window.history.pushState(null, null, "/match-course/");
         // $("#body").html(resp.bodyText);
     }
     
@@ -55,44 +58,44 @@ if (token !== null){
 const showLoader = ()=>{
     let content = $("#content");
     let body = $("body");
-    let nav = $("#nav");
-    let bloader = $('.bloader');
-    bloader.css('display', 'flex');
-    body.css('overflow','hidden');
-    nav.hide();
-    content.hide();
+    let bloader = $("#blo");
+    if (bloader.hasClass("bloader") !== true){
+        content.hide(1);
+        bloader.toggleClass("bloader");
+        body.css("overflow","hidden");
+    }
 }
 
 const hideLoader = (title, url)=>{
-    let bloader = $('.bloader');
-    let content = $("#content");
-    let nav = $("#nav");
+    let bloader = $("#blo");
     let body = $("body");
-    $('title').text(title);
-    bloader.fadeOut(1000);
-    content.show();
-    nav.show();
-    body.css('overflow','auto');
-    window.history.pushState(null, null, url);
+    let content = $("#content");
+    $("title").text(title);
+    if (bloader.hasClass("bloader") === true){
+        content.show();
+        bloader.toggleClass("bloader");
+        body.css("overflow","auto");
+        window.history.pushState(null, null, url);
+    }
 }// hides the loader icon
 
 const linkOpener = (tag)=>{
-$(tag).on('click',
+$(tag).on("click",
     function(e)
     {
         showLoader();
-        let href = $(this).attr('href');
+        let href = $(this).attr("href");
         e.preventDefault();
         if ((href !== "/sign-up/") && (href !== "/login/"))
         {
-            $('body').load(`/ajax/v1.0${href} #content`, function(data)
+            $("body").load(`/ajax/v1.0${href} #content`, function(data)
             {
                 hideLoader($(this).text(), href);
             }
             );
         }else
         {
-            $('#body').load(`${href} #content`, function(data)
+            $("#body").load(`${href} #content`, function(data)
             {
                 hideLoader($(this).text(), href);
             }
@@ -102,16 +105,16 @@ $(tag).on('click',
 );
 }
 const eventNavLink = ()=>{
-    $('.sp').click(function(e){
+    $(".sp").click(function(e){
         e.preventDefault();
         let a = $(this);
-        let active = $('a.active');
-        let href = a.attr('href');
+        let active = $("a.active");
+        let href = a.attr("href");
         let title = a.text();
         let lco = window.location.pathname;
         if (lco === "/"){
             console.log("home");
-            let fieldset = `<fieldset class='form mt-3'></fieldset>`;
+            let fieldset = `<fieldset class="form mt-3"></fieldset>`;
             $("#home-content").html(fieldset);
         }
         showLoader();

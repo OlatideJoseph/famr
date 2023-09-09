@@ -10,11 +10,6 @@
   {% endblock %}
 </head>
 <body id="body">
-  <div class="bloader">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav">
       <div class="container ml-5">
         <a class="navbar-brand text-info" href="/">MatchRecommendCourse</a>
@@ -51,8 +46,13 @@
         </div>
       </div>
     </nav>
+    <section id="blo">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+    </section>
     
-    <div class="container-fluid col-md-8 mb-5 pl-5 pr-5 ajx">
+    <div class="container-fluid col-md-8 mb-5 pl-5 pr-5 ajx" id="content">
       {% with messages = get_flashed_messages(with_categories = True) %}
           {% for category, message in messages %}
               <p class = "alert alert-{{category}}">{{ message }}</p>
@@ -63,14 +63,6 @@
     </div>
   
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
-{% macro scripts(one)%}
-    {% for name in varargs %}
-      {{one}}
-      <script type="text/javascript" src="{{url_for('static', filename='js/{{name}}')}}">
-      </script>
-    {% endfor %}
-{% endmacro %}
 </body>
 </html>
 

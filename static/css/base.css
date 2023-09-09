@@ -1,11 +1,13 @@
-.bloader{
+#blo{
 	width: 100vw;
 	z-index:1;
-	display: none;
-	background: var(--bs-grey);
-	display: none;
+	display: flex;
+	background: var(--bs-light);
 	position: absolute;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+}
+.bloader{
+	display: none !important;
 }

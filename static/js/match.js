@@ -6,8 +6,6 @@ getHtml(`/ajax/v1.0${mlocation}`);
 hideLoader('Match', '/match-course/');
 let jamb = document.getElementById('jamb_score');
 let btn = document.getElementById('submit');
-let url = window.origin;
-let urlpath = window.location.pathname;
 let grade1=document.getElementById('grade_1');
 let grade2=document.getElementById('grade_2');
 let grade3=document.getElementById('grade_3');
@@ -29,7 +27,6 @@ let calculator=(...args)=>
 let sum=(a, b)=>{
     return (toInt(a)+toInt(b));
 }
-$("#content").load(`${window.origin}/ajax/v1.0${urlpath} #content`);
 $(document).ready(()=>{
     //Updating for aggregate data
     $('form').on('submit',function(e)

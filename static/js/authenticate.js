@@ -24,15 +24,18 @@ $(document).ready(
                 },
                 success: function(data, textStatus, jqXHR)
                 {
+                    let form = $("form");
                     localStorage.setItem("refresh", data["refresh_token"]);
                     $.ajaxSetup({
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("refresh")}`
                         }
                     });//sets the default req header
-                    $('form').hide();
-                    let resp = getHtml(`/ajax/v1.0/match-course/`);
-                    $('form').show();
+                    form.hide();
+                    let resp = getHtml(`/ajax/v1.0/match-course/`);//gets the form element
+                    form.css("class", "");
+                    form.show();
+
                     hideLoader("Match", "/match-course/");
                     showAlert(data["msg"][0], data["msg"][1]);
                 },
