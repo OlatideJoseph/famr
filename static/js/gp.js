@@ -1,9 +1,5 @@
-"use strict";
 showLoader();
-let glocation = window.location.pathname;
-let form = document.querySelector("fieldset");
-getHtml(`/ajax/v1.0${glocation}`);
-console.log("htis");
+getHtml(`/ajax/v1.0${window.location.pathname}`);
 hideLoader('Grade Point', '/grade-add/');
 $(window).on('load', function(){
     let f = document.querySelector('form');
@@ -37,5 +33,12 @@ $(window).on('load', function(){
         });
     }
     );
+
+});
+ $(window).on("load",function(){
+    $(".nav-link").click(function(e){
+        e.preventDefault();//Stops the default action of the page
+        getAndChangePageFunction($(this).attr('href'));
+    });
 });
 console.log("next");

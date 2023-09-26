@@ -1,6 +1,6 @@
 from collections import Counter
 import functools
-from flask import redirect, url_for, request, Response
+from flask import redirect, url_for, request, Response, abort
 from app import auth
 
 
@@ -30,4 +30,10 @@ def user_logged_in(func):
     return inner_func
 
 
-
+def admin_protected(func):
+    def inner_func(*args, **kwargs):
+        if auth.current_user().is_admin:
+            pass
+        else:
+            abort(403)
+        return func(*args, **kwargs)

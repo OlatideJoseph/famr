@@ -1,4 +1,3 @@
-"use strict";
 $(document).ready(
     function()
     {
@@ -33,6 +32,7 @@ $(document).ready(
                     });//sets the default req header
                     form.hide();
                     let resp = getHtml(`/ajax/v1.0/match-course/`);//gets the form element
+                    $(".usp").show();
                     form.css("class", "");
                     form.show();
 
@@ -47,6 +47,14 @@ $(document).ready(
                     showAlert( resp["msg"][0], resp["msg"][1]);
                 }
             });// ajax requests ends here
+        });
+        hideLoader();
+        $(window).on("load",function(){
+            $(".nav-link").click(function(e){
+                e.preventDefault();//Stops the default action of the page
+                getAndChangePageFunction($(this).attr('href'));
+
+            });
         });
         // signup link event listener
         $('.link').on('click', function(e)

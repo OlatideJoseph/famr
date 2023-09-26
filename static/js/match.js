@@ -1,33 +1,40 @@
-"use strict";
 //data storage space
+console.log("headlessly");
 showLoader();
-let mlocation = window.location.pathname;
-getHtml(`/ajax/v1.0${mlocation}`);
-hideLoader('Match', '/match-course/');
-let jamb = document.getElementById('jamb_score');
-let btn = document.getElementById('submit');
-let grade1=document.getElementById('grade_1');
-let grade2=document.getElementById('grade_2');
-let grade3=document.getElementById('grade_3');
-let grade4=document.getElementById('grade_4');
-let grade5=document.getElementById('grade_5');
-let grade6=document.getElementById('grade_6');
-let grade7=document.getElementById('grade_7');
+getHtml(`/ajax/v1.0${window.location.pathname}`);
+hideLoader("Match", "/match-course/");
+$(window).on("load",function(){
+    $(".nav-link").click(function(e){
+        e.preventDefault();//Stops the default action of the page
+        getAndChangePageFunction($(this).attr('href'));
+        $("title").text($(this).text());
 
-
-let toInt=(a)=>
-{
-    return Number.parseInt(a);
-}
-let calculator=(...args)=>
-{
-    return (args.reduce(sum)+(jamb.value*0.15)).toFixed(2);
-}
-
-let sum=(a, b)=>{
-    return (toInt(a)+toInt(b));
-}
+});
+});
 $(document).ready(()=>{
+    let jamb = document.getElementById('jamb_score');
+    let btn = document.getElementById('submit');
+    let grade1=document.getElementById('grade_1');
+    let grade2=document.getElementById('grade_2');
+    let grade3=document.getElementById('grade_3');
+    let grade4=document.getElementById('grade_4');
+    let grade5=document.getElementById('grade_5');
+    let grade6=document.getElementById('grade_6');
+    let grade7=document.getElementById('grade_7');
+
+
+    let toInt=(a)=>
+    {
+        return Number.parseInt(a);
+    }
+    let calculator=(...args)=>
+    {
+        return (args.reduce(sum)+(jamb.value*0.15)).toFixed(2);
+    }
+
+    let sum=(a, b)=>{
+        return (toInt(a)+toInt(b));
+    }
     //Updating for aggregate data
     $('form').on('submit',function(e)
     {

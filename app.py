@@ -26,10 +26,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 auth = HTTPTokenAuth(scheme="Bearer")
 
-# @app.shell_context_processor
-# def context_processor():
-#     return {""}
-
 from users import users
 from school import school
 from ajax import  ajax
@@ -42,7 +38,11 @@ app.register_blueprint(ajax, url_prefix="/ajax/v1.0/")
 app.register_blueprint(md, url_prefix="/models/")
 app.register_blueprint(fm, url_prefix="/forms/")
 
-
+import models
+#Application shell processor
+@app.shell_context_processor
+def context_processor():
+    return {"db": db, "migrate": migrate, "auth": auth, "models": models}
 
 
 if __name__ == "__main__":

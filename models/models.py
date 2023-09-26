@@ -25,7 +25,7 @@ class UserAdminMixin(BaseMixin):
 class User(db.Model, UserAdminMixin):
     """The User table"""
     __tablename__ = "users"
-    username = db.Column(db.String(15), nullable=False)
+    username = db.Column(db.String(15), nullable=False, unique = True)
     password = db.Column(db.Text(), nullable=False)
     token = db.relationship("Token", backref='user', lazy=True)
 

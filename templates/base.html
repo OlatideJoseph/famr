@@ -19,16 +19,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{url_for('school.index')}}">Home</a>
+              <a class="nav-link active"  aria-current="page" href="{{url_for('school.index')}}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link sp auth" href="{{url_for('school.match')}}">Match</a>
+              <a class="nav-link sp auth"  href="{{url_for('school.match')}}">Match</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link sp auth" href="{{url_for('school.add_form')}}">Add Course</a>
+              <a class="nav-link sp auth"  href="{{url_for('school.add_form')}}">Add Course</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link sp auth" href="{{url_for('school.add_subject')}}">Add Subject</a>
+              <a class="nav-link sp auth"  href="{{url_for('school.add_subject')}}">Add Subject</a>
             </li>
             <li class="nav-item">
               <a class="nav-link sp auth" href="{{url_for('school.grade_point')}}">Grade Point</a>
@@ -40,19 +40,19 @@
               <a class="nav-link auth" href="{{url_for('users.log_out')}}">Log Out</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              <a class="nav-link disabled"  href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <section id="blo">
+    <div id="blo">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
-    </section>
+    </div>
     
-    <div class="container-fluid col-md-8 mb-5 pl-5 pr-5 ajx" id="content">
+    <section class="container-fluid col-md-8 mb-5 pl-5 pr-5 ajx" id="content">
       {% with messages = get_flashed_messages(with_categories = True) %}
           {% for category, message in messages %}
               <p class = "alert alert-{{category}}">{{ message }}</p>
@@ -60,7 +60,7 @@
       {% endwith %}
       {% block content %}
       {% endblock %}
-    </div>
+    </section>
   
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

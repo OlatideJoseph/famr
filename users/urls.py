@@ -25,6 +25,7 @@ def login():
             return {
                 "refresh_token": token,
                 "msg": ["User logged successfully","info"],
+                "is_admin": usr.is_admin,
                 "code": 200
                 }
         return {
