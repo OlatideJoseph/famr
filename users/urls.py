@@ -7,12 +7,18 @@ from models import User, Token
 from app import db, auth
 from . import users
 
+
+
+
+xhr = "X-Requested-With"
+xhr_val = "XMLHttpRequest"
+
 @users.route("/login/", methods = ["GET", "POST"])
 def login():
     form = UserLoginForm()
     headers = {"Content-Type":"application/json"}
     #creates an auth token if the request is an 
-    if (request.method == "POST") and (request.is_json):
+    if (request.method == "POST") and (request.headers.get(xhr) == xhr_val):
         js_data = request.get_json()
         u = js_data['username']
         usr = User.query.filter_by(username=u).first()
@@ -65,9 +71,13 @@ def sign_up():
     headers = {
         "Content-Type": "application/json"
     }
-    if ((request.method == "POST") and (request.is_json)):
+    if ((request.method == "POST") and (request.headers.get(xhr) == xhr_val)):
         js = request.get_json()
         username = js.get("username")
+        first_name = js.get("first_name")
+        last_name = js.get("last_name")
+        mid_name = js.get("middle_name")
+        birth_date = js.get("birth_date")
         password = gph(js.get("auth"))
         if username and password:
             user  = User(username=username, password=password)
@@ -82,9 +92,18 @@ def sign_up():
         }, 201, headers)
     if form.validate_on_submit():
         username = form.username.data
+        email = form.email.data
+        first_name = form.first_name.data
+        last_name = form.first_name.data
+        birth_date = form.birth_date.data
         password = form.password.data
         hashed = gph(password)
-        user = User(username=username, password=password)
+        user = User(username=username,
+            password=password, first_name=first_name,
+            last_name=last_name,birth_date=birth_date)
+        mid_name = form.middle_name.data
+        if mid_name:
+            user.mid_name = mid_name
         db.session.add(user)
         db.session.commit()
         flash(f"User {username} added successfully !", "success")
