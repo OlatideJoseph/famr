@@ -19,14 +19,15 @@ naming_convention = {
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8b9562889f24968e91ebdb6c2af18ba8cada1b34cfcccb1c64b5db118bf67143"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sqlite.db"
-app.config["SQLALCHEMY_COMMIT_TEARDOWN"] = True
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+app.config["SQLALCHEMY_COMMIT_TEARDOWN"] = False
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 meta = MetaData(naming_convention=naming_convention)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 auth = HTTPTokenAuth(scheme="Bearer")
 
 from users import users
+from admin import admin
 from school import school
 from ajax import  ajax
 from models import model as md
@@ -34,6 +35,7 @@ from forms import form as fm
 
 app.register_blueprint(users)
 app.register_blueprint(school)
+app.register_blueprint(admin, url_prefix="/admin/")
 app.register_blueprint(ajax, url_prefix="/ajax/v1.0/")
 app.register_blueprint(md, url_prefix="/models/")
 app.register_blueprint(fm, url_prefix="/forms/")

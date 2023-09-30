@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<fieldset class="form card mt-3 bg-secondary text-light" style="max-width: 24rem;">
+    <legend class="card-header text-center">Admin Auth Form</legend>
+    <form method = 'post' action = '#' class="card-body">
+        {{form.csrf_token}}
+        <div class="row">
+            <div class="col">
+                {{form.username.label(class = "form-label")}}
+                {{form.username(class = "form-control")}}
+            </div>            
+            <div class="col">
+                {{form.password.label(class="form-label")}}
+                {{form.password(class="form-control")}}
+            </div>
+        </div>
+        <div class="row">
+        	{{form.login(class="login btn btn-primary btn-sm mt-3")}}
+        	<div class="card-footer">
+        		Create an account ? <a href="{{url_for('admin.register_user')}}" class="link text-light">Sign up!</a>
+        	</div>
+        </div>
+    </form>
+</fieldset>
+
+{% endblock %}

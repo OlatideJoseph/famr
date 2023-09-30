@@ -48,7 +48,7 @@ if (token !== null){
 }else
 {
     let location = window.location.pathname;
-    if (location !== "/login/" && location !== "/sign-up/")
+    if (location !== "/login/" && location !== "/sign-up/" && location !== "/admin/authenticate/")
     {
         window.location.pathname = "/login/";// redirect users to the login page
     }

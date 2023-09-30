@@ -21,13 +21,28 @@ class UserAdminMixin(BaseMixin):
     is_admin = db.Column(db.Boolean, default=False)
 
 
+class UserRole(BaseMixin, db.Model):
+    __tablename__ = 'roles'
+    _id = db.Column(db.Integer, unique=True, primary_key=True)
+    name = db.Column(db.String(25), unique = True, nullable = False)
+    users = db.relationship("User", backref="role", lazy=True)
+
+    def __repr__(self):
+        return f"Role:<{self.name}>"
 
 class User(db.Model, UserAdminMixin):
     """The User table"""
     __tablename__ = "users"
     username = db.Column(db.String(15), nullable=False, unique = True)
+    email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.Text(), nullable=False)
     token = db.relationship("Token", backref='user', lazy=True)
+    first_name = db.Column(db.String(25), nullable=False)
+    last_name = db.Column(db.String(25), nullable=False)
+    mid_name = db.Column(db.String(25), nullable=True)
+    birth_date = db.Column(db.DateTime, nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey("roles._id"), unique=True)
+    created_on = db.Column(db.DateTime, default=datetime.utcnow)
 
 
     def __repr__(self) -> str:
