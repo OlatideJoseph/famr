@@ -58,6 +58,17 @@ $(document).ready(()=>{
         }
         let field=$("#form").prepend(aggregate);
     });
+    $.ajax({
+        url:"/ajax/v1.0/get-auth-data",
+        type:"get",
+        success:function(data){
+            $(".email").text(data["email"]);
+            $(".first").text(data["first_name"]);
+            $(".last").text(data["last_name"]);
+            $(".mid").text(data["mid_name"])
+            $(".dob").text(data["dob"])
+        }
+    });
     //Querying for course data
     $("#course_name").on('input',function(){
         let c = $(this).val()

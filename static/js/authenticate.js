@@ -12,11 +12,13 @@ $(document).ready(
         $("form").first().on('submit',function(e){
             e.preventDefault();
             let form = $(this).serialize();
+            console.log(form)
             $.ajax(
             {
                 url: `${window.location.pathname}`,
                 type:"POST",
                 data:form,
+                headers:{"Content-Type":"application/x-www-form-urlencoded"},
                 beforeSend: function(data)
                 {
                     showLoader();
@@ -27,7 +29,7 @@ $(document).ready(
                     localStorage.setItem("refresh", data["refresh_token"]);
                     $.ajaxSetup({
                         headers: {
-                            Authorization: `Bearer ${localStorage.getItem("refresh")}`
+                            Authorization: `Bearer ${localStorage.getItem("refresh")}`, 
                         }
                     });//sets the default req header
                     form.hide();

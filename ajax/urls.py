@@ -104,6 +104,7 @@ def add_subject():
 @auth.login_required
 def match():
     form = MatchForm()
+    user_obj = auth.current_user()
     if form.validate_on_submit():
         course = form.course.data
         jamb = form.jamb.data
@@ -123,7 +124,7 @@ def match():
                 "course": true
             }
         print(dir(request))
-    return render("ajax/match.html", form=form)
+    return render("ajax/match.html", form=form, user=user_obj)
 @ajax.route("/course/")
 @auth.login_required
 def cause():
@@ -161,3 +162,16 @@ def grade_point():
         flash(f"Grade {grade.grade} added successfully!", "info")
         return redirect("/")
     return render("ajax/addgrade.html", form=form)
+
+@ajax.route("get-auth-data")
+@auth.login_required
+def get_data():
+    user = auth.current_user()
+    data = {
+        "email": user.email,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "dob": user.birth_date.strftime("%d-%m-%Y"),
+        "mid_name": user.mid_name,
+    }
+    return jsonify(**data)

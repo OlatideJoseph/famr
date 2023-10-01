@@ -4,7 +4,47 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/match.css')}}">
 {% endblock %}
 {% block content%}
-<fieldset class="form mt-3">
+<section class="bio-data card container-fluid">
+	<div class="card-header text-center">
+		<p>Bio's Data</p>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col">
+				<p>Email: <span class="email"></span></p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>First Name: <span class="first"></span></p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>Last Name: <span class="last"></span></p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>Middle Name: <span class="mid"></span></p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>Date Of Birth: <span class="dob"></span></p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>First Name:<span></span></p>
+			</div>
+			<div class="col">
+				<p>Last Name:<span></span></p>
+			</div>
+		</div>
+	</div>
+</section>
+<fieldset class="form mt-3" style="max-width:25rem;">
     
 </fieldset>
 <script type="text/javascript" defer src="{{url_for('static', filename='js/match.js')}}"></script>

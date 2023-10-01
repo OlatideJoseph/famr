@@ -10,7 +10,7 @@ $(document).ready(
         );
         $("form").on("submit", function(e)
         {
-            e.preventDefault();
+            // e.preventDefault();
             let data = $(this).serialize();
             console.log(data);
         }

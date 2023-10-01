@@ -25,15 +25,6 @@
               <a class="nav-link sp auth"  href="{{url_for('school.match')}}">Match</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link sp auth"  href="{{url_for('school.add_form')}}">Add Course</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link sp auth"  href="{{url_for('school.add_subject')}}">Add Subject</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link sp auth" href="{{url_for('school.grade_point')}}">Grade Point</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link usp" href="{{url_for('users.login')}}">Log In</a>
             </li>
             <li class="nav-item">
@@ -51,13 +42,15 @@
           <span class="visually-hidden">Loading...</span>
         </div>
     </div>
-    
-    <section class="container-fluid col-md-8 mb-5 pl-5 pr-5 ajx" id="content">
-      {% with messages = get_flashed_messages(with_categories = True) %}
+    {% with messages = get_flashed_messages(with_categories = True) %}
           {% for category, message in messages %}
               <p class = "alert alert-{{category}}">{{ message }}</p>
           {% endfor %}
-      {% endwith %}
+    {% endwith %}
+    <!-- <section class="container-fluid col-md-8 mb-5 pl-5 pr-5 ajx" id="content">
+      
+    </section> -->
+    <section class="content-section">
       {% block content %}
       {% endblock %}
     </section>

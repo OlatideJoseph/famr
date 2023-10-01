@@ -53,7 +53,7 @@ class User(db.Model, UserAdminMixin):
     first_name = db.Column(db.String(25), nullable=False)
     last_name = db.Column(db.String(25), nullable=False)
     mid_name = db.Column(db.String(25), nullable=True)
-    birth_date = db.Column(db.DateTime, nullable=False)
+    birth_date = db.Column(db.Date, nullable=False)
     bio_data = db.relationship("UserBioData", backref="user", uselist=False)
     role_id = db.Column(db.Integer, db.ForeignKey("roles._id"), unique=True)
     created_on = db.Column(db.DateTime, default=datetime.utcnow)

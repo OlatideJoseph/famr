@@ -43,9 +43,12 @@ app.register_blueprint(fm, url_prefix="/forms/")
 import models
 #Application shell processor
 @app.shell_context_processor
-def context_processor():
+def shell_context_processor():
     return {"db": db, "migrate": migrate, "auth": auth, "models": models}
-
+#Request context processor
+@app.context_processor
+def context_processor():
+    return {"auth":auth}
 
 if __name__ == "__main__":
     app.run(debug = True)

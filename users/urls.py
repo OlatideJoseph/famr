@@ -18,7 +18,7 @@ def login():
     form = UserLoginForm()
     headers = {"Content-Type":"application/json"}
     #creates an auth token if the request is an 
-    if (request.method == "POST") and (request.headers.get(xhr) == xhr_val):
+    if (request.method == "POST") and (request.headers.get(xhr) == xhr_val+'ehghj'):
         js_data = request.get_json()
         u = js_data['username']
         usr = User.query.filter_by(username=u).first()
@@ -96,17 +96,17 @@ def sign_up():
     if form.validate_on_submit():
         username = form.username.data
         email = form.email.data
-        first_name = form.first_name.data
-        last_name = form.first_name.data
+        first_name = form.first_name.data.title()
+        last_name = form.first_name.data.title()
         birth_date = form.birth_date.data
         password = form.password.data
         hashed = gph(password)
-        user = User(username=username,
-            password=password, first_name=first_name,
+        user = User(username=username, email=email,
+            password=hashed, first_name=first_name,
             last_name=last_name,birth_date=birth_date, role=role)
         mid_name = form.middle_name.data
         if mid_name:
-            user.mid_name = mid_name
+            user.mid_name = mid_name.title()
         db.session.add(user)
         db.session.commit()
         flash(f"User {username} added successfully !", "success")
