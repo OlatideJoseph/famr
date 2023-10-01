@@ -2,11 +2,18 @@
 	display: inline;
 }
 .bio-data{
-	max-width: 25rem;
+	max-width: 20rem;
+	margin-top:50px;
+	margin-right: 20px;
+	margin-left: 20px;
+	max-height: 20rem;
 }
 .content-section{
 	padding: 12px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
+}
+.form{
+	width: auto;
 }
