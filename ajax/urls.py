@@ -163,7 +163,7 @@ def grade_point():
         return redirect("/")
     return render("ajax/addgrade.html", form=form)
 
-@ajax.route("get-auth-data")
+@ajax.route("/get-auth-data/")
 @auth.login_required
 def get_data():
     user = auth.current_user()
@@ -175,3 +175,8 @@ def get_data():
         "mid_name": user.mid_name,
     }
     return jsonify(**data)
+
+@ajax.route("/get-grade-and-point/")
+@auth.login_required
+def ajx_grade():
+    return jsonify([[g.name, g.point] for g, g in Grade.query.all()])

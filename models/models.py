@@ -52,6 +52,7 @@ class User(db.Model, UserAdminMixin):
     token = db.relationship("Token", backref='user', lazy=True)
     first_name = db.Column(db.String(25), nullable=False)
     last_name = db.Column(db.String(25), nullable=False)
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     mid_name = db.Column(db.String(25), nullable=True)
     birth_date = db.Column(db.Date, nullable=False)
     bio_data = db.relationship("UserBioData", backref="user", uselist=False)
@@ -76,10 +77,30 @@ class User(db.Model, UserAdminMixin):
     def gen_pass(password: str) -> str:
         return g_pass(password)
 
+    def active_token(self):
+        """\
+            Unlike the active token method this returns the active of the
+            current instance.
+        """
+        active = []
+        a = self.token
+        if a:
+            for actve in a:
+                try:
+                    d = actve.decode()
+                    if d and actve.logged_out is False:
+                        active.append(actve)
+                    raise Exception
+                except:
+                    pass
+        return active
+
 class UserBioData(db.Model, BaseMixin):
     __tablename__ = "biodata"
     _id = db.Column(db.Integer, unique=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users._id"))
+    jamb_reg = db.Column(db.String(25), unique=True, nullable=True)
+    waec_id = db.Column(db.String(25), unique=True, nullable=True)
 
 
 class Token(db.Model, BaseMixin):
@@ -87,19 +108,24 @@ class Token(db.Model, BaseMixin):
     token = db.Column(db.Text(), nullable=False, unique=True)
     exp = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users._id'))
+    logged_out = db.Column(db.Boolean, default=False)
     
     @classmethod
     def active_token(cls):
         """\
             it returns the all the active token of the model class
+            by classifying through the active attribute and the 
+            logged_out attributes of the instance class.
         """
         active = []
         a = cls.query.all()
         if a:
             for actve in a:
                 try:
-                    cls.decode_token(actve.token)
-                    active.append(actve)
+                    d = cls.decode_token(actve.token)
+                    if d and actve.logged_out is False:
+                        active.append(actve)
+                    raise Exception
                 except:
                     pass
         return active
@@ -117,6 +143,7 @@ class Token(db.Model, BaseMixin):
             }, key
         )
         return tok
+
     @classmethod
     def decode_token(cls, token: str) -> dict:
         import jwt
@@ -124,12 +151,39 @@ class Token(db.Model, BaseMixin):
         b = jwt.decode(token, key, algorithms=["HS256"])
 
         return b
+
     @classmethod    
     def verify_token(cls, token: str) -> bool:
         t = cls.query.filter_by(token = token).first()
         if t is not None:
             return False
         return True
+
+    def decode(self):
+        """\
+            Returns the decode token for the current instance
+            Example:
+            >>> token = Token.query.get(1)
+            <Token 1>
+            >>> token.decode()
+            {'id': 1, 'exp': 1727747097}
+            >>> token.token
+            ... # some long random tokens
+        """
+        return self.decode_token(self.token)
+
+    def log_out(self) -> None:
+        self.logged_out = True
+        return None
+
+    @classmethod
+    def log_out_from(cls, token: str) -> None:
+        token = cls.query.filter_by(token=token).first()
+        token.log_out()
+        return None
+
+
+    
 
 class Course(db.Model, BaseMixin):
     __tablename__  = "course"

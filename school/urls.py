@@ -26,27 +26,8 @@ def index():
     
 @school.route("/match-course/")
 def match():
-    # form = MatchForm()
-    # if form.validate_on_submit():
-    #     course = form.course.data
-    #     jamb = form.jamb.data
-    #     first = form.field1.data
-    #     second = form.field2.data
-    #     third = form.field3.data
-    #     fourth = form.field4.data
-    #     fifth = form.field5.data
-    #     course_mod = Course.query.filter_by(course_title = course).first()
-    #     if course.is_full:
-    #         return jsonify(course={
-    #                "full":True,
-    #                "score":80
-    #             })
-    #     if course:
-    #         resp = {
-    #             "course": true
-    #         }
-    #     print(dir(request))
     return render("match.html")
+
 @school.route("/course/")
 def cause():
     if request.is_json:
@@ -67,5 +48,7 @@ def course_grade():
 @school.route("/grade-add/", methods=["POST", "GET"])
 def grade_point():
     return render("addgrade.html")
+
+
 
 

@@ -43,24 +43,30 @@ def login():
         username = form.username.data
         password = form.password.data
         usr = User.query.filter_by(username=username).first()
-        if usr and usr.check_pass(password):
+        if len(usr.active_token()) < 3:#Only authenticate if token is less than 3
+            if usr and usr.check_pass(password):
 
-            token = Token.gen_token(usr.pk)
-            tock = Token(token=token, user=usr)
-            db.session.add(tock)
-            db.session.commit()
+                token = Token.gen_token(usr.pk)
+                tock = Token(token=token, user=usr)
+                db.session.add(tock)
+                db.session.commit()
+                return make_response({
+                    "refresh_token": token,
+                    "msg": ["User logged successfully","info"],
+                    "code": 200,
+                    "redirect": url_for('school.index')
+                    }, 200, headers)
+                
             return make_response({
-                "refresh_token": token,
-                "msg": ["User logged successfully","info"],
-                "code": 200,
-                "redirect": url_for('school.index')
-                }, 200, headers)
-            
+                "code": 401,
+                "msg": ["Invalid User Credentials ", "warning"],
+                "redirect": "/login"
+            }, 401, headers)
         return make_response({
-            "code": 401,
-            "msg": ["Invalid User Credentials ", "warning"],
-            "redirect": "/login"
-        }, 401, headers)
+                "code": 401,
+                "msg": ["You are logged in on three device", "error"],
+                "redirect": "/login"
+            }, 401, headers)
     return render("login.html", form=form)
 
 
@@ -121,5 +127,7 @@ def list_users():
     )
 
 @users.route("/log-out/")
+@auth.login_required
 def log_out():
+    Token.log_out_from(auth.token)
     return render("logout.html")
