@@ -1,3 +1,4 @@
+import functools
 from flask import (render_template as render,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for, Response)
@@ -8,6 +9,16 @@ from app import auth, db
 from utils.main import user_logged_in
 from . import ajax
 
+@auth.login_required
+def required_config(f):
+    """\
+        A decorator that is decorated by the auth.login_required
+    """
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        user = auth.current_user().save_last_seen()
+        return f(*args, **kwargs)
+    return wrapper
 
 
 @ajax.route("/add-form/", methods = ["GET", "POST"])
@@ -91,7 +102,8 @@ def add_subject():
                 ), 201)
     elif form.validate_on_submit():
         subject = form.name.data.title()
-        wsub = Subject(name=subject.title()) #Adds the subject to the database and it makes sure it starts with a capital letter
+        #Adds the subject to the database and it makes sure it starts with a capital letter
+        wsub = Subject(name=subject.title())
         try:
             db.session.add(wsub)
             db.session.commit()
@@ -179,4 +191,13 @@ def get_data():
 @ajax.route("/get-grade-and-point/")
 @auth.login_required
 def ajx_grade():
-    return jsonify([[g.name, g.point] for g, g in Grade.query.all()])
+    grades_choice = [[0,"---"]]
+    grades_choice += [[grd.point, grd.grade] for grd in Grade.query.all()]
+    return jsonify(grades_choice)
+
+@ajax.route("/get-course-data/")
+@auth.login_required
+def ajx_course():
+    course_choice = [["","-------------"]]
+    course_choice += [[sub.course_title, sub.course_title] for sub in Course.query.all()]
+    return jsonify(course_choice)

@@ -148,5 +148,5 @@ class UserCreationForm(FlaskForm):
     first_name = StringField("*First Name:*", validators=[DataRequired(), Length(max=25, min=3)])
     last_name = StringField("*Last Name:*", validators=[DataRequired(), Length(max=25, min=3)])
     birth_date = DateField("*Date-Of-Birth:*", validators=[DataRequired()])
-    middle_name = StringField("*Middle Name:* (optional)", validators=[Length(max=25, min=3)])
+    middle_name = StringField("*Middle Name:* (opt)", validators=[Length(max=25, min=3)])
     signup = SubmitField("Sign Up")

@@ -95,6 +95,11 @@ class User(db.Model, UserAdminMixin):
                     pass
         return active
 
+    def save_last_seen(self):
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
+
 class UserBioData(db.Model, BaseMixin):
     __tablename__ = "biodata"
     _id = db.Column(db.Integer, unique=True, primary_key=True)
@@ -174,6 +179,8 @@ class Token(db.Model, BaseMixin):
 
     def log_out(self) -> None:
         self.logged_out = True
+        db.session.add(self)
+        db.session.commit()
         return None
 
     @classmethod
