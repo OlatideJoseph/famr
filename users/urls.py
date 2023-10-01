@@ -3,7 +3,7 @@ from flask import (render_template as render,
                 jsonify, redirect, abort, url_for)
 from werkzeug.security import generate_password_hash as gph
 from forms import UserLoginForm, UserCreationForm
-from models import User, Token
+from models import User, Token, UserRole
 from app import db, auth
 from . import users
 
@@ -71,7 +71,10 @@ def sign_up():
     headers = {
         "Content-Type": "application/json"
     }
-    if ((request.method == "POST") and (request.headers.get(xhr) == xhr_val)):
+    role = UserRole.query.filter_by(name="users").first()
+
+    if ((request.method == "POST") and (
+        request.headers.get(xhr) == xhr_val)):
         js = request.get_json()
         username = js.get("username")
         first_name = js.get("first_name")
@@ -80,7 +83,7 @@ def sign_up():
         birth_date = js.get("birth_date")
         password = gph(js.get("auth"))
         if username and password:
-            user  = User(username=username, password=password)
+            user  = User(username=username, password=password, role=role)
             db.session.add(user)
             db.session.commit()
         return make_response({
@@ -100,7 +103,7 @@ def sign_up():
         hashed = gph(password)
         user = User(username=username,
             password=password, first_name=first_name,
-            last_name=last_name,birth_date=birth_date)
+            last_name=last_name,birth_date=birth_date, role=role)
         mid_name = form.middle_name.data
         if mid_name:
             user.mid_name = mid_name

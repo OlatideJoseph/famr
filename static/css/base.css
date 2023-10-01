@@ -1,3 +1,8 @@
+.ajx{
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+}
 #blo{
 	width: 100vw;
 	z-index:1;

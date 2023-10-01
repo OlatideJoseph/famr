@@ -133,4 +133,5 @@ $(window).on("load", function(){
         $(".usp").show(1);//vice versa
         $(".auth").hide(1);//vice versa
     }
+    hideLoader();
 });

@@ -4,4 +4,4 @@ model = Blueprint("models", __name__)
 
 from .models import (User, Token, Subject,
 				WaecSubject, Course, Grade,
-				Subject, AdminJamb)
+				Subject, AdminJamb, UserRole)

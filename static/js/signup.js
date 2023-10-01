@@ -47,4 +47,12 @@ $(window).on("load",function(){
         $("title").text($(this).text());
     });
     hideLoader();
+    if (token)
+    {
+        $(".usp").hide(1);//hide  views required for not authenticated
+        $(".auth").show(1);//shows views required for authentication 
+    }else{
+        $(".usp").show(1);//vice versa
+        $(".auth").hide(1);//vice versa
+    }
 });

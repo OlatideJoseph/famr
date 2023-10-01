@@ -31,3 +31,26 @@ def authenticate():
 @admin.route("/register-user/")
 def register_user():
 	return render("admin/register.html", form=forms)
+
+
+
+@admin.route("/add-form/", methods = ["GET", "POST"])
+@admin_protected_view
+@auth.login_required
+def add_form():
+    return render("admin/addform.html")
+
+@admin.route("/add-subject-waec/", methods = ["GET", "POST"])
+@admin_protected_view
+@auth.login_required
+def add_subject():
+    """A request view that accept a request argument s and add it to the database
+       Note: It is to keep It only adds subject to the database
+    """
+    return render("admin/subject.html")
+
+@admin.route("/grade-add/", methods=["POST", "GET"])
+@admin_protected_view
+@auth.login_required
+def grade_point():
+    return render("admin/addgrade.html")
