@@ -46,4 +46,5 @@ $(window).on("load",function(){
         getAndChangePageFunction($(this).attr('href'));
         $("title").text($(this).text());
     });
+    hideLoader();
 });
