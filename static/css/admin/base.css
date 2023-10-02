@@ -1,3 +1,21 @@
 body{
 	background-color:#150E28 !important;
 }
+.ajx{
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+}
+#blo{
+	width: 100vw;
+	z-index:2;
+	display: flex;
+	background: var(--bs-light);
+	position: absolute;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+.bloader{
+	display: none !important;
+}

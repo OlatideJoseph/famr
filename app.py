@@ -32,6 +32,7 @@ from school import school
 from ajax import  ajax
 from models import model as md
 from forms import form as fm
+from views import view
 
 app.register_blueprint(users)
 app.register_blueprint(school)
@@ -39,6 +40,7 @@ app.register_blueprint(admin, url_prefix="/admin/")
 app.register_blueprint(ajax, url_prefix="/ajax/v1.0/")
 app.register_blueprint(md, url_prefix="/models/")
 app.register_blueprint(fm, url_prefix="/forms/")
+app.register_blueprint(view, url_prefix="/views/")
 
 import models
 #Application shell processor
@@ -49,6 +51,16 @@ def shell_context_processor():
 @app.context_processor
 def context_processor():
     return {"auth":auth}
+
+@auth.error_handler
+def forbidden(resp):
+    return make_response(
+        {
+            "user": "forbidden",
+            "code": (401,)
+        },
+            401,
+            {"Content-Type":"application/json"})
 
 if __name__ == "__main__":
     app.run(debug = True)

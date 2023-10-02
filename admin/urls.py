@@ -2,6 +2,8 @@ import functools
 from flask import url_for, redirect, request, render_template as render
 from app import auth
 from admin import admin
+from models import User, Token
+from views import AdminLoginView
 from forms import AdminLoginForm
 
 def admin_protected_view(func):
@@ -23,10 +25,22 @@ def admin_protected_view(func):
 def home():
 	return "<h1>Admin Home Page!</h1>"
 
-@admin.route("/authenticate/", methods=["GET", "POST"])
-def authenticate():
-	form = AdminLoginForm()
-	return render("/admin/authenticate.html", form=AdminLoginForm())
+# @admin.route("/authenticate/", methods=["GET", "POST"])
+# def authenticate():
+# 	form = AdminLoginForm()
+# 	if form.validate_on_submit():
+# 		username = form.username.data
+# 		password = form.password.data
+# 		user = User.query.filter_by(username=username).first()
+# 		if user and user.check_pass(password):
+# 			token = Token.gen_token(user.pk)
+# 			return jsonify({
+# 				"refresh_token":token,
+# 				"is_admin": user.is_admin
+# 				})
+# 	return render("/admin/authenticate.html", form=AdminLoginForm())
+
+admin.add_url_rule("/authenticate/", view_func=AdminLoginView.as_view("authenticate"))
 
 @admin.route("/register-user/")
 def register_user():
@@ -54,3 +68,11 @@ def add_subject():
 @auth.login_required
 def grade_point():
     return render("admin/addgrade.html")
+
+
+
+@admin.after_request
+def admin_last_seen(resp):
+	if auth.current_user() and auth.current_user.is_admin:
+		auth.current_user().save_last_seen()
+	return resp

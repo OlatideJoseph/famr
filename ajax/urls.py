@@ -9,16 +9,6 @@ from app import auth, db
 from utils.main import user_logged_in
 from . import ajax
 
-@auth.login_required
-def required_config(f):
-    """\
-        A decorator that is decorated by the auth.login_required
-    """
-    @functools.wraps(f)
-    def wrapper(*args, **kwargs):
-        user = auth.current_user().save_last_seen()
-        return f(*args, **kwargs)
-    return wrapper
 
 
 @ajax.route("/add-form/", methods = ["GET", "POST"])
@@ -137,6 +127,7 @@ def match():
             }
         print(dir(request))
     return render("ajax/match.html", form=form, user=user_obj)
+
 @ajax.route("/course/")
 @auth.login_required
 def cause():
@@ -201,3 +192,10 @@ def ajx_course():
     course_choice = [["","-------------"]]
     course_choice += [[sub.course_title, sub.course_title] for sub in Course.query.all()]
     return jsonify(course_choice)
+
+
+@ajax.after_request
+def user_required_config(resp):
+    if auth.current_user():
+        auth.current_user().save_last_seen()
+    return resp
