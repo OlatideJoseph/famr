@@ -3,7 +3,7 @@ from flask import (render_template as render,
                 jsonify, redirect, abort, url_for)
 from werkzeug.security import generate_password_hash as gph
 from forms import UserLoginForm, UserCreationForm
-from models import User, Token, UserRole
+from models import User, Token, UserRole, Level
 from app import db, auth
 from views import LoginView
 from . import users
@@ -36,7 +36,7 @@ def sign_up():
         birth_date = js.get("birth_date")
         password = gph(js.get("auth"))
         if username and password:
-            user  = User(username=username, password=password, role=role)
+            user  = User(username=username, password=password)
             db.session.add(user)
             db.session.commit()
         return make_response({
@@ -50,17 +50,20 @@ def sign_up():
         username = form.username.data
         email = form.email.data
         first_name = form.first_name.data.title()
-        last_name = form.first_name.data.title()
+        last_name = form.last_name.data.title()
         birth_date = form.birth_date.data
         password = form.password.data
         hashed = gph(password)
         user = User(username=username, email=email,
             password=hashed, first_name=first_name,
-            last_name=last_name,birth_date=birth_date, role=role)
+            last_name=last_name,birth_date=birth_date)
         mid_name = form.middle_name.data
         if mid_name:
             user.mid_name = mid_name.title()
+
+        level = Level(role=role, user=user)
         db.session.add(user)
+        db.session.add(level)
         db.session.commit()
         flash(f"User {username} added successfully !", "success")
     return render("signup.html", form=form)
@@ -76,5 +79,7 @@ def list_users():
 @users.route("/log-out/")
 @auth.login_required
 def log_out():
+    auth = request.authorization
+    print(auth.token)
     Token.log_out_from(auth.token)
     return render("logout.html")

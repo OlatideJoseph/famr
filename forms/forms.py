@@ -17,11 +17,8 @@ subjects = [
 ]
 regexp = r""
 grades_choice = [(0,"---")]
-grades_choice += [(grd.point, grd.grade) for grd in Grade.query.all()]
 add_choice = [("","-------------")]
-add_choice += [(sub.name, sub.name) for sub in ss.query.all()]
 course_choice = [("","-------------")]
-course_choice += [(sub.course_title, sub.course_title) for sub in Course.query.all()]
 
 
 

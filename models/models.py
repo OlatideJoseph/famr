@@ -23,9 +23,8 @@ class UserAdminMixin(BaseMixin):
 
 class UserRole(db.Model, BaseMixin):
     __tablename__ = 'roles'
-    _id = db.Column(db.Integer, unique=True, primary_key=True)
     name = db.Column(db.String(25), unique = True, nullable = False)
-    users = db.relationship("User", backref="role", lazy=True)
+    level = db.relationship("Level", backref="role", lazy=True)
 
     def __repr__(self):
         return f"Role:<{self.name}>"
@@ -43,6 +42,11 @@ class UserRole(db.Model, BaseMixin):
         except:
             return False
 
+class Level(db.Model, BaseMixin):
+    __tablename__ = "level"
+    user_id = db.Column(db.Integer, db.ForeignKey('users._id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('roles._id'))
+
 class User(db.Model, UserAdminMixin):
     """The User table"""
     __tablename__ = "users"
@@ -56,7 +60,7 @@ class User(db.Model, UserAdminMixin):
     mid_name = db.Column(db.String(25), nullable=True)
     birth_date = db.Column(db.Date, nullable=False)
     bio_data = db.relationship("UserBioData", backref="user", uselist=False)
-    role_id = db.Column(db.Integer, db.ForeignKey("roles._id"), unique=True)
+    level = db.relationship(Level, backref="user", lazy = True)
     created_on = db.Column(db.DateTime, default=datetime.utcnow)
 
 

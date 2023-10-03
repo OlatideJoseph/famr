@@ -183,16 +183,20 @@ def get_data():
 @auth.login_required
 def ajx_grade():
     grades_choice = [[0,"---"]]
-    grades_choice += [[grd.point, grd.grade] for grd in Grade.query.all()]
+    grades_choice += [[grd.point, grd.grade] for grd in Grade.query.all() if grd]
     return jsonify(grades_choice)
 
 @ajax.route("/get-course-data/")
 @auth.login_required
 def ajx_course():
     course_choice = [["","-------------"]]
-    course_choice += [[sub.course_title, sub.course_title] for sub in Course.query.all()]
+    course_choice += [[sub.course_title, sub.course_title] for sub in Course.query.all() if sub]
     return jsonify(course_choice)
 
+@ajax.route("/get-subject-data/")
+@auth.login_required
+def ajx_subject():
+    return jsonify([(sub.name, sub.name) for sub in Subject.query.all() if sub])
 
 @ajax.after_request
 def user_required_config(resp):

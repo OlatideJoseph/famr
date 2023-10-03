@@ -8,4 +8,14 @@
     
 </fieldset>
 <script type="text/javascript" defer src="{{url_for('static', filename='js/match.js')}}"></script>
+<script type="text/javascript">
+    $(window).on("load",function(){
+        showLoader();
+        getHtml(`/ajax/v1.0${window.location.pathname}`);
+        hideLoader("Match", "/match-course/");
+        let script = `<script type='text/javascript' defer src={{url_for('static', filename='js/match.js')}}></`;
+        script += `script>`;
+        $("body").append($(script));
+    });
+</script>
 {% endblock %}

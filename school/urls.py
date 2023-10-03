@@ -14,7 +14,9 @@ def verify_password(token):
         import jwt
         user_id = Token.decode_token(token)["id"]
         if user_id:
-            return User.query.get(int(user_id))
+            user = User.query.get(int(user_id))
+            if user:
+                return user
 
 @school.route("/")
 def index():

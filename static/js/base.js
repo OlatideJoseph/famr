@@ -15,16 +15,21 @@ const showAlert = (msg, category)=>{
     // $("#loader").fadeOut(500);
     $("nav").after(alert);
 };
-const getHtml = (url, title)=>{
+const getHtml = (url, title, script)=>{
     $.ajax({
         url: url,
         type: "GET",
         success:function(data, textStatus, jqXHR)
         {
-            let bodyText = jqXHR.responseText.match(/<fieldset[^>]*>([\s\S]*)<\/fieldset>/i)[1];
-            let msg = "success";
-            let dat = data;
-            $("fieldset").html(bodyText);
+            // let bodyText = jqXHR.responseText.match(/<fieldset[^>]*>([\s\S]*)<\/fieldset>/i)[1];
+            let bodyText = $.parseHTML(data);
+            bodyText.forEach(function(data){
+                if ($(data).hasClass('ajx'))
+                {
+                    $(".ajx").replaceWith(data);
+                }
+
+            });
         }
     });
 }// only to be used when the user is logged in
@@ -83,10 +88,14 @@ const getAndChangePageFunction = (href)=>{
         },
         success:function(data, textStatus, jqXHR)
         {
-            let bodyText = jqXHR.responseText.match(/<section[^>]*>([\s\S]*)<\/section>/i)[1];
-            console.log(bodyText);
-            $("#content").html(bodyText);
-            hideLoader();
+            let bodyText = $.parseHTML(data);
+            bodyText.forEach(function(data){
+                if ($(data).hasClass('ajx'))
+                {
+                    $(".ajx").replaceWith(data);
+                }
+
+            });
         }
     });
     window.history.pushState(null, null, href);
