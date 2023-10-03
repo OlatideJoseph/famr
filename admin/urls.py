@@ -1,5 +1,5 @@
 import functools
-from flask import url_for, redirect, request, render_template as render
+from flask import url_for, redirect, request, render_template as render, session
 from app import auth
 from admin import admin
 from models import User, Token
@@ -10,10 +10,12 @@ def admin_protected_view(func):
 	@functools.wraps(func)
 	def inner_func(*args, **kwargs):
 		admin_user = auth.current_user() #Note the variable name denote the person using this route is an admin
+		print(admin_user)
 		if admin_user and admin_user.is_admin:
 			return func(*args, **kwargs)
-		elif admin_user and not (admin_user.is_admin):
+		elif admin_user and  (admin_user.is_admin != True):
 			flash("User: {admin_user.username} is not an admin, login with an admin account", "warning")
+			print(session)
 			return redirect(url_for("admin.authenticate"))
 		else:
 			return redirect(url_for("admin.authenticate"))

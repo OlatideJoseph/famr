@@ -1,6 +1,7 @@
-from flask import render_template as render, url_for, request, redirect, jsonify
+from flask import render_template as render, url_for, request, redirect, jsonify, make_response
 from flask.views import MethodView
 from werkzeug.security import generate_password_hash as gph
+from app import db
 from models import User, Token, UserRole
 from forms import UserLoginForm, UserCreationForm, AdminLoginForm
 

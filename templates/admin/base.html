@@ -38,9 +38,7 @@
       </div>
     </nav>
     <div id="blo">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+        <img src="{{url_for('static', filename='img/1485.gif')}}" alt="Loader-Icon"/>
     </div>
     {% with messages = get_flashed_messages(with_categories = True) %}
           {% for category, message in messages %}

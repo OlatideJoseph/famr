@@ -62,5 +62,9 @@ def forbidden(resp):
             401,
             {"Content-Type":"application/json"})
 
+@app.errorhandler(500)
+def internal_error(e):
+    return render("admin/500.html"), 500
+
 if __name__ == "__main__":
     app.run(debug = True)
