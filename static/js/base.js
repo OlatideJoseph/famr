@@ -133,7 +133,8 @@ const getAndChangePageFunction = (href)=>{
 //     }
 //     );
 // }// set an event listener for all anchor tag applied sp
-$(window).on("load", function(){
+$(window).on("load", function()
+{
     if (token)
     {
         $(".usp").hide(1);//hide  views required for not authenticated
@@ -143,4 +144,8 @@ $(window).on("load", function(){
         $(".auth").hide(1);//vice versa
     }
     hideLoader();
+    if(window.location.pathname == "/login/")
+    {
+        $(".bio-data").css({display: "none"});
+    }
 });

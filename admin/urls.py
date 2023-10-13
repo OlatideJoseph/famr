@@ -1,28 +1,22 @@
 import functools
 from flask import url_for, redirect, request, render_template as render, g
-from app import auth
+from app import auth, app
 from admin import admin
 from models import User, Token
-from views import AdminLoginView
+from views import AdminLoginView, AdminSignUpView
 from forms import AdminLoginForm
 
-def admin_protected_view(func):
-	@functools.wraps(func)
-	def inner_func(*args, **kwargs):
-		admin_user = auth.current_user() #Note the variable name denote the person using this route is an admin
-		print(dir(g))
-		if admin_user and admin_user.is_admin:
-			return func(*args, **kwargs)
-		elif admin_user and  (admin_user.is_admin != True):
-			flash("User: {admin_user.username} is not an admin, login with an admin account", "warning")
-			return redirect(url_for("admin.authenticate"))
-		else:
-			return redirect(url_for("admin.authenticate"))
-	return inner_func
+
+
+def admin_protected_view(user):
+	admin_user = user #Note the variable name denote the person using this route is an admin
+	if admin_user and  (admin_user.is_admin != True):
+		flash("User: {admin_user.username} is not an admin, login with an admin account", "warning")
+		return redirect(url_for("admin.authenticate"))
+	else:
+		return redirect(url_for("admin.authenticate"))
 
 @admin.route("/")
-@admin_protected_view
-@auth.login_required
 def home():
 	return "<h1>Admin Home Page!</h1>"
 
@@ -42,6 +36,7 @@ def home():
 # 	return render("/admin/authenticate.html", form=AdminLoginForm())
 
 admin.add_url_rule("/authenticate/", view_func=AdminLoginView.as_view("authenticate"))
+admin.add_url_rule("/register-admin-user/", view_func=AdminSignUpView.as_view("sign-up"))
 
 @admin.route("/register-user/")
 def register_user():
@@ -50,14 +45,10 @@ def register_user():
 
 
 @admin.route("/add-form/", methods = ["GET", "POST"])
-@admin_protected_view
-@auth.login_required
 def add_form():
-    return render("admin/addform.html")
+	return render("admin/addform.html")
 
 @admin.route("/add-subject-waec/", methods = ["GET", "POST"])
-@admin_protected_view
-@auth.login_required
 def add_subject():
     """A request view that accept a request argument s and add it to the database
        Note: It is to keep It only adds subject to the database
@@ -65,10 +56,8 @@ def add_subject():
     return render("admin/subject.html")
 
 @admin.route("/grade-add/", methods=["POST", "GET"])
-@admin_protected_view
-@auth.login_required
 def grade_point():
-    return render("admin/addgrade.html")
+	return render("admin/addgrade.html")
 
 
 

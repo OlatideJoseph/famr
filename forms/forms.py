@@ -147,3 +147,6 @@ class UserCreationForm(FlaskForm):
     birth_date = DateField("*Date-Of-Birth:*", validators=[DataRequired()])
     middle_name = StringField("*Middle Name:* (opt)", validators=[Length(max=25, min=3)])
     signup = SubmitField("Sign Up")
+
+class AdminSignUpForm(UserCreationForm):
+    pass

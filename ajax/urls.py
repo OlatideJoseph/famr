@@ -10,10 +10,26 @@ from utils.main import user_logged_in
 from . import ajax
 
 
+def admin_protected_view(user):
+    admin_user = user #Note the variable name denote the person using this route is an admin
+    if admin_user and admin_user.is_admin:
+        return True
+    elif admin_user and  (admin_user.is_admin != True):
+        print("if")
+        flash("User: {admin_user.username} is not an admin, login with an admin account", "warning")
+        return redirect(url_for("admin.authenticate"))
+    else:
+        print("else")
+        return redirect(url_for("admin.authenticate"))
 
-@ajax.route("/add-form/", methods = ["GET", "POST"])
+
+@ajax.route("/admin/add-form/", methods = ["GET", "POST"])
 @auth.login_required()
 def add_form():
+    protected = admin_protected_view(auth.current_user())
+    if protected:
+        if isinstance(protected, Response):
+            return protected
     form = AddCourseForm()
     if form.validate_on_submit():
         course_title = form.course_name.data.title()
@@ -58,12 +74,16 @@ def add_form():
 
     return render("ajax/addform.html", form=form)
 
-@ajax.route("/add-subject-waec/", methods = ["GET", "POST"])
+@ajax.route("/admin/add-subject-waec/", methods = ["GET", "POST"])
 @auth.login_required
 def add_subject():
     """A request view that accept a request argument s and add it to the database
        Note: It is to keep It only adds subject to the database
     """
+    protected = admin_protected_view(auth.current_user())
+    if protected:
+        if isinstance(protected, Response):
+            return protected
     form = AddSubjectForm()
     if request.method == "POST" and request.is_json:
         print(dir(request))
@@ -147,10 +167,14 @@ def cause():
 def course_grade():
     return render("ajax/grading.html")
 
-@ajax.route("/grade-add/", methods=["POST", "GET"])
+@ajax.route("/admin/grade-add/", methods=["POST", "GET"])
 @auth.login_required
 def grade_point():
     form = AddGradeForm()
+    protected = admin_protected_view(auth.current_user())
+    if protected:
+        if isinstance(protected, Response):
+            return protected
     if form.validate_on_submit():
         grade = Grade(grade=form.grade.data, point=form.point.data)
         db.session.add(grade)
@@ -182,15 +206,13 @@ def get_data():
 @ajax.route("/get-grade-and-point/")
 @auth.login_required
 def ajx_grade():
-    grades_choice = [[0,"---"]]
-    grades_choice += [[grd.point, grd.grade] for grd in Grade.query.all() if grd]
+    grades_choice = [[grd.point, grd.grade] for grd in Grade.query.all() if grd]
     return jsonify(grades_choice)
 
 @ajax.route("/get-course-data/")
 @auth.login_required
 def ajx_course():
-    course_choice = [["","-------------"]]
-    course_choice += [[sub.course_title, sub.course_title] for sub in Course.query.all() if sub]
+    course_choice = [[sub.course_title, sub.course_title] for sub in Course.query.all() if sub]
     return jsonify(course_choice)
 
 @ajax.route("/get-subject-data/")

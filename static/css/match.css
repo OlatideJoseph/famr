@@ -4,6 +4,9 @@
 .bio-data{
 	max-width: 20rem;
 	margin-top:50px;
+	top: 40px;
+	left: 5px;
+	position: absolute;
 	margin-right: 20px;
 	margin-left: 20px;
 	max-height: 20rem;

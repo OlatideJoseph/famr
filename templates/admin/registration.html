@@ -1,0 +1,54 @@
+{% extends "admin/base.html" %}
+{% block head%}
+<title>Sign Up</title>
+{% endblock %}
+{% block content%}
+<fieldset class="form card mt-3 text-light" style="max-width: 45rem; background-color:#3a1844;" id="form">
+    <legend class="card-header text-center">Sign Up Form</legend>
+    <form method = 'post' action = '#' class="card-body">
+        {{form.csrf_token}}
+        <div class="row">
+            <div class="col">
+                {{form.email.label(class = "form-label")}}
+                {{form.email(class = "form-control")}}
+            </div>            
+            <div class="col">
+                {{form.username.label(class="form-label")}}
+                {{form.username(class="form-control")}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.first_name.label(class = "form-label")}}
+                {{form.first_name(class = "form-control")}}
+            </div>
+            <div class="col">
+                {{form.middle_name.label(class = "form-label")}}
+                {{form.middle_name(class = "form-control")}}
+            </div>
+            <div class="col">
+                {{form.last_name.label(class = "form-label")}}
+                {{form.last_name(class = "form-control")}}
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                {{form.password.label(class="form-label")}}
+                {{form.password(class="form-control")}}
+            </div>
+            <div class="col">
+                {{form.birth_date.label(class = "form-label")}}
+                {{form.birth_date(class = "form-control")}}
+            </div>
+        </div>
+        <div class="row">
+        	{{form.signup(class="login btn btn-primary btn-sm mt-3")}}
+        	<div class="card-footer text-center">
+                <span class="text-center">Have an account ! ? <a href="{{url_for('users.login')}}" class="link text-light">Log in!</a></span>
+        	</div>
+        </div>
+    </form>
+</fieldset>
+<script type="text/javascript" src="{{url_for('static', filename='js/signup.js')}}"></script>
+{% endblock %}
