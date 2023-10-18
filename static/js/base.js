@@ -13,7 +13,7 @@ const showAlert = (msg, category)=>{
     alert += `<span class="btn-close" data-bs-dismiss="alert"`
     alert += ` aria-label="Close">&times</span></p>`;
     // $("#loader").fadeOut(500);
-    $("nav").after(alert);
+    $("#blo").before(alert);
 };
 const getHtml = (url, title, script)=>{
     $.ajax({
@@ -34,12 +34,14 @@ const getHtml = (url, title, script)=>{
     });
 }// only to be used when the user is logged in
 let token = localStorage.getItem("refresh");
-if (token !== null){
+if (token !== null)
+{
     $.ajaxSetup({
         headers:{Authorization: `Bearer ${localStorage.getItem("refresh")}`}
     });
     let location = window.location.pathname;
-    if (location === "/login/" || location === "/sign-up/"){
+    if (location === "/login/" || location === "/sign-up/")
+    {
         showLoader();
         let resp = getHtml(`/ajax/v1.0/match-course/`, "Match");
         let form = $("form");
@@ -47,10 +49,25 @@ if (token !== null){
         hideLoader();
         window.history.pushState(null, null, "/match-course/");
         // $("#body").html(resp.bodyText);
+    } else if (location === "/admin/authenticate/" || location === "/admin/sign-up/")
+    {
+        let user = $.getJSON("/ajax/v1.0/get-auth-data/", function(user){
+            let msg = `User ${user["username"]} is not an admin, you need to login with an admin account!!!`;
+            if (!user["is_admin"])
+            {
+                showAlert(msg, "danger");
+            } else
+            {
+                window.location.pathname = '/admin/';
+            }
+        });
+    } else
+    {
+        console.log("An Else statement");
     }
     
 
-}else
+} else
 {
     let location = window.location.pathname;
     if (location !== "/login/" && location !== "/sign-up/" && location !== "/admin/authenticate/")
@@ -100,39 +117,7 @@ const getAndChangePageFunction = (href)=>{
     });
     window.history.pushState(null, null, href);
 
-}// A util function that changes pages content on click
-// const eventNavLink = ()=>{
-//     $(".sp").click(function(e){
-//         e.preventDefault();
-//         let a = $(this);
-//         let active = $("a.active");
-//         let href = a.attr("href");
-//         let title = a.text();
-//         let lco = window.location.pathname;
-//         if (lco === "/"){
-//             console.log("home");
-//             let fieldset = `<fieldset class="form mt-3"></fieldset>`;
-//             $("#home-content").html(fieldset);
-//         }
-//         $.ajax({
-//         url: href,
-//         type: "get",
-//         dataType: "script",
-//         beforeSend: function(){
-//             showLoader();
-//         },
-//         success: function(data, textStatus, jqXHR)
-//             {
-//                 let bodyText = jqXHR.responseText.match(/<fieldset[^>]*>([\s\S]*)<\/fieldset>/i)[1];
-//                 let msg = "success";
-//                 let d = $(data).find("#content");
-//                 $("#content").html(d);
-//                 hideLoader(title, href);
-//             }
-//         });
-//     }
-//     );
-// }// set an event listener for all anchor tag applied sp
+}
 $(window).on("load", function()
 {
     if (token)
@@ -146,6 +131,6 @@ $(window).on("load", function()
     hideLoader();
     if(window.location.pathname == "/login/")
     {
-        $(".bio-data").css({display: "none"});
+        $(".bio-data").css({display: null});
     }
 });

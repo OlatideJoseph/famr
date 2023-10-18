@@ -66,5 +66,6 @@ def forbidden(resp):
 def internal_error(e):
     return render("admin/500.html"), 500
 
+application = app
 if __name__ == "__main__":
     app.run(debug = True)

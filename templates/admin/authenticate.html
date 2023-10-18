@@ -1,11 +1,12 @@
 {% extends "admin/base.html" %}
 {% block head %}
 <title>Admin Login</title>
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/admin/auth.css/')}}">
 {% endblock %}
 {% block content %}
 <fieldset class="form card mt-3 text-light" style="max-width: 35rem;  background-color:#3a1844;">
     <legend class="card-header text-center">Auth | Admin | Form</legend>
-    <form method = 'post' action = '#' class="card-body">
+    <form method = 'post' action = 'javascript:void(0);' class="card-body">
         {{form.csrf_token}}
         <div class="row">
             <div class="col">

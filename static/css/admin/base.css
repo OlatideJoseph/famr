@@ -1,11 +1,23 @@
 body{
 	background-color:#150E28 !important;
+	color:#fff;
+	overflow: hidden;
 }
-.ajx{
-	display: flex !important;
-	align-items: center;
-	flex-direction: row;
-	justify-content: center;
+fieldset{
+	background-color: #3a1844;
+	font-family: monospace;
+}
+}
+.bio-data{
+	max-width: 300px;
+	width: 280px;
+	margin-top:50px;
+	top: 40px;
+	left: 5px;
+	position: absolute;
+	margin-right: 20px;
+	margin-left: 20px;
+	max-height: 400px;
 }
 #blo{
 	width: 100vw;

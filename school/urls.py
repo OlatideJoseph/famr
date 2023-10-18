@@ -47,10 +47,6 @@ def cause():
 def course_grade():
     return render("grading.html")
 
-@school.route("/grade-add/", methods=["POST", "GET"])
-def grade_point():
-    return render("addgrade.html")
-
 
 
 

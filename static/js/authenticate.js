@@ -18,7 +18,6 @@ $(document).ready(
                 url: `${window.location.pathname}`,
                 type:"POST",
                 data:form,
-                headers:{"Content-Type":"application/x-www-form-urlencoded"},
                 beforeSend: function(data)
                 {
                     showLoader();
@@ -70,15 +69,33 @@ $(document).ready(
                 $.ajax({
                     url: href,
                     type: "GET",
-                    success:function(data, textStatus, jqXHR){
+                    success:function(data, textStatus, jqXHR)
+                    {
                         let bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
                         $('body').html(bodyText);
-                        hideLoader(title, href);
+                        $.ajax({
+                            url: '/static/js/signup.js/',
+                            dataType: 'script',
+                            success: function(){
+                                let script = $("script[src='/static/js/authenticate.js/']");
+                                if (script.length > 0)
+                                {
+                                    script.remove();
+                                } else {
+                                    console.log("script does not exist !");
+                                }
+                            }
+                        });
                         // bloader.fadeOut(1000);
                         // form.show();
                         // window.history.pushState(null, null, href);
                         // body.css('overflow','auto');
-                    }
+
+                    },
+                    complete: function()
+                    {
+                        hideLoader(title, href);
+                    },
                 });
             }
         );

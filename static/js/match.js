@@ -87,7 +87,7 @@ $(document).ready(()=>{
         let field=$("#form").prepend(aggregate);
     });
     $.ajax({
-        url:"/ajax/v1.0/get-auth-data",
+        url:"/ajax/v1.0/get-auth-data/",
         type:"get",
         success:function(data){
             $(".email").text(data["email"]);

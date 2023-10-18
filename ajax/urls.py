@@ -196,10 +196,12 @@ def get_data():
     user = auth.current_user()
     data = {
         "email": user.email,
+        "username": user.username,
         "first_name": user.first_name,
         "last_name": user.last_name,
         "dob": user.birth_date.strftime("%d-%m-%Y"),
         "mid_name": user.mid_name,
+        "is_admin": user.is_admin,
     }
     return jsonify(**data)
 

@@ -18,7 +18,7 @@ def admin_protected_view(user):
 
 @admin.route("/")
 def home():
-	return "<h1>Admin Home Page!</h1>"
+	return render("admin/home.html")
 
 # @admin.route("/authenticate/", methods=["GET", "POST"])
 # def authenticate():
@@ -63,6 +63,6 @@ def grade_point():
 
 @admin.after_request
 def admin_last_seen(resp):
-	if auth.current_user() and auth.current_user.is_admin:
+	if auth.current_user() and auth.current_user().is_admin:
 		auth.current_user().save_last_seen()
 	return resp

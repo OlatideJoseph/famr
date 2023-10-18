@@ -1,6 +1,6 @@
 showLoader();
 getHtml(`/ajax/v1.0${window.location.pathname}`);
-hideLoader('Grade Point', '/grade-add/');
+hideLoader('Grade Point', '/admin/grade-add/');
 $(window).on('load', function(){
     let f = document.querySelector('form');
     $("form").on('submit', function(e)
