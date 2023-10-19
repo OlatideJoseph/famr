@@ -33,6 +33,7 @@ $(document).ready(
                     hideLoader("Login", "/login/");
                     showAlert( resp["msg"][0], resp["msg"][1]);
                 }
+            });
         }
         );
         $('.link').on('click', function(e)
@@ -49,11 +50,17 @@ $(document).ready(
                     type: "GET",
                     success:function(data, textStatus, jqXHR)
                     {
-                        var bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
-                        $('body').html(bodyText);
+                        let bodyText = $.parseHTML(data);
+                        bodyText.forEach(function(data)
+                        {
+                            if ($(data).hasClass('ajx'))
+                            {
+                                $(".ajx").replaceWith(data);
+                            }
+                        });
                         $.ajax(
                         {
-                            url: '/static/js/signup.js/',
+                            url: '/static/js/authenticate.js/',
                             dataType: 'script',
                             success: function()
                             {

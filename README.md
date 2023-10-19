@@ -14,6 +14,7 @@
 This project is based on the idea proposed to us by our supervisor mr. adelanwa
 *Description\**
 It gives hope for the hopeless and provide other options for them, don't get me wrong, all I mean is that there are students who wished for admission to their dream school, but either fortunately or unfortunately they might not qualify to the course of their choice based on their performance on their pre-entrance examination, so our project is for the who does not know maybe they'll qualify for our institution, our application provide the ability to see what they are lacking in the data's they provide and it'll also be able to give them suggestions on courses that could accept to our institution.
+
 **Project Stack**
 1. Python/Flask
 ```python

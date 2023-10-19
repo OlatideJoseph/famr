@@ -10,7 +10,6 @@ $(window).on("load",function(){
                 $("select[id^='grade']").append(option);
             }
         }
-        console.log(data);
     });
     $.getJSON("/ajax/v1.0/get-course-data/", function(data){
         for (let i=0; i<data.length; i++){
@@ -21,7 +20,7 @@ $(window).on("load",function(){
                 $("select[id^='course']").append(option);
             }
         }
-        console.log(data);
+        
     });
     $.getJSON("/ajax/v1.0/get-subject-data/", function(data){
         for (let i=0; i<data.length; i++){
@@ -32,7 +31,7 @@ $(window).on("load",function(){
                 $("select[id^='field']").append(option);
             }
         }
-        console.log(data);
+        
     });
 });
 $(document).ready(()=>{
@@ -89,8 +88,8 @@ $(document).ready(()=>{
             $(".email").text(data["email"]);
             $(".first").text(data["first_name"]);
             $(".last").text(data["last_name"]);
-            $(".mid").text(data["mid_name"])
-            $(".dob").text(data["dob"])
+            $(".mid").text(data["mid_name"]);
+            $(".dob").text(data["dob"]);
         }
     });
     //Querying for course data
@@ -131,4 +130,3 @@ $(document).ready(()=>{
         );
     })
 });
-$

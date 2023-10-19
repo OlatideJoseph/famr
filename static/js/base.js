@@ -19,7 +19,6 @@ const showLoader = ()=>{
     let content = $("#content");
     let body = $("body");
     let bloader = $("#blo");
-    console.log(bloader);
     bloader.removeClass("bloader");
     content.hide(1);
     console.log("Shown");
@@ -97,6 +96,16 @@ if (token !== null)
             } else
             {
                 window.location.pathname = '/admin/';
+            }
+        });
+    } else if (location === "/admin/")
+    {
+        $.ajax({
+            url:"/static/js/admin/home.js/",
+            dataType: 'script',
+            type:"get",
+            success:function(data){
+                console.log("admin js loaded successfully");
             }
         });
     } else

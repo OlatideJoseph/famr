@@ -125,6 +125,11 @@ class LoginView(MethodView):
 				"msg": ["Invalid User Credentials ", "warning"],
 				"redirect": "/login"
 			}, 401, headers)
+		return make_response({
+				"code": 401,
+				"msg": ["User not authorized", "danger"],
+				"redirect": "/login"
+			}, 401, headers)
 
 
 class AdminLoginView(LoginView):

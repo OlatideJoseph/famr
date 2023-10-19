@@ -5,7 +5,7 @@ const authLogin = ()=>{
 	}
 	user = JSON.stringfy(user);
 	$.ajax({
-		url:'/admin/authenticate',
+		url:'/admin/authenticate/',
 		data: user,
 		contentType: 'application/json',
 		dataType: 'json',

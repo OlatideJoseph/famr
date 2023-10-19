@@ -18,6 +18,7 @@ $(document).ready(
                 url: `${window.location.pathname}`,
                 type:"POST",
                 data:form,
+                contentType: "application/x-www-form-urlencoded",
                 beforeSend: function(data)
                 {
                     showLoader();
@@ -34,6 +35,7 @@ $(document).ready(
                     form.hide();
                     let resp = getHtml(`/ajax/v1.0/match-course/`);//gets the form element
                     $(".usp").show();
+                    $(".bio-data").css({"display": "block"});
                     form.css("class", "");
                     form.show();
 
@@ -71,8 +73,14 @@ $(document).ready(
                     type: "GET",
                     success:function(data, textStatus, jqXHR)
                     {
-                        let bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
-                        $('body').html(bodyText);
+                        let bodyText = $.parseHTML(data);
+                        bodyText.forEach(function(data){
+                            if ($(data).hasClass('ajx'))
+                            {
+                                $(".ajx").replaceWith(data);
+                            }
+
+                        });
                         $.ajax({
                             url: '/static/js/signup.js/',
                             dataType: 'script',
