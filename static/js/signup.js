@@ -43,18 +43,21 @@ $(document).ready(
                 let body = $("body");
                 let title = $(this).text();
                 let href = $(this).attr('href');
-                $.ajax({
+                $.ajax(
+                {
                     url: href,
                     type: "GET",
                     success:function(data, textStatus, jqXHR)
                     {
                         var bodyText = jqXHR.responseText.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
                         $('body').html(bodyText);
-                        $.ajax({
+                        $.ajax(
+                        {
                             url: '/static/js/signup.js/',
                             dataType: 'script',
-                            success: function(){
-                                let script = $("script[src='/static/js/signup.js/']")
+                            success: function()
+                            {
+                                let script = $("script[src='/static/js/signup.js/']");
                                 if (script.length > 0)
                                 {
                                     script.remove();
@@ -73,12 +76,8 @@ $(document).ready(
         );
 	}
 );
-$(window).on("load",function(){
-    $(".nav-link").click(function(e){
-        e.preventDefault();//Stops the default action of the page
-        getAndChangePageFunction($(this).attr('href'));
-        $("title").text($(this).text());
-    });
+$(window).on("load",function()
+{
     hideLoader();
     if (token)
     {

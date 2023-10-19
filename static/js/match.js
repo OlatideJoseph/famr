@@ -1,10 +1,6 @@
 //data storage space
 $(window).on("load",function(){
-    $(".nav-link").click(function(e){
-        e.preventDefault();//Stops the default action of the page
-        getAndChangePageFunction($(this).attr('href'));
-        $("title").text($(this).text());
-    });
+    $(".bio-data").css("display", "block");
     $.getJSON("/ajax/v1.0/get-grade-and-point/", function(data){
         for (let i=0; i<data.length; i++){
             let d = data[i]; // holds the value and name for the option taken

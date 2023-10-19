@@ -15,6 +15,26 @@ const showAlert = (msg, category)=>{
     // $("#loader").fadeOut(500);
     $("#blo").before(alert);
 };
+const showLoader = ()=>{
+    let content = $("#content");
+    let body = $("body");
+    let bloader = $("#blo");
+    console.log(bloader);
+    bloader.removeClass("bloader");
+    content.hide(1);
+    console.log("Shown");
+}
+
+const hideLoader = (title, url)=>{
+    let bloader = $("#blo");
+    let body = $("body");
+    let content = $("#content");
+    $("title").text(title);
+    bloader.addClass("bloader");
+    window.history.pushState(null, null, url);
+    content.show(1);
+    console.log("hidden");
+}// hides the loader icon
 const getHtml = (url, title, script)=>{
     $.ajax({
         url: url,
@@ -46,8 +66,26 @@ if (token !== null)
         let resp = getHtml(`/ajax/v1.0/match-course/`, "Match");
         let form = $("form");
         form.css("class", "mt-3");
-        hideLoader();
-        window.history.pushState(null, null, "/match-course/");
+        hideLoader("Match", '/match-course/');
+        $.ajax(
+        {
+            url: '/static/js/match.js/',
+            dataType: 'script',
+            success: function()
+            {
+                let script = $("script[src='/static/js/authenticate.js/']");
+                let script0 = $("script[src='/static/js/signup.js/']");
+                if (script.length > 0)
+                {
+                    script.remove();
+                } else if (script0.length > 0){
+                    script0.remove();
+                    alert("removed");
+                } else {
+                    console.log("Script does not exist");
+                }
+            }
+        });
         // $("#body").html(resp.bodyText);
     } else if (location === "/admin/authenticate/" || location === "/admin/sign-up/")
     {
@@ -75,26 +113,6 @@ if (token !== null)
         window.location.pathname = "/login/";// redirect users to the login page
     }
 }
-const showLoader = ()=>{
-    let content = $("#content");
-    let body = $("body");
-    let bloader = $("#blo");
-    console.log(bloader);
-    bloader.removeClass("bloader");
-    content.hide(1);
-    console.log("Shown");
-}
-
-const hideLoader = (title, url)=>{
-    let bloader = $("#blo");
-    let body = $("body");
-    let content = $("#content");
-    $("title").text(title);
-    bloader.addClass("bloader");
-    window.history.pushState(null, null, url);
-    content.show(1);
-    console.log("hidden");
-}// hides the loader icon
 const getAndChangePageFunction = (href)=>{
     console.log("Function Executed");
     $.ajax({
