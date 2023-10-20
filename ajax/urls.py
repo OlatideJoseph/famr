@@ -2,13 +2,16 @@ import functools
 from flask import (render_template as render,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for, Response)
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, PendingRollbackError
 from forms import AddCourseForm, AddSubjectForm, MatchForm, AddGradeForm
 from models import Course, WaecSubject, Grade, AdminJamb, Subject, User, Token
 from app import auth, db
 from utils.main import user_logged_in
 from . import ajax
 
+
+xhr = 'X-Requested-With'
+xhr0 = 'XMLHttpRequest'
 
 def admin_protected_view(user):
     admin_user = user #Note the variable name denote the person using this route is an admin
@@ -85,9 +88,9 @@ def add_subject():
         if isinstance(protected, Response):
             return protected
     form = AddSubjectForm()
-    if request.method == "POST" and request.is_json:
-        print(dir(request))
+    if ((request.method == "POST") and (request.headers.get(xhr) == xhr0)):
         subject = request.get_json()["subject"]
+        print(subject)
         if subject:
             if type(subject) is list:
                 wsub_list = [Subject(name=sub.title()) for sub in subject]
@@ -104,11 +107,18 @@ def add_subject():
                     added = False,
                     msg= f"The subject '{subject}' already exist !"
                 ))
+            except PendingRollbackError:
+                db.session.rollback()
+                return make_response(jsonify(
+                    added = False,
+                    msg= f"The subject '{subject}' already exist !"
+                ))
             except:
                 return make_response(jsonify(added=False, msg=f"DatabaseError"), 200)
             return make_response(jsonify(
                     added=True, redirect=url_for("school.match"),
-                    msg=f"Subject '{subject}'' added successfully"
+                    msg=f"Subject '{subject}' added successfully",
+                    status="success"
                 ), 201)
     elif form.validate_on_submit():
         subject = form.name.data.title()

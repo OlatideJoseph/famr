@@ -9,3 +9,12 @@
 	top:15px;
 	left: 20px;
 }
+.alert{
+	width:50vw;
+	display: inline;
+	float:right;
+}
+fieldset{
+	border-radius: 25px !important;
+	padding: 10px !important;
+}

@@ -1,10 +1,19 @@
-$(window).on("load",function(){
-    $(".nav-link").click(function(e){
-        e.preventDefault();//Stops the default action of the page
-        getAndChangePageFunction($(this).attr('href'));
-        $("title").text($(this).text());
-    });
-    $('.btn').on('click', function(){
-        alert("hello");
+$('.sub').on('click', function(e){
+    e.preventDefault();
+    let formData = JSON.stringify({"subject": [$('#name').val()]});
+    alert("Hello");
+    $.ajax({
+        url: `/ajax/v1.0/admin/add-subject-waec/`,
+        type: "POST",
+        contentType: "application/json",
+        data: formData,
+        success: function(data, textStatus, jqXHR)
+        {
+            showAlert(data['msg'], data['status']);
+            console.log(data);
+        },
+        error: function(){
+            console.log("An error occured");
+        }
     });
 });

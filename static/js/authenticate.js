@@ -31,7 +31,7 @@ $(document).ready(
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("refresh")}`, 
                         },
-                        async: true;
+                        async: true,
                     });//sets the default req header
                     form.hide();
                     let resp = getHtml(`/ajax/v1.0/match-course/`);//gets the form element

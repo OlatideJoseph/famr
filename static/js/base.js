@@ -7,6 +7,21 @@ const createScript = (src)=>{
 
     return sc;  
 }
+const loadScript = (url, func)=>{
+    $.ajax({
+        url: url,
+        dataType: 'script',
+        success: (func) ? func : function(){
+            let script = $("script[src='/static/js/authenticate.js/']");
+            if (script.length > 0)
+            {
+                script.remove();
+            } else {
+                console.log("script does not exist !");
+            }
+        }
+    });
+}
 const showAlert = (msg, category)=>{
     let alert = `<p class="alert alert-${category} `
     alert += `alert-dismissible mt-2 mb-2 pl-3 pl- fade show">${msg}`
@@ -147,7 +162,7 @@ const getAndChangePageFunction = (href)=>{
     window.history.pushState(null, null, href);
 
 }
-$(window).on("load", function()
+$(document).ready(function()
 {
     if (token)
     {
@@ -161,5 +176,5 @@ $(window).on("load", function()
     if(window.location.pathname == "/login/")
     {
         $(".bio-data").css({display: null});
-    }
+    }//remove the bio data form from login
 });
