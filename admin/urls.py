@@ -1,5 +1,5 @@
 import functools
-from flask import url_for, redirect, request, render_template as render, g
+from flask import url_for, redirect, request, render_template as render, g, make_response, flash
 from app import auth, app
 from admin import admin
 from models import User, Token
@@ -60,9 +60,14 @@ def grade_point():
 	return render("admin/addgrade.html")
 
 
-
 @admin.after_request
 def admin_last_seen(resp):
 	if auth.current_user() and auth.current_user().is_admin:
 		auth.current_user().save_last_seen()
 	return resp
+
+@admin.route("/get-admin-data/")
+def admin_data():
+	return make_response({
+		"usrno": len(User.query.all())
+		},200)

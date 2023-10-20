@@ -19,6 +19,7 @@ const showLoader = ()=>{
     let content = $("#content");
     let body = $("body");
     let bloader = $("#blo");
+    body.addClass("body-loading");
     bloader.removeClass("bloader");
     content.hide(1);
     console.log("Shown");
@@ -32,6 +33,7 @@ const hideLoader = (title, url)=>{
     bloader.addClass("bloader");
     window.history.pushState(null, null, url);
     content.show(1);
+    body.removeClass("body-loading");
     console.log("hidden");
 }// hides the loader icon
 const getHtml = (url, title, script)=>{

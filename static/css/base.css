@@ -3,6 +3,9 @@
 	align-items: center;
 	justify-content: center;
 }
+.body-loading{
+	overflow: hidden;
+}
 #blo{
 	width: 100vw;
 	z-index:2;

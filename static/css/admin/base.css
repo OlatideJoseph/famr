@@ -7,6 +7,9 @@ fieldset{
 	background-color: #3a1844;
 	font-family: monospace;
 }
+.body-loading{
+	overflow: hidden;
+}
 }
 .bio-data{
 	max-width: 300px;
