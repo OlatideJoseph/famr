@@ -3,8 +3,9 @@
 <title>Grade Point</title>
 {% endblock %}
 {% block content%}
-<fieldset>
+<fieldset class="mt-3">
     <legend>Add Form</legend>
+    <hr>
     <form method = 'post' action = 'javascript:void(0)'>
         {{form.csrf_token}}
         {{form.grade.label(class = "form-label")}}

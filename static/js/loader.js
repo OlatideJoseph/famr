@@ -5,14 +5,19 @@ hideLoader('Add Subjects', window.location.pathname);
 
 $(window).on('load',function()
 {
-    if(window.location.pathname == "/login/")
-    {
-        $(".bio-data").css({display: null});
-    }//remove the bio data form from login
     switch (window.location.pathname)
     {
         case ('/admin/add-subject-waec/'):
             loadScript("/static/js/subject.js/");
+            $('title').text('Add Subjects');
+            break;
+        case ('/admin/grade-add/'):
+        	loadScript("/static/js/gp.js/");
+        	$('title').text('Grade Point');
+        	break;
+        case ('/admin/add-form/'):
+        	$('title').text('Add Lasustech course');
+        	break;
 
     }
 

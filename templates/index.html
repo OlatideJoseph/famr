@@ -1,10 +1,18 @@
-{% extends "base.html" %}
-{% block head%}
-<title>Match</title>
-{% endblock %}
-{% block content%}
-<div id="home-content">
-	<p> The Home Page</p>
-</div>
-
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/index.css')}}">
+	<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='img/favicon.png')}}">
+	<title>Welcome Aspirants !</title>
+</head>
+<body>
+	<section class="section-1">
+		<h1>Page 1</h1>
+	</section>
+	<section class="section-2">
+		<h1>Page 2</h1>
+	</section>
+</body>
+</html>
