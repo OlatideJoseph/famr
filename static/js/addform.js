@@ -1,15 +1,24 @@
-//data storage space
-// eventNavLink();
-showLoader();
-getHtml(`/ajax/v1.0${window.location.pathname}`);
-hideLoader('Register Course', '/add-form/');
-$(window).on("load",function(){
-    $(".nav-link").click(function(e){
-        e.preventDefault();//Stops the default action of the page
-        getAndChangePageFunction($(this).attr('href'));
-
-    });
-    $("form").on("submit", function(e){
-        e.preventDefault();
-    });
+$("form").on("submit", function(e){
+    e.preventDefault();
+});
+$.getJSON("/ajax/v1.0/get-subject-data/", function(data){
+    for (let i=0; i<data.length; i++){
+        let d = data[i]; // holds the value and name for the option taken
+        if (d)
+        {
+            let option = $(`<option value="${d[0]}">${d[1]}</option>`);
+            $("select[id^='field']").append(option);
+        }
+    }
+    
+});
+$.getJSON("/ajax/v1.0/get-grade-and-point/", function(data){
+    for (let i=0; i<data.length; i++){
+        let d = data[i]; // holds the value and name for the option taken
+        if (d)
+        {
+            let option = $(`<option value="${d[0]}">${d[1]}</option>`);
+            $("select[id^='grade']").append(option);
+        }
+    }
 });

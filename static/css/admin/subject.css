@@ -10,8 +10,8 @@
 	left: 20px;
 }
 .alert{
-	width:50vw;
-	display: inline;
+	width:70vw;
+	display: inline-block;
 	float:right;
 }
 fieldset{

@@ -16,6 +16,7 @@ $(window).on('load',function()
         	$('title').text('Grade Point');
         	break;
         case ('/admin/add-form/'):
+            loadScript("/static/js/addform.js/");
         	$('title').text('Add Lasustech course');
         	break;
 

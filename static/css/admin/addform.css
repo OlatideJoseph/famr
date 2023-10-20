@@ -4,3 +4,17 @@
 	flex-direction: row;
 	justify-content: center;
 }
+.bio-data{
+	position: absolute;
+	top:15px;
+	left: 20px;
+}
+.alert{
+	width:70vw;
+	display: inline-block;
+	float:right;
+}
+fieldset{
+	border-radius: 25px !important;
+	padding: 10px !important;
+}
