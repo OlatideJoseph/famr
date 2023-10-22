@@ -11,6 +11,20 @@
   {% endblock %}
 </head>
 <body id="body">
+  <div class="admin-section">
+    <center><h3>Lasustech</h3></center>
+    <hr>
+    <div class="sub-section">
+      <ul>
+        <li class="current"><a href="#">Home</a></li>
+        <li><a href="#">Add Subjects</a></li>
+        <li><a href="#">Add Lasustech Course</a></li>
+        <li><a href="#">Add Grade Point score</a></li>
+        <li><a href="#">Visit User Page...</a></li>
+      </ul>
+    </div>
+    
+  </div>
     <div id="blo">
         <img src="{{url_for('static', filename='img/1485.gif')}}" alt="Loader-Icon"/>
     </div>
@@ -22,7 +36,7 @@
     <!-- <section class="container-fluid col-md-8 mb-5 pl-5 pr-5 ajx" id="content">
       
     </section> -->
-    <section class="content-section ajx">
+    <section class="content-section ajx jj">
       {% block content %}
       {% endblock %}
     </section>

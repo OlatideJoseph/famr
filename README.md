@@ -6,7 +6,7 @@
 4. Olutayo Yetunde Opeyemi
 5. Adeyinka AbdulRahman Olabode
 6. waliat
-7. Micheal Babatunde
+7. Babatunde Michael Adewale
 8. Adeyemi Oreoluwa Peter
 9. Sadiku Fawas Olorunkemi
 10. ...

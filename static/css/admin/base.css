@@ -2,10 +2,17 @@ body{
 	background-color:#150E28 !important;
 	color:#fff;
 	overflow: hidden;
+	display: flex;
+	flex-direction: row;
 }
 fieldset{
 	background-color: #3a1844;
 	font-family: monospace;
+}
+.jj{
+	position: relative;
+	margin-left: 300px;
+	width: 50vw;
 }
 .body-loading{
 	overflow: hidden;
@@ -34,4 +41,42 @@ fieldset{
 }
 .bloader{
 	display: none !important;
+}
+.admin-section{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	max-width: 40vw;
+	z-index: 101;
+	background-color: #17151b;
+	padding-right: 10px;
+}
+.sub-section{
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+}
+.sub-section ul{
+	line-height: 30px;
+}
+.sub-section ul li{
+	list-style-type: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	transition: .4s all;
+	cursor: pointer;
+}
+.sub-section ul li:hover{
+	background-color: var(--bs-dark);
+}
+li.current{
+	background-color: var(--bs-dark);
+}
+li > a{
+	text-decoration: none;
+	color: white;
+	font-weight: 400;
 }
