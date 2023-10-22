@@ -1,13 +1,26 @@
+:root{
+	--bg-purple:#3a1844;
+	--nav-bg:#17151b;
+	--abg-color:#150E28;
+}
 body{
-	background-color:#150E28 !important;
+	background-color:var(--abg-color) !important;
 	color:#fff;
-	overflow: hidden;
 	display: flex;
+	overflow: hidden;
 	flex-direction: row;
 }
 fieldset{
-	background-color: #3a1844;
+	background-color: var(--bg-purple);
 	font-family: monospace;
+}
+.hr{
+	margin-left: 15px;
+}
+.a-lg{
+	width: 45px;
+	height: 45px;
+	border-radius: 90px;
 }
 .jj{
 	position: relative;
@@ -47,6 +60,7 @@ fieldset{
 	top: 0;
 	left: 0;
 	bottom: 0;
+	width: 280px;
 	max-width: 40vw;
 	z-index: 101;
 	background-color: #17151b;

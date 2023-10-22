@@ -12,15 +12,18 @@
 </head>
 <body id="body">
   <div class="admin-section">
-    <center><h3>Lasustech</h3></center>
-    <hr>
+    <center>
+      <img src="{{url_for('static', filename='img/lasustech_logo-2.png')}}" class="a-lg" alt="logo">
+      <h3>Lasustech</h3>
+    </center>
+    <hr class="hr">
     <div class="sub-section">
       <ul>
-        <li class="current"><a href="#">Home</a></li>
-        <li><a href="#">Add Subjects</a></li>
-        <li><a href="#">Add Lasustech Course</a></li>
-        <li><a href="#">Add Grade Point score</a></li>
-        <li><a href="#">Visit User Page...</a></li>
+        <li class="current home"><a href="{{url_for('admin.home')}}">Home</a></li>
+        <li class="subject"><a href="{{url_for('admin.add_subject')}}">Add Subjects</a></li>
+        <li class="course"><a href="{{url_for('admin.add_form')}}">Add Lasustech Course</a></li>
+        <li class="gp"><a href="{{url_for('admin.grade_point')}}">Add Grade Point score</a></li>
+        <li><a href="{{'school.match'}}">Visit User Page...</a></li>
       </ul>
     </div>
     

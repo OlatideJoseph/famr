@@ -10,14 +10,20 @@ $(window).on('load',function()
         case ('/admin/add-subject-waec/'):
             loadScript("/static/js/subject.js/");
             $('title').text('Add Subjects');
+            $('.current').toggleClass('current');
+            $('.subject').toggleClass('current');
             break;
         case ('/admin/grade-add/'):
         	loadScript("/static/js/gp.js/");
         	$('title').text('Grade Point');
+            $('.current').toggleClass('current');
+            $('.gp').toggleClass('current');
         	break;
         case ('/admin/add-form/'):
             loadScript("/static/js/addform.js/");
         	$('title').text('Add Lasustech course');
+            $('.current').toggleClass('current');
+            $('.course').toggleClass('current');
         	break;
 
     }
