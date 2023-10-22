@@ -28,7 +28,7 @@ const showAlert = (msg, category)=>{
     alert += `<span class="btn-close" data-bs-dismiss="alert"`
     alert += ` aria-label="Close">&times</span></p>`;
     // $("#loader").fadeOut(500);
-    $("#blo").before(alert);
+    $(".ajx").prepend(alert);
 };
 const showLoader = ()=>{
     let content = $("#content");
@@ -73,7 +73,11 @@ let token = localStorage.getItem("refresh");
 if (token !== null)
 {
     $.ajaxSetup({
-        headers:{Authorization: `Bearer ${localStorage.getItem("refresh")}`}
+        headers:{Authorization: `Bearer ${localStorage.getItem("refresh")}`},
+        error:function()
+        {
+            showAlert("An error occured !", "danger");
+        }
     });
     let location = window.location.pathname;
     if (location === "/login/" || location === "/sign-up/")

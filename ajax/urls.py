@@ -34,6 +34,48 @@ def add_form():
         if isinstance(protected, Response):
             return protected
     form = AddCourseForm()
+    if request.method == "POST" and request.headers.get(xhr) == xhr0:
+        #data variable
+        data = request.get_json()
+        course_title = data["course_name"].title()
+        jamb_score = int(data["jamb_score"])
+        field1 = data["field1"].title()
+        grade_1 = data["grade_1"]
+        field2 = data["field2"].title()
+        grade_2 = data["grade_2"]
+        field3 = data["field3"].title()
+        grade_3 = data["grade_3"]
+        field4 = data["field4"].title()
+        grade_4 = data["grade_4"]
+        field5 = data["field5"].title()
+        grade_5 = data["grade_5"]
+        course = Course(course_title=course_title)
+        jamb = AdminJamb(min_score = jamb_score, course = course)
+        c_sub = [
+            WaecSubject(course=course, name=field1,
+                     grade=Grade.query.filter_by(point=grade_1).first()),
+            WaecSubject(course=course, name=field2,
+                     grade=Grade.query.filter_by(point=grade_2).first()),
+            WaecSubject(course=course, name=field3,
+                     grade=Grade.query.filter_by(point=grade_3).first()),
+            WaecSubject(course=course, name=field4,
+                     grade=Grade.query.filter_by(point=grade_4).first()),
+            WaecSubject(course=course, name=field5,
+                     grade=Grade.query.filter_by(point=grade_5).first()),
+        ]
+        #database operation
+        db.session.add(course)
+        db.session.add(jamb)
+        db.session.commit()
+        db.session.add_all(c_sub)
+        db.session.commit()
+
+        return make_response({
+            "msg": f"{data['course_name']} added successfully",
+            "status": "success",
+            "code": 201,
+            }, 201,
+            {"Content-Type":"application/json"})
     if form.validate_on_submit():
         course_title = form.course_name.data.title()
         print(course_title)
@@ -68,8 +110,13 @@ def add_form():
         db.session.commit()
         db.session.add_all(c_sub)
         db.session.commit()
-        flash(f"{form.course_name.data} added successfully", "info")
-        return redirect("/")
+
+        return make_response({
+            "msg": f"{form.course_name.data} added successfully",
+            "status": "success",
+            "code": 201,
+            }, 201,
+            {"Content-Type":"application/json"})
         # except IntegrityError:
         #     flash(f"{form.course_title} is already created", "warning")
         # else:
