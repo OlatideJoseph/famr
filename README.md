@@ -56,3 +56,16 @@ body{
 }
 ```
 
+## Installation
+**Run the following command to install the application**
+```text
+pip install requirements.txt
+export FLASK_APP=app.py
+export FLASK_DEBUG=1
+```
+**To run the application
+```qterminal
+flask run
+...
+```
+The application should start running now.
