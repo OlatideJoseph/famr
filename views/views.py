@@ -82,19 +82,21 @@ class LoginView(MethodView):
 	def post(self):
 		form = self.form()
 		headers = {"Content-Type":"application/json"}
-		if request.headers.get(xhr) == xhr_val+'ehghj':
+		if ((request.headers.get(xhr) == xhr_val) and
+			(request.headers.get("Content-Type") == "application/json")):
 			js_data = request.get_json()
 			u = js_data['username']
 			usr = User.query.filter_by(username=u).first()
 			if usr and usr.check_pass(js_data["password"]):
-				token = Token.gen_token(usr.pk)
-				tock = Token(token=token, user=usr)
-				db.session.add(tock)
-				db.session.commit()
-				return {"refresh_token": token,
-					"msg": ["User logged successfully","info"],
-					"is_admin": usr.is_admin,
-				"code": 200}
+				if len(usr.active_token()) <= 3:#Only authenticate if token is less than 3
+					token = Token.gen_token(usr.pk)
+					tock = Token(token=token, user=usr)
+					db.session.add(tock)
+					db.session.commit()
+					return {"refresh_token": token,
+						"msg": ["User logged successfully","info"],
+						"is_admin": usr.is_admin,
+					"code": 200}
 			return {
 				"code": 401,
 				"msg": ["Invalid User Credentials ", "warning"]
@@ -105,7 +107,7 @@ class LoginView(MethodView):
 			password = form.password.data
 			usr = User.query.filter_by(username=username).first()
 			if usr and usr.check_pass(password):
-				if len(usr.active_token()) < 3:#Only authenticate if token is less than 3
+				if len(usr.active_token()) <= 3:#Only authenticate if token is less than 3
 					token = Token.gen_token(usr.pk)
 					tock = Token(token=token, user=usr)
 					db.session.add(tock)

@@ -29,6 +29,9 @@ fieldset{
 	display: flex !important;
 	flex-direction: column !important;
 }
+.bg-purple{
+	background-color: var(--bg-purple) !important;
+}
 .body-loading{
 	overflow: hidden;
 }
@@ -112,5 +115,4 @@ li > a{
 }
 .alert{
 	max-width: 700px !important;
-	margin-left: 300px !important;
 }

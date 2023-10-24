@@ -103,7 +103,7 @@ $(document).ready(()=>{
                 let span = "<ul>Subject: ";
                 let ali = "";
                 for (let i = 0; i <= subject.length-1; i++){
-                    let li = "\n<li>" + subject[i] + "</li>"
+                    let li = "\n<li>" + Object.keys(subject[i])[0] + "</li>"
                     ali += li;
                 }
                 span += ali;

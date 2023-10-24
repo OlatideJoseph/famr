@@ -8,6 +8,7 @@ $("form").on('submit', function(e)
     {
         url: `/ajax/v1.0${window.location.pathname}`,
         type:"POST",
+        contentType: "application/x-www-form-urlencoded",
         data:form,
         beforeSend: function(data)
         {
@@ -17,7 +18,6 @@ $("form").on('submit', function(e)
         {
             console.log(data);
             showAlert(data["msg"][0], data["msg"][1]);
-            alert(data);
         },
         error: function(data)
         {

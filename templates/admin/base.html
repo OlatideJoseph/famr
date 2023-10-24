@@ -20,10 +20,18 @@
     <div class="sub-section">
       <ul>
         <li class="current home"><a href="{{url_for('admin.home')}}">Home</a></li>
+        <hr>
         <li class="subject"><a href="{{url_for('admin.add_subject')}}">Add Subjects</a></li>
+        <hr>
         <li class="course"><a href="{{url_for('admin.add_form')}}">Add Lasustech Course</a></li>
+        <hr>
         <li class="gp"><a href="{{url_for('admin.grade_point')}}">Add Grade Point score</a></li>
+        <hr>
         <li><a href="{{url_for('school.match')}}">Visit User Page...</a></li>
+        <hr>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Sign out
+        </button>
       </ul>
     </div>
     
@@ -40,6 +48,25 @@
       
     </section> -->
     <section class="content-section ajx jj">
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Are you sure you want to logout ?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-dark">
+              <span class="text-danger">*Note:*</span> if you logout you'll have to login again to access this page
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="logOut();">Logout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {% block content %}
       {% endblock %}
     </section>

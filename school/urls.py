@@ -31,10 +31,11 @@ def match():
     return render("match.html")
 
 @school.route("/course/")
+@auth.login_required
 def cause():
-    if request.is_json:
-        js = request.get_json()
-        course = Course.query.filter_by(course_title=js["course"]).first()
+    arg = request.args.get('c')
+    if arg:
+        course = Course.query.filter_by(course_title=arg).first()
         if course:
             return {
                 "subject":[{sub.name:sub.grade.point} for sub in course.waec],

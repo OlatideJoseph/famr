@@ -70,6 +70,14 @@ const getHtml = (url, title, script)=>{
     });
 }// only to be used when the user is logged in
 let token = localStorage.getItem("refresh");
+const logOut = ()=>{
+    $.get(`/log-out/?token=${token}`, function(data){
+        showAlert(data['msg'], 'success');
+    });
+    localStorage.clear();
+    setInterval(function(){window.location.pathname = '/';}, 3500);
+    //waits for 3.5 seconds before loading to the user page
+}//clears the user token and logs the user out
 if (token !== null)
 {
     $.ajaxSetup({

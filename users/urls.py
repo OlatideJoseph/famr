@@ -79,7 +79,8 @@ def list_users():
 @users.route("/log-out/")
 @auth.login_required
 def log_out():
-    auth = request.authorization
-    print(auth.token)
-    Token.log_out_from(auth.token)
-    return render("logout.html")
+    auth = request.args.get('token')
+    if auth:
+        Token.log_out_from(auth)
+        return make_response(jsonify(msg="Logged out successfully !", code=200), 200)
+    return jsonify(msg = "An error occured !", status="danger")

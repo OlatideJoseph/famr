@@ -1,9 +1,10 @@
+$('.admin-section').css({display:"none"});
 const authLogin = ()=>{
 	let user = {
 		'username': $('#username').val(),
 		'password': $('#password').val()
 	}
-	user = JSON.stringfy(user);
+	user = JSON.stringify(user);
 	$.ajax({
 		url:'/admin/authenticate/',
 		data: user,
@@ -14,10 +15,11 @@ const authLogin = ()=>{
 			if (data['is_admin'])
 			{
 				$.ajaxSetup({
-					headers:{Authorization: data['refresh_token']}
+					headers:{Authorization: `Bearer ${data['refresh_token']}`}
 				});//sets the default header for authentication
 				localStorage.setItem('refresh', data['refresh_token']);//sets the default token
 				showAlert("User logged in successfully", "success");
+				window.location.pathname = 'admin';
 			} else
 			{
 				showAlert("User account is not an admin", "warning");
@@ -25,7 +27,7 @@ const authLogin = ()=>{
 		}
 	});
 }
-$('.login').on('submit', function()
+$('form').on('submit', function()
 {
-	console.log("loading");
+	authLogin();
 });

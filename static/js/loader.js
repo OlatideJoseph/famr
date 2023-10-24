@@ -25,6 +25,9 @@ $(window).on('load',function()
             $('.current').toggleClass('current');
             $('.course').toggleClass('current');
         	break;
+        case ('/admin/authenticate/'):
+            loadScript("/static/js/admin/auth.js/");
+            break;
 
     }
 
