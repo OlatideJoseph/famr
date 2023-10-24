@@ -28,11 +28,12 @@
             <li class="nav-item">
               <a class="nav-link usp" href="{{url_for('users.login')}}">Log In</a>
             </li>
+            <button type="button" class="nav-item  btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Logout
+            </button>
+
             <li class="nav-item">
-              <a class="nav-link auth" href="{{url_for('users.log_out')}}">Log Out</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled"  href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              <a class="nav-link disabled"  href="#" tabindex="-1" aria-disabled="true">Others...</a>
             </li>
           </ul>
         </div>
@@ -52,6 +53,25 @@
       
     </section> -->
     <section class="content-section ajx">
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Are you sure you want to logout ?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-dark">
+              <span class="text-danger">*Note:*</span> if you logout you'll have to login again to access this page !
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="logOut();">Logout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <section class="bio-data card">
         <div class="card-header space-between row">
           <p>Bio's Data</p>
