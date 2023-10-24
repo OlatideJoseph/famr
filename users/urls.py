@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash as gph
 from forms import UserLoginForm, UserCreationForm
 from models import User, Token, UserRole, Level
 from app import db, auth
-from views import LoginView, SignUpView
+from views import LoginView, SignUpView, ProfileView
 from . import users
 
 
@@ -15,6 +15,7 @@ xhr = "X-Requested-With"
 xhr_val = "XMLHttpRequest"
 
 #class based views
+users.add_url_rule("/profile/", view_func=ProfileView.as_view('profile'))
 users.add_url_rule("/login/", view_func=LoginView.as_view("login"))
 
 #function based views

@@ -1,7 +1,7 @@
 from flask import render_template as render, url_for, request, redirect, jsonify, make_response, flash
 from flask.views import MethodView, View
 from werkzeug.security import generate_password_hash as gph
-from app import db
+from app import db, auth
 from models import User, Token, UserRole, Level
 from forms import UserLoginForm, UserCreationForm, AdminLoginForm, AdminSignUpForm, UserCreationForm
 
@@ -31,13 +31,13 @@ class SignUpView(View):
 				"redirect": url_for("users.login")
 			}, 201, headers)
 		if form.validate_on_submit():
-			user = self.process_form(form, role) #processes the form submitted
+			user = self.process_form(form) #processes the form submitted
 			if user:
 				level = Level(role=role, user=user)
 				db.session.add(user)
 				db.session.add(level)
 				db.session.commit()
-				flash(f"User {username} added successfully !", "success")
+				return {[f"User {user.username} added successfully !", "success"]}
 		return render("signup.html", form=form)
 
 	def process_form(self, form):
@@ -174,3 +174,14 @@ class AdminSignUpView(SignUpView):
 			}, 201, headers)
 
 		return render("admin/registration.html", form=form)
+
+
+class ProfileView(MethodView):
+	decorators = [auth.login_required]
+	template = "users/profile.html"
+
+	def get(self):
+		return render(self.template)
+
+	def post(self):
+		return render(self.template)

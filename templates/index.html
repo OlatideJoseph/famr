@@ -8,12 +8,13 @@
 	<title>Welcome Aspirants !</title>
 </head>
 <body>
-	<section class="section-1">
+	<div class="section-1">
 		<h1>Page 1</h1>
-	</section>
-	<section class="section-2">
-		<h1>Page 2</h1>
-		<button type="button">Login</button>
-	</section>
+	</div>
+	<div class="section-2">
+		<img src="{{url_for('static', filename='img/favicon.png')}}" alt="page-img">
+		<h1>Welcome to your Lasustech admission companion</h1>
+		<button type="button" onclick="window.location.pathname='/login/';">Login</button>
+	</div>
 </body>
 </html>

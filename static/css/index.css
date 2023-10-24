@@ -11,14 +11,48 @@ body{
 .section-1, .section-2{
 	height: 100vh;
 	width: 50vw;
-	padding: 20px;
+	padding: 0;
+	margin:0;
 }
 .section-1{
-
+	color: #ccc;
+}
+.section-1::before{
+	content: '';
+	background-size: cover;
+	background-repeat: no-repeat;
+	object-fit: cover;
+	position: absolute;
+	background-image: url('/static/img/toa-unsplash.jpg/');
+	height: 100vh;
+	margin: 0;
+	width: 50vw;
+	z-index: -1;
 }
 .section-2{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
-.section-2::before{
+.section-2 h1{
+	margin-left: 5px;
+}
+button[type='button']{
+	max-width: 400px;
+	padding: 15px;
+	transition: .3s ease all;
+	border-radius: 20px;
+	border: none;
+	margin-top: 10px;
+	border-radius: 20px;
+	background: linear-gradient(315deg, #66c2e6, #79e6ff);
+	box-shadow:  -1px -1px 20px 2px #60b7d9, 20px 20px 60px #82f7ff;
+}
+button[type='button']:hover{
+	background: #00b7ff;
+}
+/*.section-2::before{
 	content: '';
 	width: 3px;
 	border-radius: 2px;
@@ -26,5 +60,6 @@ body{
 	display: inline-block;
 	float: left;
 	height: 100vh;
+	margin: 0;
 	background: black;
-}
+}*/
