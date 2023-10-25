@@ -11,11 +11,15 @@ body{
 .section-1, .section-2{
 	height: 100vh;
 	width: 50vw;
-	padding: 0;
 	margin:0;
 }
 .section-1{
 	color: #ccc;
+}
+.section-1 > .content{
+	display: flex !important;
+	flex-direction: column;
+	justify-content: space-between !important;
 }
 .section-1::before{
 	content: '';
@@ -30,13 +34,17 @@ body{
 	z-index: -1;
 }
 .section-2{
+}
+.content{
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	text-align: center;
 }
-.section-2 h1{
-	margin-left: 5px;
+.section-2 .content{
+	padding-top: 200px;
+
 }
 button[type='button']{
 	max-width: 400px;
@@ -63,3 +71,9 @@ button[type='button']:hover{
 	margin: 0;
 	background: black;
 }*/
+@media(prefers-color-scheme:dark){
+	.section-2{
+		background: black;
+		color: #ccc;
+	}
+}
