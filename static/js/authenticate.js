@@ -36,7 +36,7 @@ $(document).ready(
                     form.hide();
                     let resp = getHtml(`/ajax/v1.0/match-course/`);//gets the form element
                     $(".usp").show();
-                    $(".bio-data").css({"display": "block"});
+                    $(".bio-data").show(0);
                     form.css("class", "");
                     form.show();
 

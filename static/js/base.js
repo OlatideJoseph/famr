@@ -146,12 +146,15 @@ if (token !== null)
 } else
 {
     let location = window.location.pathname;
-    if (location !== "/login/" && location !== "/sign-up/" && location !== "/admin/")
+    if (location !== "/login/" && location !== "/sign-up/" && location !== "/admin/" && location !== '/admin/authenticate/')
     {
         window.location.pathname = "/login/";// redirect users to the login page
     } else if (location == '/admin/')
     {
         window.location.pathname = '/admin/authenticate/';
+    } else
+    {
+        console.log("Not auth");
     }// redirects user is they are not yet authenticated
 }
 const getAndChangePageFunction = (href)=>{

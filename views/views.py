@@ -177,7 +177,7 @@ class AdminSignUpView(SignUpView):
 
 
 class ProfileView(MethodView):
-	decorators = [auth.login_required]
+	decorators = []
 	template = "users/profile.html"
 
 	def get(self):
