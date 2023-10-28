@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Poppins:wght@300&display=swap');
+
+body{
+	font-family: 'Lora', serif;
+	font-family: 'Poppins', sans-serif;
+	overflow: hidden;
+}
+h1{
+	margin-left: 50px;
+}
+h4{
+	margin: 0;
+}
+a{
+	text-decoration: none;
+}
+.content-section{
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.profile{
+	display: flex;
+	flex-direction: row;
+}
+.u-img{
+	width: 64px;
+	height: 64px;
+	border-radius: 32px;
+}
+.cc{
+	display: flex;
+	justify-content: space-between;
+}
+.id-hd{
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+}
+.profile-body{
+	width: 400px;
+}
+@media (prefers-color-scheme: dark){
+	body{
+		color: antiquewhite;
+		background: black;
+	}
+	.content-section{
+		background: #17151b;
+	}
+	a{
+		color: lightblue;
+	}
+}

@@ -1,4 +1,11 @@
 "use strict";
+const notAllowedUrl = [
+        "/login/",
+        "/sign-up/",
+        "/admin/",
+        "/admin/authenticate/ua/",
+        "/admin/register-admin-user/ua/"
+];
 const createScript = (src)=>{
     const sc = document.createElement("script");
     sc.type = "text/javascript";
@@ -115,7 +122,7 @@ if (token !== null)
             }
         });
         // $("#body").html(resp.bodyText);
-    } else if (location === "/admin/authenticate/" || location === "/admin/sign-up/")
+    } else if (location.endsWith("/ua/"))
     {
         let user = $.getJSON("/ajax/v1.0/get-auth-data/", function(user){
             let msg = `User ${user["username"]} is not an admin, you need to login with an admin account!!!`;
@@ -127,16 +134,29 @@ if (token !== null)
                 window.location.pathname = '/admin/';
             }
         });
-    } else if (location === "/admin/")
+    } else if (location.startsWith('/admin/'))
     {
         $.ajax({
-            url:"/static/js/admin/home.js/",
-            dataType: 'script',
+            url:"/ajax/v1.0/get-auth-data/",
             type:"get",
-            success:function(data){
-                console.log("admin js loaded successfully");
+            success: function(data)
+            {
+                if (data["is_admin"])
+                {
+                    $.ajax({
+                        url:"/static/js/admin/home.js/",
+                        dataType: 'script',
+                        type:"get",
+                        success:function(data){
+                            console.log("admin js loaded successfully");
+                        }
+                    });
+                } else
+                {
+                    window.location.pathname = "/admin/authenticate/ua/?ua";
+                } //check if user is an admin
             }
-        });
+        });// get the data of the authenticated user
     } else
     {
         console.log("An Else statement");
@@ -146,12 +166,12 @@ if (token !== null)
 } else
 {
     let location = window.location.pathname;
-    if (location !== "/login/" && location !== "/sign-up/" && location !== "/admin/" && location !== '/admin/authenticate/')
+    if (!(notAllowedUrl.find(t => {return t == location})))
     {
         window.location.pathname = "/login/";// redirect users to the login page
     } else if (location == '/admin/')
     {
-        window.location.pathname = '/admin/authenticate/';
+        window.location.pathname = '/admin/authenticate/ua/';
     } else
     {
         console.log("Not auth");

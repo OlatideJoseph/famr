@@ -148,5 +148,9 @@ class UserCreationForm(FlaskForm):
     middle_name = StringField("*Middle Name:* (opt)", validators=[Length(max=25, min=3)])
     signup = SubmitField("Sign Up")
 
+
+class EditProfileForm(FlaskForm):
+    pass
+    
 class AdminSignUpForm(UserCreationForm):
     pass

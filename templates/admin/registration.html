@@ -45,10 +45,10 @@
         <div class="row">
         	{{form.signup(class="login btn btn-primary btn-sm mt-3")}}
         	<div class="card-footer text-center">
-                <span class="text-center">Have an account ! ? <a href="{{url_for('users.login')}}" class="link text-light">Log in!</a></span>
+                <span class="text-center">Have an account ! ? <a href="{{url_for('admin.authenticate')}}" class="text-light">Log in!</a></span>
         	</div>
         </div>
     </form>
 </fieldset>
-<script type="text/javascript" src="{{url_for('static', filename='js/signup.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/admin/signup.js')}}"></script>
 {% endblock %}

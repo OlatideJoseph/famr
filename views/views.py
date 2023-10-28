@@ -3,7 +3,9 @@ from flask.views import MethodView, View
 from werkzeug.security import generate_password_hash as gph
 from app import db, auth
 from models import User, Token, UserRole, Level
-from forms import UserLoginForm, UserCreationForm, AdminLoginForm, AdminSignUpForm, UserCreationForm
+from forms import (UserLoginForm, UserCreationForm,
+					AdminLoginForm, AdminSignUpForm,
+					UserCreationForm, EditProfileForm)
 
 xhr = "X-Requested-With"
 xhr_val = "XMLHttpRequest"
@@ -17,27 +19,31 @@ class SignUpView(View):
             "Content-Type": "application/json"
 		}
 		role = UserRole.query.filter_by(name="users").first()
+		role1 = UserRole.query.filter_by(name="students").first()
 
 		if ((request.method == "POST") and (
 			request.headers.get(xhr) == xhr_val)):
 			pro = self.xhr_form_processor()
-			if pro:
-				pass
-			return make_response({
-				"msg": [
-					f"User {username} added successfully !", "success"
-				], 
-				"code": 201,
-				"redirect": url_for("users.login")
-			}, 201, headers)
+			if user:
+				level = Level(role=role, user=user)
+				level1 = Level(role1, user=user)
+				db.session.add_all([user, level, level1])
+				db.session.commit()
+				return make_response({
+					"msg": [
+						f"User {pro.username} added successfully !", "success"
+					], 
+					"code": 201,
+					"redirect": url_for("users.login")
+				}, 201, headers)
 		if form.validate_on_submit():
 			user = self.process_form(form) #processes the form submitted
 			if user:
 				level = Level(role=role, user=user)
-				db.session.add(user)
-				db.session.add(level)
+				level1 = Level(role=role1, user=user)
+				db.session.add_all([user, level, level1])
 				db.session.commit()
-				return {[f"User {user.username} added successfully !", "success"]}
+				return {"msg": [f"User {user.username} added successfully !", "success"]}
 		return render("signup.html", form=form)
 
 	def process_form(self, form):
@@ -65,11 +71,13 @@ class SignUpView(View):
 		mid_name = js.get("middle_name")
 		birth_date = js.get("birth_date")
 		password = gph(js.get("auth"))
-		if username and password:
-			user  = User(username=username, password=password)
-			db.session.add(user)
-			db.session.commit()
-		return True
+		user = User(username=username, email=email,
+			password=hashed, first_name=first_name,
+			last_name=last_name,birth_date=birth_date)
+		mid_name = form.middle_name.data
+		if mid_name:
+			user.mid_name = mid_name.title()
+		return user
 
 
 class LoginView(MethodView):
@@ -184,4 +192,14 @@ class ProfileView(MethodView):
 		return render(self.template)
 
 	def post(self):
+		return render(self.template)
+
+class EditProfileView(View):
+	template: str
+	"""
+		This view function is for editing the profile view
+	"""
+	template = "users/edit_profile.html/"
+
+	def dispatch_request(self, prn: str):
 		return render(self.template)

@@ -35,7 +35,8 @@ class UserRole(db.Model, BaseMixin):
         role1 = cls(name="admins")
         role2 = cls(name="users")
         role3 = cls(name="staffs")
-        db.session.add_all([role2, role1, role3])
+        role4 = cls(name="students")
+        db.session.add_all([role2, role1, role3, role4])
         try:
             db.session.commit()
             return True
@@ -55,6 +56,7 @@ class User(db.Model, UserAdminMixin):
     password = db.Column(db.Text(), nullable=False)
     token = db.relationship("Token", backref='user', lazy=True)
     first_name = db.Column(db.String(25), nullable=False)
+    image_path = db.Column(db.String, default="users/default.jpg")
     last_name = db.Column(db.String(25), nullable=False)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     mid_name = db.Column(db.String(25), nullable=True)

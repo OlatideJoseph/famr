@@ -1,4 +1,5 @@
 import functools
+from datetime import date
 from flask import (render_template as render,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for, Response)
@@ -259,6 +260,7 @@ def get_data():
         "dob": user.birth_date.strftime("%d-%m-%Y"),
         "mid_name": user.mid_name,
         "is_admin": user.is_admin,
+        "age": (date.today().year - user.birth_date.year)
     }
     return jsonify(**data)
 

@@ -1,7 +1,37 @@
-{% extends 'base.html' %}
-{% block head %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Users | Profile | Page</title>
-{% endblock %}
-{% block content %}
-      <h1>Profile Page</h1>
-{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/profile.css')}}">
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='img/lasustech_logo-2.png')}}">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
+</head>
+<body>
+    <section class="content-section ajx jj">
+        <div class="pf">
+            <h1>User Profile Page</h1>
+            <div class="profile">
+                <img src="{{url_for('static', filename='img/users/icons8-user-default-64.png')}}" class="u-img" alt="user-profile-image"/>
+                <div class="profile-body">
+                    <hr>
+                    <div class="identification">
+                        <div class="id-hd">
+                            <h4 class="username">Default User Name</h4>
+                            <a href="#">Edit</a>
+                        </div>
+                        <small class="real">Lasustech Student Probable Admission Candidate</small>
+                    </div>
+                    <hr>
+                    <p class="cc">Age: <span class="age">yrs</span></p>
+                    <p class="cc">Matric: <span class="matric"></span></p>
+                    <p class="cc">Registration-Id: <span class="waec-id"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="{{url_for('static', filename='js/profile.js')}}"></script>
+</body>
+</html>

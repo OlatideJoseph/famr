@@ -6,7 +6,7 @@ const authLogin = ()=>{
 	}
 	user = JSON.stringify(user);
 	$.ajax({
-		url:'/admin/authenticate/',
+		url:'/admin/authenticate/ua/',
 		data: user,
 		contentType: 'application/json',
 		dataType: 'json',
@@ -23,6 +23,12 @@ const authLogin = ()=>{
 			} else
 			{
 				showAlert("User account is not an admin", "warning");
+			}
+		},
+		statusCode: {
+			401: function()
+			{
+				showAlert("User not Allowed to access this page", "warning");
 			}
 		}
 	});

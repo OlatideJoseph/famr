@@ -35,14 +35,8 @@ def home():
 # 				})
 # 	return render("/admin/authenticate.html", form=AdminLoginForm())
 
-admin.add_url_rule("/authenticate/", view_func=AdminLoginView.as_view("authenticate"))
-admin.add_url_rule("/register-admin-user/", view_func=AdminSignUpView.as_view("sign-up"))
-
-@admin.route("/register-user/")
-def register_user():
-	return render("admin/register.html", form=forms)
-
-
+admin.add_url_rule("/authenticate/ua/", view_func=AdminLoginView.as_view("authenticate"))
+admin.add_url_rule("/register-admin-user/ua/", view_func=AdminSignUpView.as_view("sign_up"))
 
 @admin.route("/add-form/", methods = ["GET", "POST"])
 def add_form():
