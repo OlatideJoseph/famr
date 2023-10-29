@@ -26,9 +26,13 @@ $(window).on('load',function()
             $('.course').toggleClass('current');
         	break;
         case ('/admin/authenticate/'):
+            $('title').text('Admin | Authenticate');
             loadScript("/static/js/admin/auth.js/");
             break;
-
+        case ('/match-course/'):
+            $('title').text('Match and Find');
+            loadScript("/static/js/match.js/");
+            break;
     }
 
 });

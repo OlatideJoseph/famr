@@ -33,15 +33,16 @@ $(document).ready(
                         },
                         async: true,
                     });//sets the default req header
-                    form.hide();
-                    let resp = getHtml(`/ajax/v1.0/match-course/`);//gets the form element
-                    $(".usp").show();
-                    $(".bio-data").show(0);
-                    form.css("class", "");
-                    form.show();
+                    window.location.pathname = "/match-course/";
+                    // form.hide();
+                    // let resp = getHtml(`/ajax/v1.0/match-course/`);//gets the form element
+                    // $(".usp").show();
+                    // $(".bio-data").show(0);
+                    // form.css("class", "");
+                    // form.show();
 
-                    hideLoader("Match", "/match-course/");
-                    showAlert(data["msg"][0], data["msg"][1]);
+                    // hideLoader("Match", "/match-course/");
+                    // showAlert(data["msg"][0], data["msg"][1]);
                 },
                 error: function(data)
                 {

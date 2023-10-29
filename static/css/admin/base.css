@@ -14,6 +14,12 @@ fieldset{
 	background-color: var(--bg-purple);
 	font-family: monospace;
 }
+blockquote{
+	transition: .1s display;
+	max-height: 30vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
 .hr{
 	margin-left: 15px;
 }
@@ -60,6 +66,33 @@ fieldset{
 .bloader{
 	display: none !important;
 }
+.b-ul{
+	display: none;
+	opacity: 0.5;
+	transform: translateY(10px);
+}
+.h-l{
+
+}
+.core, .a-o{
+	margin-left: 10px;
+	padding: 0;
+	border-radius: 3px;
+	padding: 12px;
+	display: flex;
+	transition: .5s all;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.carat{
+	transition: .7s all;
+}
+.core:hover, .a-o:hover{
+	background-color: var(--bs-dark);
+}
+.c-r{
+	transform: rotateX(200deg);
+}
 .admin-section{
 	position: absolute;
 	top: 0;
@@ -74,6 +107,9 @@ fieldset{
 .sub-section{
 	overflow-y: auto;
 	display: flex;
+	justify-content: space-between;
+	height: 70vh;
+	max-height: 70vh;
 	flex-direction: column;
 }
 .sub-section ul{

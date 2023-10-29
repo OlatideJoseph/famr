@@ -11,6 +11,11 @@
 	margin-left: 20px;
 	max-height: 20rem;
 }
+.na{
+	display: flex;
+	flex-direction: column;
+	
+}
 .content-section{
 	padding: 12px;
 	display: flex;

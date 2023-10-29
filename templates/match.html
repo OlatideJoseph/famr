@@ -4,18 +4,10 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/match.css')}}">
 {% endblock %}
 {% block content%}
-<fieldset class="form mt-3">
+<div class="na">
+    <fieldset class="form mt-3">
     
-</fieldset>
-<script type="text/javascript" defer src="{{url_for('static', filename='js/match.js')}}"></script>
-<script type="text/javascript">
-    $(window).on("load",function(){
-        showLoader();
-        getHtml(`/ajax/v1.0${window.location.pathname}`);
-        hideLoader("Match", "/match-course/");
-        let script = `<script type='text/javascript' defer src={{url_for('static', filename='js/match.js')}}></`;
-        script += `script>`;
-        $("body").append($(script));
-    });
-</script>
+    </fieldset>
+</div>
+<script type="text/javascript" defer src="{{url_for('static', filename='js/loader.js')}}"></script>
 {% endblock %}

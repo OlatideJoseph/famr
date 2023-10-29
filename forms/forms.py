@@ -150,7 +150,12 @@ class UserCreationForm(FlaskForm):
 
 
 class EditProfileForm(FlaskForm):
-    pass
+    email = StringField("Email Address: ")
+    username = StringField("Username: ")
+    first_name = StringField("FirstName: ")
+    middle_name = StringField("MiddleName: ")
+    last_name = StringField("LastName: ")
+    update = SubmitField("Update !")
     
 class AdminSignUpForm(UserCreationForm):
     pass

@@ -154,18 +154,24 @@ class AdminSignUpView(SignUpView):
 	def dispatch_request(self):
 		form = self.form()
 		role = UserRole.query.filter_by(name="users").first()
+		role0 = UserRole.query.filter_by(name="staffs").first()
 		role1 = UserRole.query.filter_by(name="admins").first()
 
 		if form.validate_on_submit():
 			user = self.process_form(form)
 			if user:
 				user.is_admin = True
+				level = Level(role=role0, user=user)
 				level0 = Level(role=role, user=user)
 				level1 = Level(role=role1, user=user)
-				db.session.add_all([user, level1, level0])
+				db.session.add_all([user, level1, level0, level])
 				db.session.commit()
-				print("added")
-				flash(f"User {username} added successfully !", "success")
+				return make_response(
+					jsonify(
+							msg=[
+								f"User {user.username} added successfully",
+								"success"]
+						), 201, {"Content-Type":"application/json"})
 
 		if ((request.method == "POST") and (
 			request.headers.get(xhr) == xhr_val)):
@@ -175,7 +181,7 @@ class AdminSignUpView(SignUpView):
 
 			return make_response({
 				"msg": [
-					f"User {username} added successfully !", "success"
+					f"User {pro.username} added successfully !", "success"
 				], 
 				"code": 201,
 				"redirect": url_for("admin.login")

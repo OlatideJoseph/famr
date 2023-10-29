@@ -37,6 +37,15 @@ const showAlert = (msg, category)=>{
     // $("#loader").fadeOut(500);
     $(".ajx").prepend(alert);
 };
+const naShowAlert = (msg, category) => {
+    let alert = `<p class="alert alert-${category} `
+    alert += `alert-dismissible mt-2 mb-2 pl-3 pl- fade show">${msg}`
+    alert += `<span class="btn-close" data-bs-dismiss="alert"`
+    alert += ` aria-label="Close">&times</span></p>`;
+    // $("#loader").fadeOut(500);
+    $(".na").prepend(alert);
+};
+
 const showLoader = ()=>{
     let content = $("#content");
     let body = $("body");
@@ -45,7 +54,7 @@ const showLoader = ()=>{
     bloader.removeClass("bloader");
     content.hide(1);
     console.log("Shown");
-}
+};
 
 const hideLoader = (title, url)=>{
     let bloader = $("#blo");
@@ -129,6 +138,7 @@ if (token !== null)
             if (!user["is_admin"])
             {
                 showAlert(msg, "danger");
+                console.log(user);
             } else
             {
                 window.location.pathname = '/admin/';
@@ -153,7 +163,7 @@ if (token !== null)
                     });
                 } else
                 {
-                    window.location.pathname = "/admin/authenticate/ua/?ua";
+                    window.location.pathname = "/admin/authenticate/ua/";
                 } //check if user is an admin
             }
         });// get the data of the authenticated user
@@ -204,8 +214,8 @@ $(document).ready(function()
 {
     if (token)
     {
-        $(".usp").hide(1);//hide  views required for not authenticated
-        $(".auth").show(1);//shows views required for authentication 
+        $(".usp").hide(1);//hides the views not allowed for authenticated users
+        $(".auth").show(1);//shows the views allowed for authenticated users
     }else{
         $(".usp").show(1);//vice versa
         $(".auth").hide(1);//vice versa
@@ -215,4 +225,9 @@ $(document).ready(function()
     {
         $(".bio-data").css({display: null});
     }//remove the bio data form from login
+    $(".core").on('click', function()
+    {
+        $('.n').toggleClass('b-ul');
+        $('span.carat').toggleClass("c-r");
+    });
 });

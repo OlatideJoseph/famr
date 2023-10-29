@@ -5,8 +5,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/admin/base.css')}}">
   <link  rel="icon" type="image/x-icon" href="{{url_for('static', filename='img/favicon.png')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/fontawesome.min.js"></script>
   {% block head %}
   {% endblock %}
 </head>
@@ -18,21 +20,25 @@
     </center>
     <hr class="hr">
     <div class="sub-section">
-      <ul>
-        <li class="current home"><a href="{{url_for('admin.home')}}">Home</a></li>
-        <hr>
-        <li class="subject"><a href="{{url_for('admin.add_subject')}}">Add Subjects</a></li>
-        <hr>
-        <li class="course"><a href="{{url_for('admin.add_form')}}">Add Lasustech Course</a></li>
-        <hr>
-        <li class="gp"><a href="{{url_for('admin.grade_point')}}">Add Grade Point score</a></li>
-        <hr>
-        <li><a href="{{url_for('school.match')}}">Visit User Page...</a></li>
-        <hr>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Sign out
-        </button>
-      </ul>
+      <p class="core">Core Configurations<span class="carat"><i class="fa-solid fa-chevron-down" style="color: #ffffff;"></i></span></p>
+      <blockquote class="n b-ul">
+        <ul>
+          <li class="current home"><a href="{{url_for('admin.home')}}">Home</a></li>
+          <hr>
+          <li class="subject"><a href="{{url_for('admin.add_subject')}}">Add Subjects</a></li>
+          <hr>
+          <li class="course"><a href="{{url_for('admin.add_form')}}">Add Lasustech Course</a></li>
+          <hr>
+          <li class="gp"><a href="{{url_for('admin.grade_point')}}">Add Grade Point score</a></li>
+          <hr>
+          <li><a href="{{url_for('school.match')}}">Visit User Page...</a></li>
+          <hr>
+        </ul>
+      </blockquote>
+      <p class="a-o">Admin Options<span class="carat"><i class="fa-solid fa-chevron-down" style="color: #ffffff;"></i></span></p>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Sign out
+      </button>
     </div>
     
   </div>

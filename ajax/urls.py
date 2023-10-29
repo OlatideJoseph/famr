@@ -246,6 +246,7 @@ def grade_point():
             }
         flash(f"Grade {grade.grade} added successfully!", "info")
         return redirect("/")
+    print(form.errors)
     return render("ajax/addgrade.html", form=form)
 
 @ajax.route("/get-auth-data/")
