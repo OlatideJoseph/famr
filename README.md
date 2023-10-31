@@ -21,7 +21,7 @@ It gives hope for the hopeless and provide other options for them, don't get me 
 ## Prerequisities
 To be able to run this program you'll have to the following installed
 - A web browser
-- **[Python]('https://www.python.org/'Python website)**
+- **[Python](https://www.python.org/ "Python website")**
 
 
 ## Installation
