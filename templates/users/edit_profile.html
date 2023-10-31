@@ -1,1 +1,32 @@
-<h3>Edit Profile Page</h3>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Users | Edit-Profile | Page</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/profile.css')}}">
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='img/lasustech_logo-2.png')}}">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
+</head>
+<body>
+    <section class="content-section ajx jj">
+        <div class="pf">
+            <h1>Edit User Profile Page</h1>
+            <div class="profile">
+                <form class="" method="post" enctype="multipart/form-data" action="#">
+                    {{form.csrf_token}}
+                    {{form.email.label}}
+                    {{form.email}}
+                    {{form.username.label}}
+                    {{form.username}}
+                    {{form.first_name.label}}
+                    {{form.first_name}}
+                    {{form.last_name.label}}
+                    {{form.last_name}}
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

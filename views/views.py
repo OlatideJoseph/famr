@@ -205,7 +205,10 @@ class EditProfileView(View):
 	"""
 		This view function is for editing the profile view
 	"""
+	form = EditProfileForm
 	template = "users/edit_profile.html/"
 
 	def dispatch_request(self, prn: str):
-		return render(self.template)
+		form = self.form()
+
+		return render(self.template, form=form)
