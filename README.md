@@ -18,8 +18,27 @@ It gives hope for the hopeless and provide other options for them, don't get me 
 8. Adeyemi Oreoluwa Peter
 9. Sadiku Fawas Olorunkemi
 10. ...
+## Prerequisities
+To be able to run this program you'll have to the following installed
+- A web browser
+- **[Python]('https://www.python.org/' Python website)**
 
-## Project Stack**
+
+## Installation
+**Run the following command to install the application**
+```text
+pip install -r requirements.txt
+export FLASK_APP=app.py
+export FLASK_DEBUG=1
+```
+**To run the application
+```qterminal
+flask run
+...
+```
+The application should start running now.
+
+### Project Stack**
 1. Python/Flask
 ```python
 from flask import Flask
@@ -55,17 +74,3 @@ body{
 	background-color: black;
 }
 ```
-
-## Installation
-**Run the following command to install the application**
-```text
-pip install requirements.txt
-export FLASK_APP=app.py
-export FLASK_DEBUG=1
-```
-**To run the application
-```qterminal
-flask run
-...
-```
-The application should start running now.
