@@ -1,11 +1,12 @@
-from flask import render_template as render, url_for, request, redirect, jsonify, make_response, flash
+from flask import (render_template as render, url_for, request,
+					redirect, jsonify, make_response, flash)
 from flask.views import MethodView, View
 from werkzeug.security import generate_password_hash as gph
 from app import db, auth
 from models import User, Token, UserRole, Level
 from forms import (UserLoginForm, UserCreationForm,
 					AdminLoginForm, AdminSignUpForm,
-					UserCreationForm, EditProfileForm)
+					UserCreationForm, EditProfileForm, ImageForm)
 
 xhr = "X-Requested-With"
 xhr_val = "XMLHttpRequest"
@@ -204,9 +205,22 @@ class EditProfileView(View):
 		This view function is for editing the profile view
 	"""
 	form = EditProfileForm
+	im = ImageForm
 	template = "users/edit_profile.html/"
 
 	def dispatch_request(self, prn: str):
 		form = self.form()
+		if request.method == "POST":
+			pass
+		return render(self.template, form=form, imform = self.im())
 
-		return render(self.template, form=form)
+class ProfileImageView(View):
+	"""
+	    The image class based view that only accepts a post request from the servers
+
+	"""
+	decorators = ["POST"]
+	im = ImageForm
+	def dispatch_request(self):
+		form = self.im()
+		pass

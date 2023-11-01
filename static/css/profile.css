@@ -4,9 +4,15 @@ body{
 	font-family: 'Lora', serif;
 	font-family: 'Poppins', sans-serif;
 	overflow: hidden;
+	color: lightgray;
+	font-weight: lighter;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 h1{
-	margin-left: 50px;
+	margin: 10px;
+	text-align: center;
 }
 h4{
 	margin: 0;
@@ -14,13 +20,29 @@ h4{
 a{
 	text-decoration: none;
 }
+form{
+	display: flex;
+	flex-direction: column;
+}
+label{
+	font-size: 15px;
+	margin: 3px;
+}
 .content-section{
+	border: 1px solid rgba(211, 211, 211, 0.432);
+	border-radius: 5px;
+}
+.pf{
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
+	background: #fff;
+	overflow-x: hidden;
+	margin: 0;
+	padding: 0;
 }
+
 .profile{
 	display: flex;
 	flex-direction: row;
@@ -42,15 +64,48 @@ a{
 .profile-body{
 	width: 400px;
 }
+.profile-input{
+	padding: 10px;
+	width: 80%;
+	margin: 5px;
+	border-radius: 5px;
+	outline: none;
+	border: 1px solid rgba(211, 211, 211, 0.432);
+}
+.profile-btn{
+	outline: none;
+	cursor: pointer;
+	padding: 10px;
+	margin: 5px, 3px;
+	border: none;
+	outline: none;
+	width: auto;
+	max-width: 100px;
+}
+.img-form{
+	background-color: #17151b;
+	padding: 12px;
+	margin: 12px;
+}
+.row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
 @media (prefers-color-scheme: dark){
 	body{
 		color: antiquewhite;
 		background: black;
+		
 	}
-	.content-section{
+	.pf{
 		background: #17151b;
 	}
 	a{
 		color: lightblue;
+	}
+	.profile-btn{
+		background-color: greenyellow;
 	}
 }

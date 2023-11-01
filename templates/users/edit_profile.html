@@ -10,23 +10,40 @@
     <script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
 </head>
 <body>
+    <section class="img-form">
+        <span>User Image</span>
+        <img src="" alt="user-profile" class="form-img" />
+        <form action="" method="post">
+            {{imform.csrf_token}}
+            {{imform.img()}}
+            {{imform.upload(class="profile-btn")}}
+        </form>
+    </section>
     <section class="content-section ajx jj">
+        <h1>Edit User Profile Page</h1>
         <div class="pf">
-            <h1>Edit User Profile Page</h1>
             <div class="profile">
-                <form class="" method="post" enctype="multipart/form-data" action="#">
+                <form class="" method="post" action="javascript:void(0)" autocomplete="off">
                     {{form.csrf_token}}
                     {{form.email.label}}
-                    {{form.email}}
+                    {{form.email(class="profile-input")}}
+                    <div class="row">
+                        <div class="group">
+                            {{form.first_name.label}}
+                            {{form.first_name(class="profile-input")}}
+                        </div>
+                        <div class="group">
+                            {{form.last_name.label}}
+                            {{form.last_name(class="profile-input")}}
+                        </div>
+                    </div>
                     {{form.username.label}}
-                    {{form.username}}
-                    {{form.first_name.label}}
-                    {{form.first_name}}
-                    {{form.last_name.label}}
-                    {{form.last_name}}
+                    {{form.username(class="profile-input")}}
+                    {{form.update(class="profile-btn")}}
                 </form>
             </div>
         </div>
     </section>
+    <script src="{{url_for('static', filename='js/edit_profile.js')}}"></script>
 </body>
 </html>

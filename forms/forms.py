@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField
 from wtforms import SelectField, StringField, SubmitField, IntegerField, PasswordField, DateField
 from wtforms.validators import DataRequired, Regexp, Length, Email
 from models import Subject as ss, Course, WaecSubject, Grade
@@ -161,6 +162,9 @@ class EditBioDataForm(FlaskForm):
     jamb_reg = StringField("Jamb Reg No:", validators=[DataRequired()])
     waec_id = StringField("Waec Reg No:", validators=[DataRequired()])
 
-
+class ImageForm(FlaskForm):
+    img = FileField("Image Field", validators=[DataRequired()])
+    upload = SubmitField("Upload Image")
+    
 class AdminSignUpForm(UserCreationForm):
     pass
