@@ -2,7 +2,7 @@ $.ajax({
     url: "/ajax/v1.0/get-auth-data/",
     type: "get",
     success: function (data) {
-        // $(".email").text(data["email"]);
+        $(".name").text(`${data["username"]} Image`);
         // $(".first").text(data["first_name"]);
         // $(".last").text(data["last_name"]);
         // $(".mid").text(data["mid_name"]);

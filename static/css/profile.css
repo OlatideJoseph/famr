@@ -76,9 +76,10 @@ label{
 	outline: none;
 	cursor: pointer;
 	padding: 10px;
-	margin: 5px, 3px;
+	margin: 5px, 5px;
 	border: none;
 	outline: none;
+	border-radius: 5px;
 	width: auto;
 	max-width: 100px;
 }
@@ -87,12 +88,20 @@ label{
 	padding: 12px;
 	margin: 12px;
 }
+.if{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
 .row{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
-
+.name{
+	text-align: center;
+}
 @media (prefers-color-scheme: dark){
 	body{
 		color: antiquewhite;

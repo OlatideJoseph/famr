@@ -11,13 +11,15 @@
 </head>
 <body>
     <section class="img-form">
-        <span>User Image</span>
-        <img src="" alt="user-profile" class="form-img" />
-        <form action="" method="post">
-            {{imform.csrf_token}}
-            {{imform.img()}}
-            {{imform.upload(class="profile-btn")}}
-        </form>
+        <span class="name">User Image</span>
+        <div class="if">
+            <img src="" alt="user-profile" class="form-img" />
+            <form action="javascript:void(0)" method="post">
+                {{imform.csrf_token}}
+                {{imform.img()}}
+                {{imform.upload(class="profile-btn")}}
+            </form>
+        </div>
     </section>
     <section class="content-section ajx jj">
         <h1>Edit User Profile Page</h1>
