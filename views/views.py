@@ -192,7 +192,7 @@ class AdminSignUpView(SignUpView):
 
 
 class ProfileView(View):
-	decorators = []
+	methods = []
 	template = "users/profile.html"
 
 	def dispatch_request(self):
@@ -200,18 +200,38 @@ class ProfileView(View):
 
 
 class EditProfileView(View):
-	template: str
 	"""
 		This view function is for editing the profile view
 	"""
+	template: str
 	form = EditProfileForm
 	im = ImageForm
 	template = "users/edit_profile.html/"
+	methods = ["GET", "POST"]
 
 	def dispatch_request(self, prn: str):
 		form = self.form()
-		if request.method == "POST":
-			pass
+		if request.method == "POST" and request.headers.get(xhr) == xhr_val:
+			json = request.json
+			if json:
+				user = User.query.filter_by(username = json['username']).first()
+				if user:
+					user.username = json.get('username')
+					user.first_name = json.get('first_name')
+					user.last_name = json.get('last_name')
+					user.mid_name = json.get('middle_name')
+					user.email = json.get("email")
+					db.session.add(user)
+					db.session.commit()
+					return make_response(jsonify(
+						msg=["Updated Successfully !", "success"]
+						), 200, {"Content-Type":"application/json"})
+				return make_response(jsonify(
+					msg=["An error has occured from somewhere", "warning"]
+				), 200, {"Content-Type":"application/json"})
+			return make_response(jsonify(
+					msg=["Invalid request arguments", "danger"]
+				), 200, {"Content-Type":"application/json"})
 		return render(self.template, form=form, imform = self.im())
 
 class ProfileImageView(View):
@@ -219,8 +239,10 @@ class ProfileImageView(View):
 	    The image class based view that only accepts a post request from the servers
 
 	"""
-	decorators = ["POST"]
+	methods = ["POST"]
 	im = ImageForm
 	def dispatch_request(self):
 		form = self.im()
+		if request.headers.get(xhr) == xhr_val:
+			pass
 		pass

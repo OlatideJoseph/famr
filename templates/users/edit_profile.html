@@ -39,8 +39,17 @@
                             {{form.last_name(class="profile-input")}}
                         </div>
                     </div>
-                    {{form.username.label}}
-                    {{form.username(class="profile-input")}}
+                    <div class="row">
+                        <div class="group">
+                            {{form.username.label}}
+                            {{form.username(class="profile-input")}}
+                        </div>
+                        <div class="group">
+                            {{form.middle_name.label}}
+                            {{form.middle_name(class="profile-input")}}
+                        </div>
+                    </div>
+                    
                     {{form.update(class="profile-btn")}}
                 </form>
             </div>

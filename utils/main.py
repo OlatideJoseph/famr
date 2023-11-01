@@ -1,8 +1,10 @@
 from collections import Counter
 import functools
+import secrets
+import os
 from flask import redirect, url_for, request, Response, abort
 from app import auth
-
+from PIL import Image
 
 recorder = []
 def duplicate(val: list) -> list:
@@ -37,3 +39,23 @@ def admin_protected(func):
         else:
             abort(403)
         return func(*args, **kwargs)
+
+class AcceptedImage:
+    """
+        it is a class meant to mimick the image module and
+        improve it
+    """
+    def __init__(self, byt):
+        self.image = byt
+
+    def generate_random_image_names(self):
+        return secrets.token_hex(10)
+
+    def convert_image(self, size: tuple = (480, 480)):
+        self.size = size
+        self.img = Image.open(self.image).thumbnail(size)
+        return self
+
+    def save_image(self, loc: str ='default'):
+        if loc == 'default':
+            pass
