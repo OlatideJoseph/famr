@@ -22,3 +22,18 @@
 #nav-bnt{
 	margin-left: 600px;
 }
+.space-between{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.space-between span{
+	display: inline;
+	width: auto;
+}
+.space-between span:nth-child(1){
+	margin-top: 25px;
+}
+.space-between span:nth-child(2){
+	float: right;
+}

@@ -261,7 +261,8 @@ def get_data():
         "dob": user.birth_date.strftime("%d-%m-%Y"),
         "mid_name": user.mid_name,
         "is_admin": user.is_admin,
-        "age": (date.today().year - user.birth_date.year)
+        "age": (date.today().year - user.birth_date.year),
+        "img_path": user.image_path,
     }
     return jsonify(**data)
 

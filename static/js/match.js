@@ -124,6 +124,7 @@ $.ajax({
         $(".last").text(data["last_name"]);
         $(".mid").text(data["mid_name"]);
         $(".dob").text(data["dob"]);
+        $(".bio-img").attr('src', `/static/img/${data["img_path"]}/`);
     },
     error: function()
     {
