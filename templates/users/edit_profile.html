@@ -16,7 +16,7 @@
             <img src="" alt="user-profile" class="form-img" />
             <form action="javascript:void(0)" method="post">
                 {{imform.csrf_token}}
-                {{imform.img()}}
+                {{imform.img(accept="image/*")}}
                 {{imform.upload(class="profile-btn")}}
             </form>
         </div>

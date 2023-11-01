@@ -28,6 +28,9 @@ label{
 	font-size: 15px;
 	margin: 3px;
 }
+input[type="submit"]{
+	margin-top: 5px;
+}
 .content-section{
 	border: 1px solid rgba(211, 211, 211, 0.432);
 	border-radius: 5px;
@@ -83,6 +86,10 @@ label{
 	width: auto;
 	max-width: 100px;
 }
+.profile-btn:nth-child(2){
+	margin-left: 5px;
+	justify-self: center;
+}
 .img-form{
 	background-color: #17151b;
 	padding: 12px;
@@ -102,10 +109,15 @@ label{
 .name{
 	text-align: center;
 }
+.form-img{
+	width: 100px;
+	border-radius: 50px;
+	height: 100px;
+}
 @media (prefers-color-scheme: dark){
 	body{
 		color: antiquewhite;
-		background: black;
+		background: #121212;
 		
 	}
 	.pf{
