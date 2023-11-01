@@ -190,15 +190,13 @@ class AdminSignUpView(SignUpView):
 		return render("admin/registration.html", form=form)
 
 
-class ProfileView(MethodView):
+class ProfileView(View):
 	decorators = []
 	template = "users/profile.html"
 
-	def get(self):
+	def dispatch_request(self):
 		return render(self.template)
 
-	def post(self):
-		return render(self.template)
 
 class EditProfileView(View):
 	template: str
