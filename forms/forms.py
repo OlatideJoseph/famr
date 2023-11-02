@@ -156,7 +156,7 @@ class EditProfileForm(FlaskForm):
     first_name = StringField("FirstName: ")
     middle_name = StringField("MiddleName: ")
     last_name = StringField("LastName: ")
-    update = SubmitField("Update !")
+    update = SubmitField("Update me")
 
 class EditBioDataForm(FlaskForm):
     jamb_reg = StringField("Jamb Reg No:", validators=[DataRequired()])
