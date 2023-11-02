@@ -11,14 +11,17 @@
 </head>
 <body>
     <section class="img-form">
-        <span class="name">User Image</span>
-        <div class="if">
-            <img src="" alt="user-profile" class="form-img" />
-            <form action="javascript:void(0)" method="post">
-                {{imform.csrf_token}}
-                {{imform.img(accept="image/*")}}
-                {{imform.upload(class="profile-btn")}}
-            </form>
+        <h1 class="name">
+
+        </h1>
+        <div class="pf if">
+                <img src="" alt="user-profile" class="form-img" />
+                <form action="javascript:void(0)" method="post" enctype="multipart/form-data" class="ff">
+                    {{imform.csrf_token}}
+                    {{imform.img(accept="image/*")}}
+                    {{imform.upload(class="profile-btn")}}
+                </form>
+                <span>Note: <small>You need to upload before it updates</small></span>
         </div>
     </section>
     <section class="content-section ajx jj">
@@ -53,6 +56,19 @@
                     {{form.update(class="profile-btn")}}
                 </form>
             </div>
+        </div>
+    </section>
+    <section class="sc-data">
+        <h1>Edit Bio's-Data</h1>
+        <div class="pf">
+            <form action="" method="post" autocomplete="off">
+                {{bform.csrf_token}}
+                {{bform.jamb_reg.label}}
+                {{bform.jamb_reg(placeholder="Jamb-Reg No.", class="profile-input")}}
+                {{bfrom.waec_id.label}}
+                {{bform.waec_id(placeholder="Waec-Id No.", class="profile-input")}}
+                {{bform.update(class="profile-btn")}}
+            </form>
         </div>
     </section>
     <script src="{{url_for('static', filename='js/edit_profile.js')}}"></script>

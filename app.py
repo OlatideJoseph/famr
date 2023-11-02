@@ -6,6 +6,9 @@ from flask_httpauth import HTTPTokenAuth
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
 from sqlalchemy.exc import IntegrityError
+import os
+
+BASE_DIR = os.path.abspath(os.getcwd())
 
 naming_convention = {
     "ix": 'ix_%(column_0_lablel)s',

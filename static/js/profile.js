@@ -7,7 +7,7 @@ $.ajax({
         $(".real").text(
             data["first_name"] + " " + data["last_name"] + " " + data["mid_name"]
         );
-        // $(".last").text();
+        $("img").attr("src", `/static/img/${data["img_path"]}`);
         // $(".mid").text(data["mid_name"]);
         $(".age").prepend(data["age"]);
     }

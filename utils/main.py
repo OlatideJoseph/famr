@@ -3,17 +3,12 @@ import functools
 import secrets
 import os
 from flask import redirect, url_for, request, Response, abort
-from app import auth
+from app import auth, BASE_DIR
 from PIL import Image
 
 recorder = []
 def duplicate(val: list) -> list:
-    #add a dict the count value for dict object
-    di = Counter(val)
-    for key, value in di.items():
-        if value > 1:
-            exist_more.append(key)
-    return exist_more
+    pass
 
 def list_available_course():
     pass
@@ -45,17 +40,36 @@ class AcceptedImage:
         it is a class meant to mimick the image module and
         improve it
     """
-    def __init__(self, byt):
+    def __init__(self, byt, size: list[tuple, list] = (480, 480)):
         self.image = byt
+        self.convert_image(size)
 
-    def generate_random_image_names(self):
-        return secrets.token_hex(10)
+    def generate_random_image_names(self) -> str:
+        """
+            generates random names for the image
+        """
+        return secrets.token_hex(10)+".jpg"
 
-    def convert_image(self, size: tuple = (480, 480)):
+    def convert_image(self, size: tuple):
+        """
+           converts the image size to the given size
+        """
         self.size = size
-        self.img = Image.open(self.image).thumbnail(size)
+        self.img = Image.open(self.image)
+        self.img.thumbnail(size)
         return self
 
-    def save_image(self, loc: str ='default'):
+    def save_image(self, loc: str ='default') -> bool:
         if loc == 'default':
-            pass
+            name = self.generate_random_image_names()
+            self.filename = name
+            path = os.path.join(BASE_DIR+'/static/img/users', name)
+            self.img.save(path)
+            return True
+        else:
+            name = self.generate_random_image_names()
+            self.filename = name
+            path = os.path.join(loc, name)
+            self.img.save(path)
+            return True
+        return False

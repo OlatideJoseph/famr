@@ -8,7 +8,7 @@ body{
 	font-weight: lighter;
 	display: flex;
 	flex-direction: row;
-	align-items: center;
+	padding: 12px;
 }
 h1{
 	margin: 10px;
@@ -31,9 +31,17 @@ label{
 input[type="submit"]{
 	margin-top: 5px;
 }
-.content-section{
+.group{
+	margin: 0;
+	padding: 0;
+	width: auto;
+}
+.content-section, .img-form, .sc-data{
 	border: 1px solid rgba(211, 211, 211, 0.432);
 	border-radius: 5px;
+}
+.img-form{
+	margin-right: 7px;
 }
 .pf{
 	overflow: auto;
@@ -43,7 +51,7 @@ input[type="submit"]{
 	background: #fff;
 	overflow-x: hidden;
 	margin: 0;
-	padding: 0;
+	padding: 5px;
 }
 
 .profile{
@@ -70,7 +78,6 @@ input[type="submit"]{
 .profile-input{
 	padding: 10px;
 	width: 80%;
-	margin: 5px;
 	border-radius: 5px;
 	outline: none;
 	border: 1px solid rgba(211, 211, 211, 0.432);
@@ -81,6 +88,7 @@ input[type="submit"]{
 	padding: 10px;
 	margin: 5px, 5px;
 	border: none;
+	transition: .44s all ease;
 	outline: none;
 	border-radius: 5px;
 	width: auto;
@@ -90,17 +98,19 @@ input[type="submit"]{
 	margin-left: 5px;
 	justify-self: center;
 }
-.img-form{
-	background-color: #17151b;
-	padding: 12px;
-	margin: 12px;
+.profile-btn:hover{
+	background-color: aquamarine;
 }
 .if{
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	padding: 10px;
 	border-radius: 3px;
 	flex-direction: column;
+	height: auto;
+}
+.if input{
+	justify-self: center;
 }
 .row{
 	display: flex;

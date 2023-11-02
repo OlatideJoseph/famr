@@ -6,7 +6,9 @@ from app import db, auth
 from models import User, Token, UserRole, Level
 from forms import (UserLoginForm, UserCreationForm,
 					AdminLoginForm, AdminSignUpForm,
-					UserCreationForm, EditProfileForm, ImageForm)
+					UserCreationForm, EditProfileForm,
+					ImageForm, EditBioDataForm)
+from utils import AcceptedImage
 
 xhr = "X-Requested-With"
 xhr_val = "XMLHttpRequest"
@@ -67,15 +69,16 @@ class SignUpView(View):
 	def xhr_form_processor(self):
 		js = request.get_json()
 		username = js.get("username")
+		email = js.get("email")
 		first_name = js.get("first_name")
 		last_name = js.get("last_name")
 		mid_name = js.get("middle_name")
 		birth_date = js.get("birth_date")
-		password = gph(js.get("auth"))
+		hashed = gph(js.get("auth"))
 		user = User(username=username, email=email,
 			password=hashed, first_name=first_name,
 			last_name=last_name,birth_date=birth_date)
-		mid_name = form.middle_name.data
+		mid_name = js.get("middle_name")
 		if mid_name:
 			user.mid_name = mid_name.title()
 		return user
@@ -186,7 +189,7 @@ class AdminSignUpView(SignUpView):
 				], 
 				"code": 201,
 				"redirect": url_for("admin.login")
-			}, 201, headers)
+			}, 201)
 
 		return render("admin/registration.html", form=form)
 
@@ -206,6 +209,7 @@ class EditProfileView(View):
 	template: str
 	form = EditProfileForm
 	im = ImageForm
+	bf = EditBioDataForm
 	template = "users/edit_profile.html/"
 	methods = ["GET", "POST"]
 
@@ -232,7 +236,7 @@ class EditProfileView(View):
 			return make_response(jsonify(
 					msg=["Invalid request arguments", "danger"]
 				), 200, {"Content-Type":"application/json"})
-		return render(self.template, form=form, imform = self.im())
+		return render(self.template, form=form, imform=self.im(), bform=self.bf())
 
 class ProfileImageView(View):
 	"""
@@ -241,8 +245,29 @@ class ProfileImageView(View):
 	"""
 	methods = ["POST"]
 	im = ImageForm
-	def dispatch_request(self):
+	def dispatch_request(self, id):
 		form = self.im()
-		if request.headers.get(xhr) == xhr_val:
-			pass
+		if form.validate_on_submit():
+			file = form.img.data
+			image_obj = AcceptedImage(file)
+			user = User.query.get(id)
+			if user:
+				image_obj.save_image()
+				user.image_path = 'users/' + image_obj.filename
+				db.session.add(user)
+				db.session.commit()
+				return make_response(jsonify(
+								msg=["Image updated successfully !", "success"]),
+								200, {"Content-Type":"application/json"})
+			return make_response(jsonify(
+							msg=["An error has occured !", "danger"]),
+							200, {"Content-Type":"application/json"})
+		return make_response(jsonify(
+								msg=["Invalid request arguments", "warning"]),
+								200, {"Content-Type":"application/json"})
+	
+class EditBioDataView(View):
+	bform = EditBioDataForm
+	methods = ["POST"]
+	def dispatch_request(self):
 		pass

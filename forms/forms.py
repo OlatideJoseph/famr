@@ -161,6 +161,7 @@ class EditProfileForm(FlaskForm):
 class EditBioDataForm(FlaskForm):
     jamb_reg = StringField("Jamb Reg No:", validators=[DataRequired()])
     waec_id = StringField("Waec Reg No:", validators=[DataRequired()])
+    update = SubmitField("Update data")
 
 class ImageForm(FlaskForm):
     img = FileField("Image Field", validators=[DataRequired()])

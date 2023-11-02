@@ -201,7 +201,7 @@ def match():
                 })
         if course:
             resp = {
-                "course": true
+                "course": True
             }
         print(dir(request))
     return render("ajax/match.html", form=form, user=user_obj)
@@ -254,6 +254,7 @@ def grade_point():
 def get_data():
     user = auth.current_user()
     data = {
+        "id": user.pk,
         "email": user.email,
         "username": user.username,
         "first_name": user.first_name,

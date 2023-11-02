@@ -27,7 +27,7 @@ $("#img").on("change", function(et)
     
 });
 
-$("#update").on('click', function(e)
+$("#update").on('click', function (e)
 {
     let form = $(this).parent();
     let formData = {};
@@ -49,3 +49,25 @@ $("#update").on('click', function(e)
         }
     });
 });
+$(".ff").on('submit', function (e)
+{
+    $.getJSON("/ajax/v1.0/get-auth-data/", function (data)
+    {
+        let fd = new FormData();
+        fd.append('img', $("#img")[0].files[0]);
+        fd.append('csrf_token', $("#csrf_token").val());
+        $.ajax({
+            url: `/edit/profile/image/${data["id"]}/`,
+            type: "POST",
+            data: fd,
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data)
+            {
+                alert(data["msg"]);
+            }
+        });
+    });// gets user id
+});// the upload event handler
+
