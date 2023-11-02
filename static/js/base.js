@@ -1,10 +1,10 @@
 "use strict";
 const notAllowedUrl = [
-        "/login/",
-        "/sign-up/",
-        "/admin/",
-        "/admin/authenticate/ua/",
-        "/admin/register-admin-user/ua/"
+    "/login/",
+    "/sign-up/",
+    "/admin/",
+    "/admin/authenticate/ua/",
+    "/admin/register-admin-user/ua/"
 ];
 const createScript = (src)=>{
     const sc = document.createElement("script");

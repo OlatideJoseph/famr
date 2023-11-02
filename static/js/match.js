@@ -114,6 +114,7 @@ $('form').on('submit',function(e)
         }
     );
 });
+
 $.ajax({
     url:"/ajax/v1.0/get-auth-data/",
     type:"get",
@@ -130,4 +131,17 @@ $.ajax({
     {
         naShowAlert("Sorry, an error seems to have occured !", "danger");
     }
+});
+
+$('img').click(function (e) {
+    let t = $(this);
+    let css = { display: "flex" };
+    let attr = { src: t.attr('src'), alt: t.attr('alt') }
+    if (attr["src"]) {
+        $(".img-modal").css(css);
+        $(".selected-img").attr(attr);
+    }
+});
+$('.circled-x').click(function (e) {
+    $('.img-modal').css("display", "none");
 });
