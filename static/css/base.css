@@ -37,3 +37,8 @@
 .space-between span:nth-child(2){
 	float: right;
 }
+.bio-img{
+	height: 50px;
+	width: 50px;
+	border-radius: 25px;
+}

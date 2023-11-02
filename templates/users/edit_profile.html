@@ -10,6 +10,26 @@
     <script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
 </head>
 <body>
+    <section class="sc-data">
+        <h1>Edit Bio's-Data</h1>
+        <div class="pf">
+            <form action="javascript:void(0)" method="post" autocomplete="off">
+                {{bform.csrf_token}}
+                <div class="row">
+                    <div class="group">
+                        {{bform.jamb_reg.label}}
+                        {{bform.jamb_reg(placeholder="Jamb-Reg No.", class="profile-input")}}
+                    </div>
+                    <div class="group">
+                        {{bform.waec_id.label}}
+                        {{bform.waec_id(placeholder="Waec-Id No.", class="profile-input")}}
+                    </div>
+                </div>
+                {{bform.update(class="profile-btn")}}
+            </form>
+        </div>
+    </section>
+
     <section class="img-form">
         <h1 class="name">
 
@@ -24,6 +44,7 @@
                 <span>Note: <small>You need to upload before it updates</small></span>
         </div>
     </section>
+    
     <section class="content-section ajx jj">
         <h1>Edit User Profile Page</h1>
         <div class="pf">
@@ -56,19 +77,6 @@
                     {{form.update(class="profile-btn")}}
                 </form>
             </div>
-        </div>
-    </section>
-    <section class="sc-data">
-        <h1>Edit Bio's-Data</h1>
-        <div class="pf">
-            <form action="" method="post" autocomplete="off">
-                {{bform.csrf_token}}
-                {{bform.jamb_reg.label}}
-                {{bform.jamb_reg(placeholder="Jamb-Reg No.", class="profile-input")}}
-                {{bform.waec_id.label}}
-                {{bform.waec_id(placeholder="Waec-Id No.", class="profile-input")}}
-                {{bform.update(class="profile-btn")}}
-            </form>
         </div>
     </section>
     <script src="{{url_for('static', filename='js/edit_profile.js')}}"></script>

@@ -3,11 +3,12 @@
 body{
 	font-family: 'Lora', serif;
 	font-family: 'Poppins', sans-serif;
-	overflow: hidden;
-	color: lightgray;
 	font-weight: lighter;
+	flex-wrap: wrap;
 	display: flex;
+	scroll-behavior: smooth;
 	flex-direction: row;
+	justify-content: space-evenly;
 	padding: 12px;
 }
 h1{
@@ -38,20 +39,23 @@ input[type="submit"]{
 }
 .content-section, .img-form, .sc-data{
 	border: 1px solid rgba(211, 211, 211, 0.432);
-	border-radius: 5px;
-}
-.img-form{
-	margin-right: 7px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 20px 5px #12121281;
+	margin: 7px;
+	max-width: 300px;
 }
 .pf{
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	background: #fff;
+	background: #935ef7;
 	overflow-x: hidden;
 	margin: 0;
+	height: auto;
+	flex-grow: 0;
 	padding: 5px;
+	border-radius: 15px 15px 0 0 !important;
 }
 
 .profile{
@@ -90,6 +94,7 @@ input[type="submit"]{
 	border: none;
 	transition: .44s all ease;
 	outline: none;
+	background: aquamarine ;
 	border-radius: 5px;
 	width: auto;
 	max-width: 100px;
@@ -99,7 +104,7 @@ input[type="submit"]{
 	justify-self: center;
 }
 .profile-btn:hover{
-	background-color: aquamarine;
+	background-color: rgba(23, 89, 233, 0.692);
 }
 .if{
 	display: flex;
@@ -139,5 +144,8 @@ input[type="submit"]{
 	}
 	.profile-btn{
 		background-color: greenyellow;
+	}
+	.content-section, .img-form, .sc-data{
+		box-shadow: none;
 	}
 }

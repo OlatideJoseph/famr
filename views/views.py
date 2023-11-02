@@ -270,4 +270,6 @@ class EditBioDataView(View):
 	bform = EditBioDataForm
 	methods = ["POST"]
 	def dispatch_request(self):
-		pass
+		form = self.bform()
+		if form.validate_on_submit():
+			pass
