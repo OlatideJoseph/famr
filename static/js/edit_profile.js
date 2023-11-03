@@ -27,7 +27,7 @@ $("#img").on("change", function(et)
     
 });
 
-$("#update").on('click', function (e)
+$(".usr").on('click', function (e)
 {
     let form = $(this).parent();
     let formData = {};
@@ -45,6 +45,27 @@ $("#update").on('click', function (e)
         data: formData,
         contentType: "application/json",
         success: function(data){
+            console.log(data);
+        }
+    });
+});
+$(".bbio").on('click', function (e) {
+    let form = $(this).parent().serialize();
+    // let formData = {};
+    // form.find('input').each(
+    //     function (...args) {
+    //         let cu = $(args[1]);
+    //         if (cu.attr('type') != 'submit')
+    //             formData[cu.attr('name')] = cu.val();
+    //     }
+    // );//gets each form input element
+    // formData = JSON.stringify(formData);
+    console.log(form);
+    $.ajax({
+        url: `/edit/profile/bio/data/`,
+        type: "POST",
+        data: form,
+        success: function (data) {
             console.log(data);
         }
     });

@@ -3,7 +3,7 @@ from flask import (render_template as render, url_for, request,
 from flask.views import MethodView, View
 from werkzeug.security import generate_password_hash as gph
 from app import db, auth
-from models import User, Token, UserRole, Level
+from models import User, Token, UserRole, Level, UserBioData
 from forms import (UserLoginForm, UserCreationForm,
 					AdminLoginForm, AdminSignUpForm,
 					UserCreationForm, EditProfileForm,
@@ -243,6 +243,7 @@ class ProfileImageView(View):
 	    The image class based view that only accepts a post request from the servers
 
 	"""
+	decorators = [auth.login_required]
 	methods = ["POST"]
 	im = ImageForm
 	def dispatch_request(self, id):
@@ -268,8 +269,20 @@ class ProfileImageView(View):
 	
 class EditBioDataView(View):
 	bform = EditBioDataForm
+	decorators = [auth.login_required]
 	methods = ["POST"]
 	def dispatch_request(self):
 		form = self.bform()
 		if form.validate_on_submit():
-			pass
+			jamb_reg = form.jamb_reg.data
+			waec_id = form.waec_id.data
+			user = auth.current_user()
+			if user:
+				bio_data = UserBioData(jamb_reg = jamb_reg, waec_id = waec_id, user = user)
+				db.session.add(bio_data)
+				db.session.commit()
+				return make_response(jsonify(msg=["Bio data added successfuly", "success"]))
+		if form.errors:
+			return make_response(jsonify(
+					**(form.errors | {"msg": ["An error occured", "danger"]})
+				), 200)
