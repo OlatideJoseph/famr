@@ -284,5 +284,6 @@ class EditBioDataView(View):
 				return make_response(jsonify(msg=["Bio data added successfuly", "success"]))
 		if form.errors:
 			return make_response(jsonify(
-					**(form.errors | {"msg": ["An error occured", "danger"]})
+					**(form.errors + {"msg": ["An error occured", "danger"]})
 				), 200)
+		
