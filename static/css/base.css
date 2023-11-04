@@ -77,3 +77,9 @@
 .selected-img{
 	border-radius: 5px;
 }
+
+@media screen and (max-width:1070px){
+	.bio-data{
+		display: none;
+	}
+}

@@ -1,3 +1,4 @@
+#!/bin/python3
 from flask import (Flask, render_template as render,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for)

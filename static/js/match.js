@@ -114,26 +114,52 @@ $('form').on('submit',function(e)
         }
     );
 });
-
+let img = document.createElement('img');
 $.ajax({
-    url:"/ajax/v1.0/get-auth-data/",
-    type:"get",
-    success: function(data)
-    {
+    url: "/ajax/v1.0/get-auth-data/",
+    type: "get",
+    success: function (data) {
         $(".email").text(data["email"]);
         $(".first").text(data["first_name"]);
         $(".last").text(data["last_name"]);
         $(".mid").text(data["mid_name"]);
         $(".dob").text(data["dob"]);
         $(".bio-img").attr('src', `/static/img/${data["img_path"]}/`);
+        img.src = `/static/img/${data["img_path"]}/`;
+        img.alt = 'user-img';
+        img.className = "bio-img";
     },
-    error: function()
-    {
+    error: function () {
         naShowAlert("Sorry, an error seems to have occured !", "danger");
     }
 });
-
-$('img').click(function (e) {
+const resize = function () {
+    if (window.screen.width < 1070) {
+        if ($('.navbar-brand img').length === 0) {
+            $('#nav').prepend(img);
+            console.log("prepended");
+        }
+    } else {
+        $('#nav img').remove();
+        console.log("hello");
+    }
+    $('img').click(function (e) {
+        let t = $(this);
+        let css = { display: "flex" };
+        let attr = { src: t.attr('src'), alt: t.attr('alt') }
+        if (attr["src"]) {
+            $(".img-modal").css(css);
+            $(".selected-img").attr(attr);
+        }
+    });
+    $('.circled-x').click(function (e) {
+        $('.img-modal').css("display", "none");
+    });
+}//adds image on resize
+resize();
+$(window).on('resize', resize);
+$('img').click(function (e)
+{
     let t = $(this);
     let css = { display: "flex" };
     let attr = { src: t.attr('src'), alt: t.attr('alt') }
@@ -141,7 +167,8 @@ $('img').click(function (e) {
         $(".img-modal").css(css);
         $(".selected-img").attr(attr);
     }
-});
-$('.circled-x').click(function (e) {
-    $('.img-modal').css("display", "none");
+    $('.circled-x').click(function (e)
+    {
+        $('.img-modal').css("display", "none");
+    });
 });

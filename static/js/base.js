@@ -117,7 +117,13 @@ if (token !== null)
             dataType: 'script',
             success: function()
             {
+                $('title').text("Match and Find");
                 let script = $("script[src='/static/js/authenticate.js/']");
+                let style = $('link[href^="/static/css/auth.css"');
+                if (style.length > 0)
+                {
+                    style.attr('href', '/static/css/match.css');
+                }
                 let script0 = $("script[src='/static/js/signup.js/']");
                 if (script.length > 0)
                 {
