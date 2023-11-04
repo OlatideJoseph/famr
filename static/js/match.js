@@ -136,25 +136,13 @@ $.ajax({
 const resize = function () {
     if (window.screen.width < 1070) {
         if ($('.navbar-brand img').length === 0) {
-            $('#nav').prepend(img);
+            $('.navbar-brand').prepend(img);
             console.log("prepended");
         }
     } else {
-        $('#nav img').remove();
+        $('.navbar-brand img').remove();
         console.log("hello");
     }
-    $('img').click(function (e) {
-        let t = $(this);
-        let css = { display: "flex" };
-        let attr = { src: t.attr('src'), alt: t.attr('alt') }
-        if (attr["src"]) {
-            $(".img-modal").css(css);
-            $(".selected-img").attr(attr);
-        }
-    });
-    $('.circled-x').click(function (e) {
-        $('.img-modal').css("display", "none");
-    });
 }//adds image on resize
 resize();
 $(window).on('resize', resize);
