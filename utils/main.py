@@ -3,7 +3,7 @@ import functools
 import secrets
 import os
 from flask import redirect, url_for, request, Response, abort
-from app import auth, BASE_DIR
+from main import auth, BASE_DIR
 from PIL import Image
 
 recorder = []

@@ -2,7 +2,7 @@ from flask import (render_template as render, url_for, request,
 					redirect, jsonify, make_response, flash)
 from flask.views import MethodView, View
 from werkzeug.security import generate_password_hash as gph
-from app import db, auth
+from main import db, auth
 from models import User, Token, UserRole, Level, UserBioData
 from forms import (UserLoginForm, UserCreationForm,
 					AdminLoginForm, AdminSignUpForm,

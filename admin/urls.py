@@ -1,6 +1,6 @@
 import functools
 from flask import url_for, redirect, request, render_template as render, g, make_response, flash
-from app import auth, app
+from main import auth
 from admin import admin
 from models import User, Token
 from views import AdminLoginView, AdminSignUpView

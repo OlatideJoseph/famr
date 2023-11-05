@@ -4,7 +4,7 @@ from flask import (render_template as render,
 from werkzeug.security import generate_password_hash as gph
 from forms import UserLoginForm, UserCreationForm
 from models import User, Token, UserRole, Level
-from app import db, auth
+from main import auth
 from views import (LoginView, SignUpView,
                    ProfileView, EditProfileView,
                    ProfileImageView, EditBioDataView)

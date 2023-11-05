@@ -4,9 +4,7 @@ from wtforms import SelectField, StringField, SubmitField, IntegerField, Passwor
 from wtforms.validators import DataRequired, Regexp, Length, Email
 from models import Subject as ss, Course, WaecSubject, Grade
 from utils.main import duplicate
-from app import app
-ctx = app.app_context()
-ctx.push()
+
 
 
 subjects = [

@@ -6,7 +6,7 @@ from flask import (render_template as render,
 from sqlalchemy.exc import IntegrityError, PendingRollbackError
 from forms import AddCourseForm, AddSubjectForm, MatchForm, AddGradeForm
 from models import Course, WaecSubject, Grade, AdminJamb, Subject, User, Token
-from app import auth, db
+from main import auth, db
 from utils.main import user_logged_in
 from . import ajax
 

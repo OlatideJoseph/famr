@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from flask import current_app
 from werkzeug.security import generate_password_hash as g_pass, check_password_hash as c_pass
-from app import db
+from main import db
 
 
 
