@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import SelectField, StringField, SubmitField, IntegerField, PasswordField, DateField
-from wtforms.validators import DataRequired, Regexp, Length, Email
+from wtforms.validators import DataRequired, Regexp, Length, Email, ValidationError
 from models import Subject as ss, Course, WaecSubject, Grade
 from utils.main import duplicate
 

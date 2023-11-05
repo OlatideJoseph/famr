@@ -25,6 +25,7 @@ auth = HTTPTokenAuth(scheme="Bearer")
 
 def create_app():
     app = Flask(__name__)
+    app.name = 'famr'
 
     from users import users
     from admin import admin

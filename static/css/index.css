@@ -35,8 +35,8 @@ body{
 	width: 50vw;
 	z-index: -1;
 }
-.section-2{
-}
+
+
 .content{
 	display: flex;
 	align-items: center;
@@ -74,6 +74,19 @@ button[type='button']:hover{
 	margin: 0;
 	background: black;
 }*/
+@media screen and (max-width: 675px){
+	body{
+		flex-direction: column !important;
+		overflow-y: auto;
+		scroll-behavior: smooth;
+	}
+	.section-1, .section-2{
+		width:100vw;
+	}
+	.section-1::before{
+		width: 100vw;
+	}
+}
 @media(prefers-color-scheme:dark){
 	.section-1::before{
 		filter: brightness(0.5);

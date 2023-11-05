@@ -41,7 +41,7 @@ blockquote{
 .body-loading{
 	overflow: hidden;
 }
-}
+
 .bio-data{
 	max-width: 300px;
 	width: 280px;
@@ -70,9 +70,6 @@ blockquote{
 	display: none;
 	opacity: 0.5;
 	transform: translateY(10px);
-}
-.h-l{
-
 }
 .core, .a-o{
 	margin-left: 10px;
@@ -153,7 +150,21 @@ li > a{
 	max-width: 700px !important;
 }
 @media screen and (max-width:1070px){
+	body{
+		padding: 5px;
+	}
 	.admin-section{
 		display: none !important;
+	}
+	.jj{
+		margin: 0 !important;
+		display: flex !important;
+		align-items: center;
+		height: 100%;
+		width: 100%;
+		justify-content: center;
+	}
+	.mobile-handler{
+		width: 80%;
 	}
 }

@@ -9,6 +9,7 @@ from forms import (UserLoginForm, UserCreationForm,
 					UserCreationForm, EditProfileForm,
 					ImageForm, EditBioDataForm)
 from utils import AcceptedImage
+from datetime import datetime
 
 xhr = "X-Requested-With"
 xhr_val = "XMLHttpRequest"
@@ -26,15 +27,15 @@ class SignUpView(View):
 
 		if ((request.method == "POST") and (
 			request.headers.get(xhr) == xhr_val)):
-			pro = self.xhr_form_processor()
+			user = self.xhr_form_processor()
 			if user:
 				level = Level(role=role, user=user)
-				level1 = Level(role1, user=user)
+				level1 = Level(role=role1, user=user)
 				db.session.add_all([user, level, level1])
 				db.session.commit()
 				return make_response({
 					"msg": [
-						f"User {pro.username} added successfully !", "success"
+						f"User {user.username} added successfully !", "success"
 					], 
 					"code": 201,
 					"redirect": url_for("users.login")
@@ -73,8 +74,8 @@ class SignUpView(View):
 		first_name = js.get("first_name")
 		last_name = js.get("last_name")
 		mid_name = js.get("middle_name")
-		birth_date = js.get("birth_date")
-		hashed = gph(js.get("auth"))
+		birth_date = datetime.strptime(js.get("birth_date"), "%Y-%m-%d")
+		hashed = gph(js.get("password"))
 		user = User(username=username, email=email,
 			password=hashed, first_name=first_name,
 			last_name=last_name,birth_date=birth_date)

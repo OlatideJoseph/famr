@@ -10,13 +10,24 @@ $(document).ready(
         );
         $("form").on("submit", function(e)
         {
-            // e.preventDefault();
-            let data = $(this).serialize();
+            e.preventDefault();
+            let objData = {
+
+            };
+            $(this).find('input').each(
+                function (...args) {
+                    let cu = $(args[1]);
+                    if (cu.attr('type') != 'submit')
+                        objData[cu.attr('name')] = cu.val();
+                }
+            );//gets each form in
+            objData = JSON.stringify(objData);
             $.ajax(
             {
                 url: `${window.location.pathname}`,
                 type:"POST",
-                data: data,
+                contentType:'application/json',
+                data: objData,
                 beforeSend: function(data)
                 {
                     showLoader();
@@ -24,14 +35,15 @@ $(document).ready(
                 success: function(data, textStatus, jqXHR)
                 {
                     window.history.pushState(null, null, '/login/');
-                    showAlert(data["msg"][0], data["msg"][1]);
+                    showAlert(data["msg"][0] + ';you\'ll be redirected in 3s', data["msg"][1]);
+                    setTimeout(()=>{window.location.pathname = '/login/'}, 3000);
                 },
                 error: function(data)
                 {
                     console.log(data.responseJSON);
                     let resp = data.responseJSON;
-                    hideLoader("Login", "/login/");
-                    showAlert( resp["msg"][0], resp["msg"][1]);
+                    hideLoader("Signup", "/sign-up/");
+                    showAlert(data["msg"][0], resp["msg"][1]);
                 }
             });
         }
@@ -56,6 +68,7 @@ $(document).ready(
                             if ($(data).hasClass('ajx'))
                             {
                                 $(".ajx").replaceWith(data);
+                                $('title').text('Login');
                             }
                         });
                         $.ajax(

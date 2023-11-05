@@ -1,4 +1,3 @@
-import functools
 from datetime import date
 from flask import (render_template as render,
                 flash, request, make_response,

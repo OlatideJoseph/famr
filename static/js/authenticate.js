@@ -80,6 +80,7 @@ $(document).ready(
                             if ($(data).hasClass('ajx'))
                             {
                                 $(".ajx").replaceWith(data);
+                                $('title').text("Sign Up")
                             }
 
                         });

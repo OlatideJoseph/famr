@@ -61,15 +61,19 @@
 	display: flex;
 	height: 100%;
 	overflow: hidden;
+	margin-left: 10px;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
+	cursor: pointer;
 }
 .circled-x{
 	font-size: 50px;
 	font-weight: bold;
+	margin-right: 10px;
 	transition: .3s all ease;
+	cursor: pointer;
 }
 .circled-x:hover{
 	color: brown;
@@ -77,9 +81,14 @@
 .selected-img{
 	border-radius: 5px;
 }
-
+@media screen and (max-width: 768px){
+	#nav-bnt{
+		margin: 0;
+		margin-top: 5px;
+	}
+}
 @media screen and (max-width:1070px){
 	.bio-data{
-		display: none;
+		display: none !important;
 	}
 }

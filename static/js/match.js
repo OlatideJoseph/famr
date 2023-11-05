@@ -56,64 +56,7 @@ let calculator=(...args)=>
 let sum=(a, b)=>{
     return (toInt(a)+toInt(b));
 }
-//Updating for aggregate data
-$('form').on('submit',function(e)
-{
-    e.preventDefault();//Stop The Form Default Action
-    let score=calculator(grade1.value, grade2.value, grade3.value,
-     grade4.value,
-      grade5.value);
-    console.log(score);
-    let aggregate = $('#agg');
-    if ($("#agg").html() !== undefined)
-    {
-        let code = aggregate.children('code');
-        code.attr("class","text-info");
-        code.first().text(score+"%");
-    }else
-    {
-        aggregate=$("<span>Aggregate: <code>"+score+"%</code></span>");
-        aggregate.attr({
-            class:"alert-primary alert card pt-3 p-3 mt-4 text-dark",
-        id:"agg"});
-    }
-    let field = $("#form").prepend(aggregate);
-    let c = $("#course_name").val();
 
-    $.getJSON(
-        `/course/?c=${c}`,
-        function(data)
-        {
-            let subject = data["subject"];
-            let span = "<ul>Subject: ";
-            let ali = "";
-            for (let i = 0; i <= subject.length-1; i++){
-                let li = "\n<li>" + Object.keys(subject[i])[0] + "</li>"
-                ali += li;
-            }
-            span += ali;
-            span += "</ul>";
-            console.log(subject);
-            console.log(span);
-            let subj = $('#sub');
-            if ($("#sub").html() !== undefined)
-            {
-               subj.html(span);
-            }else
-            {
-                subj=$(span);
-                subj.attr({
-                    class:"bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
-                id:"sub", display:"inline"});
-                let field=$("#form").prepend(subj);
-                return '';
-            }
-            subj.attr({
-                    class:"bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
-                id:"sub", display:"inline"});
-        }
-    );
-});
 let img = document.createElement('img');
 $.ajax({
     url: "/ajax/v1.0/get-auth-data/",
@@ -159,4 +102,61 @@ $('img').click(function (e)
     {
         $('.img-modal').css("display", "none");
     });
+    //Updating for aggregate data
+    $('#submit').on('click', function (e) {
+        alert("submitted");
+        e.preventDefault();//Stop The Form Default Action
+        let score = calculator(grade1.value, grade2.value, grade3.value,
+            grade4.value,
+            grade5.value);
+        console.log(score);
+        let aggregate = $('#agg');
+        if ($("#agg").html() !== undefined) {
+            let code = aggregate.children('code');
+            code.attr("class", "text-info");
+            code.first().text(score + "%");
+        } else {
+            aggregate = $("<span>Aggregate: <code>" + score + "%</code></span>");
+            aggregate.attr({
+                class: "alert-primary alert card pt-3 p-3 mt-4 text-dark",
+                id: "agg"
+            });
+        }
+        let field = $("#form").prepend(aggregate);
+        let c = $("#course_name").val();
+
+        $.getJSON(
+            `/course/?c=${c}`,
+            function (data) {
+                let subject = data["subject"];
+                let span = "<ul>Subject: ";
+                let ali = "";
+                for (let i = 0; i <= subject.length - 1; i++) {
+                    let li = "\n<li>" + Object.keys(subject[i])[0] + "</li>"
+                    ali += li;
+                }
+                span += ali;
+                span += "</ul>";
+                console.log(subject);
+                console.log(span);
+                let subj = $('#sub');
+                if ($("#sub").html() !== undefined) {
+                    subj.html(span);
+                } else {
+                    subj = $(span);
+                    subj.attr({
+                        class: "bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
+                        id: "sub", display: "inline"
+                    });
+                    let field = $("#form").prepend(subj);
+                    return '';
+                }
+                subj.attr({
+                    class: "bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
+                    id: "sub", display: "inline"
+                });
+            }
+        );
+    });
 });
+
