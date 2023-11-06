@@ -10,6 +10,10 @@ $.ajax({
         $("#username").val(data["username"]);
         $("#middle_name").val(data["mid_name"]);
         $(".form-img").attr('src', `/static/img/${data["img_path"]}/`);
+        if (data.hasOwnProperty('jamb_reg')){
+            $("#jamb_reg").val(data['jamb_reg']);
+            $("#waec_id").val(data['waec_id']);
+        }
     },
     error: function () {
         naShowAlert("Sorry, an error seems to have occured !", "danger");

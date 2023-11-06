@@ -263,6 +263,9 @@ def get_data():
         "is_admin": user.is_admin,
         "age": (date.today().year - user.birth_date.year),
         "img_path": user.image_path,
+        #bio data: they only have value if they've been created
+        "jamb_reg": user.bio_data.jamb_reg if user.bio_data else None,
+        "waec_id": user.bio_data.waec_id if user.bio_data else None,
     }
     return jsonify(**data)
 
