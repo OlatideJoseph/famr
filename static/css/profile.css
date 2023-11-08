@@ -42,7 +42,7 @@ input[type="submit"]{
 	border-radius: 10px;
 	box-shadow: 1px 1px 20px 5px #12121281;
 	margin: 7px;
-	max-width: 300px;
+	max-width: 400px;
 }
 .pf{
 	overflow: auto;

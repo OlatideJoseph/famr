@@ -275,7 +275,7 @@ def get_all_user():
         This view function is meant for the admin user only
         it returns all the user in the database
     '''
-    per_page = 2
+    per_page = 3
     page = request.args.get('page', type=int)
     page = page if page else 1
     obj =  User.query.\
