@@ -231,9 +231,15 @@ $(document).ready(function()
     {
         $(".bio-data").css({display: null});
     }//remove the bio data form from login
-    $(".core").on('click', function()
+    if (window.location.pathname.startsWith('/admin/'))
     {
-        $('.n').toggleClass('b-ul');
-        $('span.carat').toggleClass("c-r");
-    });
+        $(".core").on('click', function () {
+            $('.n').toggleClass('b-ul');
+            $('span.carat').toggleClass("c-r");
+        });
+        $(".a-o").on('click', function () {
+            $('.c').toggleClass('c-ul');
+            $('span.a-carat').toggleClass("c-r");
+        });
+    }//only create this event its the admin page
 });

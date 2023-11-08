@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+{% block head %}
+    <title>User List</title>
+{% endblock %}
+{% block content %}
+    <h1>User List</h1>
+    <span class="list-title">
+        <small class="username">Username</small> |
+        <small>FirstName</small> |
+        <small>LastName</small> |
+        <small>Email</small> |
+    </span>
+    <hr />
+    <div class="user-list">
+
+    </div>
+    <button type="button" class="btn btn-secondary previous">Previous</button>
+    <button type="button" class="btn btn-secondary next">Next</button>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/admin/userlist.js') }}"></script>
+    <script>
+        $('.current').toggleClass('current');
+        $('.list-user').toggleClass('current');
+    </script>
+{% endblock %}

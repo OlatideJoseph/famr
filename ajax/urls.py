@@ -269,6 +269,40 @@ def get_data():
     }
     return jsonify(**data)
 
+@ajax.route("/get-user-all-data/")
+def get_all_user():
+    '''\
+        This view function is meant for the admin user only
+        it returns all the user in the database
+    '''
+    per_page = 2
+    page = request.args.get('page', type=int)
+    page = page if page else 1
+    obj =  User.query.\
+                order_by(User.username.asc()).\
+                    paginate(per_page=per_page, page=page)
+    userlist = {
+        user.username:{
+            "id": user.pk,
+            "email": user.email,
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "dob": user.birth_date.strftime("%d-%m-%Y"),
+            "mid_name": user.mid_name,
+            "is_admin": user.is_admin,
+            "age": (date.today().year - user.birth_date.year),
+            "img_path": user.image_path,
+            #bio data: they only have value if they've been created
+            "jamb_reg": user.bio_data.jamb_reg if user.bio_data else None,
+            "waec_id": user.bio_data.waec_id if user.bio_data else None,
+        } for user in obj.items
+    }
+    userlist['next'] = obj.has_next
+    userlist['prev'] = obj.has_prev
+    userlist['page'] = page
+    return userlist
+
 @ajax.route("/get-grade-and-point/")
 @auth.login_required
 def ajx_grade():

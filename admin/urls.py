@@ -53,6 +53,9 @@ def add_subject():
 def grade_point():
 	return render("admin/addgrade.html")
 
+@admin.route("/list-users/")
+def list_user():
+	return render("admin/listuser.html")
 
 @admin.after_request
 def admin_last_seen(resp):
