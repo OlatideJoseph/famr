@@ -81,6 +81,9 @@
 .selected-img{
 	border-radius: 5px;
 }
+#lli{
+	display: none;
+}
 @media screen and (max-width: 768px){
 	#nav-bnt{
 		margin: 0;
@@ -90,5 +93,10 @@
 @media screen and (max-width:1070px){
 	.bio-data{
 		display: none !important;
+	}
+}
+@media screen and (max-width: 1069px) {
+	#lli {
+		display: block;
 	}
 }
