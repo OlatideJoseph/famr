@@ -34,5 +34,4 @@ $(window).on('load',function()
             loadScript("/static/js/match.js/");
             break;
     }
-
 });

@@ -25,6 +25,9 @@ body{
 	flex-direction: row;
 	flex-wrap: nowrap;
 }
+.bio-img{
+	cursor: pointer;
+}
 @media screen and (max-width: 768px){
 	body{
 		overflow-y:auto !important;

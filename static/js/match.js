@@ -80,33 +80,26 @@ const resize = function () {
     if (window.screen.width < 1070) {
         if ($('.navbar-brand img').length === 0) {
             $('.navbar-brand').prepend(img);
-            console.log("prepended");
         }
     } else {
         $('.navbar-brand img').remove();
         console.log("hello");
     }
+    $(img).click(function (e) {
+        let t = $(this);
+        let css = { display: "flex" };
+        let attr = { src: t.attr('src'), alt: t.attr('alt') }
+        if (attr["src"]) {
+            $(".img-modal").css(css);
+            $(".selected-img").attr(attr);
+        }
+    });
+    $('.circled-x').click(function (e) {
+        $('.img-modal').css("display", "none");
+    });
 }//adds image on resize
 resize();
 $(window).on('resize', resize);
-
-$('.bio-img').click(function (e)
-{
-    let t = $(this);
-    let css = { display: "flex" };
-    let attr = { src: t.attr('src'), alt: t.attr('alt') }
-    if (attr["src"]) {
-        $(".img-modal").css(css);
-        $(".selected-img").attr(attr);
-    }
-    $('.circled-x').click(function ()
-    {
-        $('.img-modal').css("display", "none");
-    });
-});
-$('.circled-x').click(function () {
-    $('.img-modal').css("display", "none");
-});
 //Updating for aggregate data
 $('#submit').on('click', function (e) {
     alert("submitted");
@@ -172,7 +165,4 @@ $('.bio-img').click(function (e) {
         $(".img-modal").css(css);
         $(".selected-img").attr(attr);
     }
-    $('.circled-x').click(function (e) {
-        $('.img-modal').css("display", "none");
-    });
 });
