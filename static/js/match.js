@@ -89,6 +89,7 @@ const resize = function () {
 }//adds image on resize
 resize();
 $(window).on('resize', resize);
+
 $('.bio-img').click(function (e)
 {
     let t = $(this);
