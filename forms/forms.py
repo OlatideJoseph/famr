@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import SelectField, StringField, SubmitField, IntegerField, PasswordField, DateField
 from wtforms.validators import DataRequired, Regexp, Length, Email, ValidationError
-from models import Subject as ss, Course, WaecSubject, Grade
+from models import Subject as ss, Course, WaecSubject, Grade, User
 from utils.main import duplicate
 
 
@@ -14,7 +14,8 @@ subjects = [
         ("Chemistry", "Chemistry"),
         ("Government", "Government"),
 ]
-regexp = r""
+allowed_name = r"^[A-za-z]+"
+allowed_uname = allowed_name + r"[_0-9]*"
 grades_choice = [(0,"---")]
 add_choice = [("","-------------")]
 course_choice = [("","-------------")]
@@ -144,8 +145,18 @@ class UserCreationForm(FlaskForm):
     first_name = StringField("*First Name:*", validators=[DataRequired(), Length(max=25, min=3)])
     last_name = StringField("*Last Name:*", validators=[DataRequired(), Length(max=25, min=3)])
     birth_date = DateField("*Date-Of-Birth:*", validators=[DataRequired()])
-    middle_name = StringField("*Middle Name:* (opt)", validators=[Length(max=25, min=3)])
+    middle_name = StringField("*Middle Name:*", validators=[Length(max=25, min=3)])
     signup = SubmitField("Sign Up")
+
+    def validate_username(self, username=username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError("Username Already Existed, Choose Another One")
+    
+    def validate_email(self, email=email):
+        email = User.query.filter_by(email=email.data).first()
+        if email:
+            raise ValidationError("Email Already Existed, Use Another Email")
 
 
 class EditProfileForm(FlaskForm):
@@ -155,6 +166,16 @@ class EditProfileForm(FlaskForm):
     middle_name = StringField("MiddleName: ")
     last_name = StringField("LastName: ")
     update = SubmitField("Update me")
+
+    def validate_email(self, email=email):
+        email = User.query.filter_by(email=email.data).first()
+        if email:
+            raise ValidationError
+        
+    def validate_username(self, username=username):
+        username = User.query.filter_by(username=username.data).first()
+        if username:
+            raise ValidationError
 
 class EditBioDataForm(FlaskForm):
     jamb_reg = StringField("Jamb Reg No:", validators=[DataRequired()])

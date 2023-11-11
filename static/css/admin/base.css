@@ -177,15 +177,13 @@ li > a{
 @media screen and (max-width:1070px){
 	body{
 		margin: 0;
+		overflow: auto;
 		padding: 0;
 		flex-direction: column;
 	}
 	.mobile-nav{
 		display: block;
 		border-radius: 10px;
-	}
-	body{
-		padding: 5px;
 	}
 	.admin-section{
 		display: none !important;
