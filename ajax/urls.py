@@ -25,6 +25,14 @@ def admin_protected_view(user):
         print("else")
         return redirect(url_for("admin.authenticate"))
 
+@ajax.get("/recommend-course/")
+def recommend_course():
+    score = request.args.get('s', type=int)
+    if score:
+        r = Course.great(score)
+        r = [c.name for c in r if c]
+        return jsonify(c=r)
+    return jsonify(error=true)
 
 @ajax.route("/admin/add-form/", methods = ["GET", "POST"])
 @auth.login_required()

@@ -212,9 +212,20 @@ class Course(db.Model, BaseMixin):
         return "Lasustech <%s> Course" %(self.course_title)
     
     def aggr(self) -> float:
+        """\
+            calculates aggregate score
+        """
         point_sum = sum(list(map(lambda x: x.grade.point, self.waec)))
         calc_jamb = (self.jamb.min_score * 0.15)
         return (point_sum + calc_jamb)
+    @classmethod
+    def great(cls, value: int | float) -> list:
+        """\
+            Returns all course greater than what is passed
+        """
+        l = [c for c in cls.query.all() if c.min_aggr >= value]
+        return l
+
 
 
 class WaecSubject(db.Model, BaseMixin):

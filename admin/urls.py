@@ -44,9 +44,10 @@ def add_form():
 
 @admin.route("/add-subject-waec/", methods = ["GET", "POST"])
 def add_subject():
-    """A request view that accept a request argument s and add it to the database
-       Note: It is to keep It only adds subject to the database
-    """
+   """\
+	   A request view that accept a request argument s and add it to the database
+      Note: It is to keep It only adds subject to the database
+   """
     return render("admin/subject.html")
 
 @admin.route("/grade-add/", methods=["POST", "GET"])
