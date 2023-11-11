@@ -1,4 +1,4 @@
-# \\recommeder
+# (Project Name)
 
 **This project is based on the idea proposed to us by our supervisor mr. adelanwa**
 
@@ -29,7 +29,7 @@ To be able to run this program you'll have to the following installed
 ```text
 pip install -r requirements.txt
 export FLASK_APP=app.py
-export FLASK_DEBUG=0
+export FLASK_DEBUG=1
 ```
 **To run the application
 ```qterminal
@@ -56,15 +56,15 @@ $(document).ready(function()
 ```
 3. Html
 ```html
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Hello \recommender</title>
+	<title>Hello Project</title>
 </head>
 <body>
-<h1>\recommender</h1>
+<h1>Project Header</h1>
 </body>
 </html>
 ```

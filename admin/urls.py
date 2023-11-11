@@ -48,7 +48,7 @@ def add_subject():
 	   A request view that accept a request argument s and add it to the database
       Note: It is to keep It only adds subject to the database
    """
-    return render("admin/subject.html")
+   return render("admin/subject.html")
 
 @admin.route("/grade-add/", methods=["POST", "GET"])
 def grade_point():

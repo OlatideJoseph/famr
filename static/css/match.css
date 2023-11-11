@@ -28,6 +28,46 @@ body{
 .bio-img{
 	cursor: pointer;
 }
+/* .recommended-cover{
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.527);
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+}
+.recommended-cover > header{
+	font-size: 24px;
+	font-weight: 400;
+	color: white;
+	display: none;
+}
+.recommended{
+	padding: 10px;
+	border-radius: 10px;
+	background-image: linear-gradient(0deg, lightslategrey, cyan);
+	box-shadow: 1px 1px 0.4rem rgba(255, 255, 255, 0.74),
+					inset 1px 1rem 0.3rem rgba(0, 0, 0, 0.863);
+}
+.course-r{
+	display: block;
+	width: 100%;
+	padding: 10px;
+	cursor: grab;
+	max-height: 400px;
+	transition: .1s all ease-in;
+	overflow-y: auto;
+}
+.course-r:hover{
+	background: rgba(119, 136, 153, 0.671);
+	border-radius: 5px;
+} */
 @media screen and (max-width: 768px){
 	body{
 		overflow-y:auto !important;
