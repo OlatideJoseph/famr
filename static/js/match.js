@@ -66,16 +66,20 @@ const onEvent = ()=>
         let grade7 = document.getElementById('grade_7');
 
 
-        let toInt = (a) => {
+        let toInt = (a) =>
+        {
             return Number.parseInt(a);
         }
-        let calculator = (...args) => {
+        let calculator = (...args) =>
+        {
             return (args.reduce(sum) + (jamb.value * 0.15)).toFixed(2);
         }
 
-        let sum = (a, b) => {
+        let sum = (a, b) =>
+        {
             return (toInt(a) + toInt(b));
         }
+
         e.preventDefault();//Stop The Form Default Action
         let score = calculator(grade1.value, grade2.value, grade3.value,
             grade4.value,

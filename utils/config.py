@@ -8,4 +8,5 @@ class DevelopmentConfig(Config):
     pass
 
 class ProductionConfig(Config):
-    pass
+    SESSION_CO0KIE_DOMAIN = False
+    SERVER_NAME = "olatidejosepha.pythonanywhere.com"

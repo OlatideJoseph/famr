@@ -206,9 +206,15 @@ class Course(db.Model, BaseMixin):
     max_candidate = db.Column(db.Integer, default=200)
     jamb = db.relationship("AdminJamb", backref="course", lazy=True, uselist = False)
     waec = db.relationship("WaecSubject", backref="course", lazy=True)
+    min_aggr = db.Column(db.Float, default=50.00)
 
     def __repr__(self):
         return "Lasustech <%s> Course" %(self.course_title)
+    
+    def aggr(self) -> float:
+        point_sum = sum(list(map(lambda x: x.grade.point, self.waec)))
+        calc_jamb = (self.jamb.min_score * 0.15)
+        return (point_sum + calc_jamb)
 
 
 class WaecSubject(db.Model, BaseMixin):

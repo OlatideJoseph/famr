@@ -63,6 +63,7 @@ def add_form():
             WaecSubject(course=course, name=field5,
                      grade=Grade.query.filter_by(point=grade_5).first()),
         ]
+        course.min_aggr = course.aggr()
         #database operation
         db.session.add(course)
         db.session.add(jamb)
@@ -104,7 +105,7 @@ def add_form():
             WaecSubject(course=course, name=field5,
                      grade=Grade.query.filter_by(point=grade_5).first()),
         ]
-
+        course.min_aggr = course.aggr()
         db.session.add(course)
         db.session.add(jamb)
         db.session.commit()
@@ -141,8 +142,9 @@ def add_subject():
         if subject:
             if type(subject) is list:
                 wsub_list = [Subject(name=sub.title()) for sub in subject]
-            else: 
-                wsub = Subject(name=subject.title()) #Adds the subject to the database and it makes sure it starts with a capital letter
+            else:
+                #Adds the subject to the database and it makes sure it starts with a capital letter
+                wsub = Subject(name=subject.title())
             try:
                 if type(subject) == list:
                     db.session.add_all(wsub_list)
@@ -150,22 +152,22 @@ def add_subject():
                     db.session.add(wsub)
                 db.session.commit()
             except IntegrityError:
+                db.session.rollback()
                 return make_response(jsonify(
                     added = False,
-                    msg= f"The subject '{subject}' already exist !"
+                    msg= [f"The subject '{subject}' already exist !", "warning"]
                 ))
             except PendingRollbackError:
                 db.session.rollback()
                 return make_response(jsonify(
                     added = False,
-                    msg= f"The subject '{subject}' already exist !"
+                    msg= [f"The subject '{subject}' already exist !", "warning"]
                 ))
             except:
                 return make_response(jsonify(added=False, msg=f"DatabaseError"), 200)
             return make_response(jsonify(
                     added=True, redirect=url_for("school.match"),
-                    msg=f"Subject '{subject}' added successfully",
-                    status="success"
+                    msg=[f"Subject '{subject}' added successfully", "success"]
                 ), 201)
     elif form.validate_on_submit():
         subject = form.name.data.title()
@@ -176,6 +178,7 @@ def add_subject():
             db.session.commit()
             flash(f"{subject} added !", "success")
         except:
+            db.session.rollback()
             flash('DatabaseError')
     return render("ajax/subject.html", form = form )
     
@@ -318,7 +321,10 @@ def ajx_course():
 @ajax.route("/get-subject-data/")
 @auth.login_required
 def ajx_subject():
-    return jsonify([(sub.name, sub.name) for sub in Subject.query.all() if sub])
+    return jsonify([
+        (sub.name, sub.name) for sub in \
+                Subject.query.order_by(Subject.name.asc()).all() if sub]
+        )
 
 @ajax.after_request
 def user_required_config(resp):
