@@ -1,6 +1,22 @@
 {% extends "base.html" %}
 {% block head %}
+<title>View | Lasustech | Courses</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/course.css')}}">
 {% endblock %}
 {% block content %}
-<h1>Courses</h1>
+<h1>Courses we offer</h1>
+<hr>
+<div>
+	{% for course in courses %}
+		<blockquote>
+			<h4>{{course.course_title}}</h4>
+			<p>
+				{% for sub in course.waec %}
+					<span class="sub">{{sub.name}}</span>
+				{% endfor %}
+			</p>
+		</blockquote>
+		<hr>
+	{% endfor %}
+</div>
 {% endblock %}

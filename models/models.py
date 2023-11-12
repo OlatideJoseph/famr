@@ -31,7 +31,9 @@ class UserRole(db.Model, BaseMixin):
 
     @classmethod
     def create_default(cls):
-        """A function that creates the default role"""
+        """\
+            A function that creates the default role
+        """
         role1 = cls(name="admins")
         role2 = cls(name="users")
         role3 = cls(name="staffs")

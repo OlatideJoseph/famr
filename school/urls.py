@@ -48,6 +48,10 @@ def cause():
 def course_grade():
     return render("grading.html")
 
-
+@school.route("/offered-courses/")
+def offer():
+    page = request.args.get("page", 1, type=int)
+    courses = Course.query.order_by(Course.course_title.asc()).paginate(page=page).items
+    return render("courses.html", courses=courses)
 
 
