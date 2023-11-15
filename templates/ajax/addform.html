@@ -20,6 +20,16 @@
         </div>
         <div class="row">
             <div class="col">
+                {{form.max_cand.label(class="form-label")}}
+                {{form.max_cand(class="form-control")}}
+            </div>
+            <div class="col">
+                {{form.dept.label(class="form-label")}}
+                {{form.dept(class="form-select")}}
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
                 {{form.field1.label(class = "form-label")}}
                 {{form.field1(class = " form-select form-select-sm")}}
             </div>

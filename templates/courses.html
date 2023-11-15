@@ -10,7 +10,7 @@
 	{% for course in courses %}
 		<blockquote>
 			<h4>{{course.course_title}}</h4>
-			<p>
+			<p>Requirements: 
 				{% for sub in course.waec %}
 					<span class="sub">{{sub.name}}</span>
 				{% endfor %}

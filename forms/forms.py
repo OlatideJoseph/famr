@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField
+from flask_wtf.file import FileField, FileAllowed, FileSize, FileRequired
 from wtforms import SelectField, StringField, SubmitField, IntegerField, PasswordField, DateField
 from wtforms.validators import DataRequired, Regexp, Length, Email, ValidationError
 from models import Subject as ss, Course, WaecSubject, Grade, User
@@ -77,12 +77,20 @@ class AddSubjectForm(FlaskForm):
 class AddCourseForm(FlaskForm):
     course_name = StringField("Course Name *", validators = [DataRequired()])
     jamb_score = IntegerField("Min Jamb Score *", validators =[DataRequired()])
+
     field1 = SelectField("Subject 1", validators = [DataRequired()],
                    choices = add_choice)
+
+    max_cand = IntegerField("Max. Cand", validators=[DataRequired()])
+    dept = SelectField("Dept:", validators=[DataRequired()],
+        choices=[('art', 'art'), ('science', 'science'), ('commercial', 'commercial')])
+
     grade_1 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
+
     field2 = SelectField("Subject 2", validators = [DataRequired()],
                    choices = add_choice)
+
     grade_2 = SelectField("Grade *", validators = [DataRequired()], coerce=int,
                    choices = grades_choice)
     field3 = SelectField("Subject 3", validators = [DataRequired()],
@@ -188,3 +196,9 @@ class ImageForm(FlaskForm):
     
 class AdminSignUpForm(UserCreationForm):
     pass
+
+class MatchFileForm(FlaskForm):
+    file_csv = FileField("Upload a CSV File",
+            validators=[FileRequired(),
+                FileAllowed(['csv'], "csv file only"), FileSize((1024 * 1024) * 10)])
+    submit = SubmitField("Upload And Recommend")

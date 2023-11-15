@@ -1,12 +1,17 @@
-from flask import (render_template as render,
-                flash, request, make_response,
-                jsonify, redirect, abort, url_for, Response)
 from sqlalchemy.exc import IntegrityError
-from forms import AddCourseForm, AddSubjectForm, MatchForm, AddGradeForm
-from models import Course, WaecSubject, Grade, AdminJamb, Subject, User, Token
+from flask import (render_template as render,
+                flash, request, make_response, current_app,
+                jsonify, redirect, abort, url_for, Response)
+from forms import (AddCourseForm,
+                    AddSubjectForm, MatchForm,
+                    AddGradeForm, MatchFileForm)
+from models import (Course, WaecSubject, Grade, AdminJamb,
+                        Subject, User, Token, UploadedCsv)
+from utils import save_csv_file, process_csv_file_parallel as pcfp
 from main import auth, db
-from utils.main import user_logged_in
 from . import school
+import secrets
+import os
 
 @auth.verify_token
 def verify_password(token):
@@ -54,4 +59,29 @@ def offer():
     courses = Course.query.order_by(Course.course_title.asc()).paginate(page=page).items
     return render("courses.html", courses=courses)
 
-
+@school.route("/match-course-file/", methods=["GET", "POST"])
+def match_file():
+    form = MatchFileForm()
+    if form.validate_on_submit():
+        user_id = request.args.get("_id", 1, type=int)
+        user = User.query.get(user_id)
+        if user:
+            file = form.file_csv.data
+            name = secrets.token_hex() + '.csv'
+            saved = save_csv_file(file, current_app.root_path, filename=name)
+            if saved:
+                uploaded_csv = UploadedCsv(user=user, filename=name)
+                db.session.add(uploaded_csv)
+                db.session.commit()
+                path = current_app.root_path + '/static/users/'
+                r_f = os.path.join(path + 'csv', name)
+                to = path + 'processed_csv'
+                pcfp(r_f, to, name)
+                return make_response(jsonify(
+                    msg=["Your file is saved and processed, please check your processed data", "success"]
+                ), 201)
+            return make_response(jsonify(
+                msg=["Sorry an error occured! please try again later", "danger"]
+            ), 200)
+        return make_response(jsonify(msg=["Confilict Request Data", "warning"]))
+    return render("match_file.html", form=form)

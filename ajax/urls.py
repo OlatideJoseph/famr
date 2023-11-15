@@ -4,7 +4,8 @@ from flask import (render_template as render,
                 jsonify, redirect, abort, url_for, Response)
 from sqlalchemy.exc import IntegrityError, PendingRollbackError
 from forms import AddCourseForm, AddSubjectForm, MatchForm, AddGradeForm
-from models import Course, WaecSubject, Grade, AdminJamb, Subject, User, Token
+from models import (Course, WaecSubject, Grade,
+                AdminJamb, Subject, User, Token, CourseCategory)
 from main import auth, db
 from utils.main import user_logged_in
 from . import ajax
@@ -47,6 +48,7 @@ def add_form():
         data = request.get_json()
         course_title = data["course_name"].title()
         jamb_score = int(data["jamb_score"])
+        max_cand = int(data["max_cand"])
         field1 = data["field1"].title()
         grade_1 = data["grade_1"]
         field2 = data["field2"].title()
@@ -57,7 +59,8 @@ def add_form():
         grade_4 = data["grade_4"]
         field5 = data["field5"].title()
         grade_5 = data["grade_5"]
-        course = Course(course_title=course_title)
+        dept = CourseCategory.query.filter_by(name=data['dept']).first()
+        course = Course(course_title=course_title, max_candidate=max_cand, department=dept)
         jamb = AdminJamb(min_score = jamb_score, course = course)
         c_sub = [
             WaecSubject(course=course, name=field1,
@@ -85,10 +88,11 @@ def add_form():
             "code": 201,
             }, 201,
             {"Content-Type":"application/json"})
+
     if form.validate_on_submit():
         course_title = form.course_name.data.title()
-        print(course_title)
         jamb_score = int(form.jamb_score.data)
+        max_cand = form.max_cand.data
         field1 = form.field1.data.title()
         grade_1 = form.grade_1.data
         field2 = form.field2.data.title()
@@ -99,7 +103,9 @@ def add_form():
         grade_4 = form.grade_4.data
         field5 = form.field5.data.title()
         grade_5 = form.grade_5.data
-        course = Course(course_title=course_title)
+        dept = CourseCategory.query.\
+            filter_by(name=form.dept.data).first()
+        course = Course(course_title=course_title, max_candidate=max_cand, department=dept)
         jamb = AdminJamb(min_score = jamb_score, course = course)
         c_sub = [
             WaecSubject(course=course, name=field1,

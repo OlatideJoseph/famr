@@ -19,6 +19,10 @@ body{
 	flex-direction: column;
 	
 }
+/*.hv{
+	display: inline !important;
+	float:  right;
+}*/
 .content-section{
 	padding: 12px;
 	display: flex;

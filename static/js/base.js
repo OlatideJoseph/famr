@@ -30,12 +30,20 @@ const loadScript = (url, func)=>{
     });
 }
 const showAlert = (msg, category)=>{
-    let alert = `<p class="alert alert-${category} `
-    alert += `alert-dismissible mt-2 mb-2 pl-3 pl- fade show">${msg}`
-    alert += `<span class="btn-close" data-bs-dismiss="alert"`
+    let path = window.location.pathname;
+    let alert = `<p class="alert alert-${category} `;
+    
+    alert += `alert-dismissible mt-2 mb-2 pl-3 pl- fade show">${msg}`;
+    alert += `<span class="btn-close" data-bs-dismiss="alert"`;
     alert += ` aria-label="Close">&times</span></p>`;
     // $("#loader").fadeOut(500);
-    $(".ajx").prepend(alert);
+    if (path != "/match-course/" && path != '/match-course-file/')
+    {
+        $(".ajx").prepend(alert);
+    } else
+    {
+        $("#form").prepend(alert);
+    }
 };
 const naShowAlert = (msg, category) => {
     let alert = `<p class="alert alert-${category} `

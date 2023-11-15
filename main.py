@@ -1,4 +1,5 @@
 #!/bin/python3
+from flask_wtf.csrf import CSRFProtect as CSRF
 from flask import (Flask, render_template as render,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for)
@@ -7,11 +8,12 @@ from flask_httpauth import HTTPTokenAuth
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
 from sqlalchemy.exc import IntegrityError
-
 import os
 
-BASE_DIR = os.path.abspath(os.getcwd())
 
+
+
+BASE_DIR = '' 
 naming_convention = {
     "ix": 'ix_%(column_0_lablel)s',
     "uq": 'uq_%(table_name)s_%(column_0_name)s',
@@ -22,6 +24,7 @@ naming_convention = {
 migrate = Migrate()
 db = SQLAlchemy()
 auth = HTTPTokenAuth(scheme="Bearer")
+csrf = CSRF()
 
 def create_app():
     app = Flask(__name__)
@@ -45,10 +48,15 @@ def create_app():
     app.register_blueprint(view, url_prefix="/views/")
     app.register_blueprint(fm, url_prefix="/forms/")
 
+    global BASE_DIR
+
+    BASE_DIR = app.root_path
+
     return app
 
 app = create_app()
 db.init_app(app)
+csrf.init_app(app)
 migrate.init_app(app, db)
 #Request context processor
 @app.context_processor

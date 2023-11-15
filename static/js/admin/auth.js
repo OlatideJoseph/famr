@@ -11,6 +11,14 @@ const authLogin = ()=>{
 		contentType: 'application/json',
 		dataType: 'json',
 		type: "POST",
+		beforeSend: function(xhr, settings)
+        {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain)
+            {
+                xhr.setRequestHeader("X-CSRFToken", $("#csrf_token").val());
+            }
+            showLoader();
+        },
 		success: function (data, textStatus, jqXHR){
 			if (data['is_admin'])
 			{

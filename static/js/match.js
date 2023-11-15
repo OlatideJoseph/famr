@@ -1,5 +1,4 @@
 //data storage space
-
 $(".bio-data").css("display", "block");
 $.getJSON("/ajax/v1.0/get-grade-and-point/", function(data){
     for (let i=0; i<data.length; i++){
@@ -158,6 +157,9 @@ $.ajax({
         naShowAlert("Sorry, an error seems to have occured !", "danger");
     }
 });
-setInterval(() => {
+
+$(document).ajaxComplete(function()
+{
+    $("#submit").off("submit");
     onEvent();
-}, 3000);
+});

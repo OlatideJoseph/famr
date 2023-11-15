@@ -18,8 +18,12 @@ $(document).ready(
                 url: `${window.location.pathname}`,
                 type:"POST",
                 data: data,
-                beforeSend: function(data)
+                beforeSend: function(xhr, settings)
                 {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain)
+                    {
+                        xhr.setRequestHeader("X-CSRFToken", $("#csrf_token").val());
+                    }
                     showLoader();
                 },
                 success: function(data, textStatus, jqXHR)

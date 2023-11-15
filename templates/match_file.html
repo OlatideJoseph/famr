@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head %}
+<title>Match a number students</title>
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/upload.css')}}">
+{% endblock %}
+{% block content %}
+<div id="form">
+	<fieldset>
+		<legend >
+			Match with file
+		</legend>
+		<form action="#" method="post" enctype="multipart/form-data">
+			{{form.csrf_token}}
+			<small class="text-info">size: (eg. min:1kb, max:10mb)</small>
+			{{form.file_csv(class="form-control")}}
+			<hr>
+			{{form.submit(class="btn btn-secondary")}}
+		</form>
+	</fieldset>
+</div>
+<script type="text/javascript" src="{{url_for('static', filename='js/match_file.js')}}">
+	
+</script>
+{% endblock %}

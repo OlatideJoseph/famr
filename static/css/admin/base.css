@@ -7,7 +7,6 @@ body{
 	background-color:var(--abg-color) !important;
 	color:#fff;
 	display: flex;
-	overflow: hidden;
 	flex-direction: row;
 }
 fieldset{
@@ -19,6 +18,9 @@ blockquote{
 	max-height: 30vh;
 	overflow-x: hidden;
 	overflow-y: auto;
+}
+.btn-close{
+	cursor: pointer;
 }
 .hr{
 	margin-left: 15px;

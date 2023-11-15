@@ -66,6 +66,7 @@ class User(db.Model, UserAdminMixin):
     bio_data = db.relationship("UserBioData", backref="user", uselist=False)
     level = db.relationship(Level, backref="user", lazy = True)
     created_on = db.Column(db.DateTime, default=datetime.utcnow)
+    uploaded_csv = db.relationship("UploadedCsv", backref="user", lazy=True)
 
 
     def __repr__(self) -> str:
@@ -198,17 +199,37 @@ class Token(db.Model, BaseMixin):
         return None
 
 
-    
+class CourseCategory(db.Model, BaseMixin):
+    __tablename__ = "course_category"
+    name = db.Column(db.String(15), nullable=False, unique=True)
+    course = db.relationship("Course", backref="department", lazy=True)
+
+    @classmethod
+    def create_default(cls) -> bool:
+        """\
+            This method creates the default department
+        """
+        commercial = cls(name="commercial")
+        science = cls(name="science")
+        art = cls(name="art")
+        try:
+            db.session.add_all([commercial, science, art])
+            db.session.commit()
+            return True
+        except:
+            return False
 
 class Course(db.Model, BaseMixin):
     __tablename__  = "course"
     course_title = db.Column(db.String(50), nullable = False, unique = True)
     course_code = db.Column(db.Integer, unique = True)
     is_full = db.Column(db.Boolean, default=False)
-    max_candidate = db.Column(db.Integer, default=200)
+    max_candidate = db.Column(db.Integer, nullable=False)
     jamb = db.relationship("AdminJamb", backref="course", lazy=True, uselist = False)
+    count = db.Column(db.Integer, default=0)
     waec = db.relationship("WaecSubject", backref="course", lazy=True)
     min_aggr = db.Column(db.Float, default=50.00)
+    category_id = db.Column(db.Integer, db.ForeignKey('course_category._id'))
 
     def __repr__(self):
         return "Lasustech <%s> Course" %(self.course_title)
@@ -254,3 +275,17 @@ class AdminJamb(db.Model, BaseMixin):
     __tablename__ = "adminjamb"
     min_score = db.Column(db.Integer)
     course_id = db.Column(db.Integer, db.ForeignKey("course._id"))
+
+class UploadedCsv(db.Model, BaseMixin):
+    __tablename__ = 'uploaded_csv'
+    user_id = db.Column(db.Integer, db.ForeignKey('users._id'))
+    filename = db.Column(db.String(30), unique=True, nullable=False)
+    uploaded_on = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+def create_default_model():
+    role = UserRole.create_default()
+    dept = CourseCategory.create_default()
+    if role and dept:
+        return True
+    return False

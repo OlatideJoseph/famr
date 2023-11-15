@@ -28,21 +28,25 @@ $(document).ready(
                 type:"POST",
                 contentType:'application/json',
                 data: objData,
-                beforeSend: function(data)
+                beforeSend: function(xhr, settings)
                 {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain)
+                    {
+                        xhr.setRequestHeader("X-CSRFToken", $("#csrf_token").val());
+                    }
                     showLoader();
                 },
                 success: function(data, textStatus, jqXHR)
                 {
+                    hideLoader("Signup", "/sign-up/");
                     window.history.pushState(null, null, '/login/');
-                    showAlert(data["msg"][0] + ';you\'ll be redirected in 3s', data["msg"][1]);
-                    setTimeout(()=>{window.location.pathname = '/login/'}, 3000);
+                    showAlert(data["msg"][0] + '; you\'ll be redirected in 5s', data["msg"][1]);
+                    setTimeout(()=>{window.location.pathname = '/login/'}, 5000);
                 },
                 error: function(data)
                 {
                     console.log(data.responseJSON);
                     let resp = data.responseJSON;
-                    hideLoader("Signup", "/sign-up/");
                     showAlert(data["msg"][0], resp["msg"][1]);
                 }
             });

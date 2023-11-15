@@ -16,6 +16,9 @@
 	align-items: center;
 	height: 100vh;
 }
+.btn-close{
+	cursor: pointer;
+}
 .bloader{
 	display: none !important;
 }

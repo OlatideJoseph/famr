@@ -19,9 +19,12 @@ $(document).ready(
                 type:"POST",
                 data:form,
                 contentType: "application/x-www-form-urlencoded",
-                beforeSend: function(data)
+                beforeSend: function(xhr, settings)
                 {
-                    showLoader();
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain)
+                    {
+                        xhr.setRequestHeader("X-CSRFToken", $("#csrf_token").val());
+                    }
                 },
                 success: function(data, textStatus, jqXHR)
                 {
