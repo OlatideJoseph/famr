@@ -1,14 +1,18 @@
-from datetime import date
-from flask import (render_template as render,
+from sqlalchemy.exc import IntegrityError, PendingRollbackError
+from utils.main import user_logged_in
+from flask import (render_template as render, current_app,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for, Response)
-from sqlalchemy.exc import IntegrityError, PendingRollbackError
 from forms import AddCourseForm, AddSubjectForm, MatchForm, AddGradeForm
 from models import (Course, WaecSubject, Grade,
                 AdminJamb, Subject, User, Token, CourseCategory)
 from main import auth, db
-from utils.main import user_logged_in
+from datetime import date
 from . import ajax
+import csv
+import os
+
+
 
 
 xhr = 'X-Requested-With'
@@ -19,7 +23,6 @@ def admin_protected_view(user):
     if admin_user and admin_user.is_admin:
         return True
     elif admin_user and  (admin_user.is_admin != True):
-        print("if")
         flash("User: {admin_user.username} is not an admin, login with an admin account", "warning")
         return redirect(url_for("admin.authenticate"))
     else:
@@ -27,16 +30,25 @@ def admin_protected_view(user):
         return redirect(url_for("admin.authenticate"))
 
 @ajax.get("/recommend-course/")
+@auth.login_required
 def recommend_course():
-    score = request.args.get('s', type=int)
-    if score:
-        r = Course.great(score)
-        r = [c.name for c in r if c]
-        return jsonify(c=r)
-    return jsonify(error=true)
+    course = request.args.get('c', type=str)
+    score = request.args.get('s', type=float)
+    if course and score:
+        course = Course.query.filter_by(course_title=course).first()
+        if course:
+            dept = course.department
+            recommended = [{
+                course.course_title:[
+                    subject.name for subject in course.waec
+                ]
+            } for course in Course.\
+                query.filter_by(department=dept).all() if course.min_aggr <= score]
+            return jsonify(recommended=recommended)
+    return {"recommended":[]}
 
 @ajax.route("/admin/add-form/", methods = ["GET", "POST"])
-@auth.login_required()
+@auth.login_required
 def add_form():
     protected = admin_protected_view(auth.current_user())
     if protected:
@@ -269,6 +281,7 @@ def grade_point():
 @auth.login_required
 def get_data():
     user = auth.current_user()
+    uploaded_csv = user.uploaded_csv
     data = {
         "id": user.pk,
         "email": user.email,
@@ -286,12 +299,70 @@ def get_data():
     }
     return jsonify(**data)
 
+@ajax.get("/view-processed-file/")
+@auth.login_required
+def processed_file():
+    filename = auth.current_user().uploaded_csv[-1].filename
+    page = request.args.get('page', 1, int)
+    print(page)
+    per_page = 4
+    val = []
+    try:
+        if (filename and page):
+            filename = 'processed_' + filename
+            path = current_app.static_folder + '/users/processed_csv'
+            pfile = os.path.join(path, filename)
+            with open(pfile, 'r', encoding="utf-8") as f:
+                fileno = f.fileno()
+                prev_sect = (page - 1) * per_page
+                next_sect = (page * per_page)
+                dict_reader = csv.DictReader(f)
+                if (fileno != 0) and (fileno <= per_page):
+                    #if file no is less than per_page
+                    for i in dict_reader:
+                        val.append(i)
+                    return {
+                                "files": val, "page": page,
+                                "has_next": False, "has_prev": False,
+                            }
+                #iterates over the file till target
+                count = 0
+                has_next = True
+                has_prev = False
+                for (student) in (dict_reader):
+                    has_prev = True if count > per_page else False
+                    count += 1
+                    if (count <= prev_sect):
+                        continue
+                    if (count > prev_sect) and (count <= next_sect) and (count < fileno):
+                        val.append(student)
+                        continue
+                    break
+                has_next = (count < (fileno - 1))
+                print(count, fileno)
+                return {
+                            "files": val, "has_next": has_next,
+                            "page": page, "has_prev": has_prev,
+                        }
+
+                f.close()
+    except FileNotFoundError as e:
+        print(e)
+        return jsonify(msg=[
+                    "The file you're try to access does not exists", "danger"
+                    ], exists=False)
+
 @ajax.route("/get-user-all-data/")
+@auth.login_required
 def get_all_user():
     '''\
         This view function is meant for the admin user only
         it returns all the user in the database
     '''
+    protected = admin_protected_view(auth.current_user())
+    if protected:
+        if isinstance(protected, Response):
+            return protected
     per_page = 3
     page = request.args.get('page', type=int)
     page = page if page else 1

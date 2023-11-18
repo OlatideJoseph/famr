@@ -244,9 +244,9 @@ class Course(db.Model, BaseMixin):
     @classmethod
     def great(cls, value: int | float) -> list:
         """\
-            Returns all course greater than what is passed
+            Returns all course within range of passed course
         """
-        l = [c for c in cls.query.all() if c.min_aggr >= value]
+        l = [c for c in cls.query.all() if c.min_aggr <= value]
         return l
 
 

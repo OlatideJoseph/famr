@@ -8,12 +8,13 @@ It gives hope for the hopeless and provide other options for them, don't get me 
 
 ## Final ND2 Year Project Under Mr. Adelanwa(Lasustech/Lapostech)
 **Students Involved**
+note: only the first one wrote the project
 1. Olatide Joseph Adeniyi
 2. Kolade Kehinde Samuel
 3. Isikalu Olajide Richard
 4. Olutayo Yetunde Opeyemi
 5. Adeyinka AbdulRahman Olabode
-6. waliat
+6. ...
 7. Babatunde Michael Adewale
 8. Adeyemi Oreoluwa Peter
 9. Sadiku Fawas Olorunkemi
@@ -31,7 +32,7 @@ pip install -r requirements.txt
 export FLASK_APP=app.py
 export FLASK_DEBUG=0
 ```
-**To run the application
+**To run the application**
 ```qterminal
 flask run
 ...

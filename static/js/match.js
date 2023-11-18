@@ -51,9 +51,10 @@ const onEvent = ()=>
         });
     });
 
-
+    $('#submit').off('click');
     $('#submit').on('click', function (e)
     {
+        let course = $('#course_name').val();
         let jamb = document.getElementById('jamb_score');
         let btn = document.getElementById('submit');
         let grade1 = document.getElementById('grade_1');
@@ -83,7 +84,11 @@ const onEvent = ()=>
         let score = calculator(grade1.value, grade2.value, grade3.value,
             grade4.value,
             grade5.value);
-        console.log(score);
+        if (score){
+            $.getJSON(`/ajax/v1.0/recommend-course/?s=${score}&c=${course}`, function(json){
+                console.log(json);
+            });
+        }
         let aggregate = $('#agg');
         if ($("#agg").html() !== undefined)
         {
@@ -99,7 +104,7 @@ const onEvent = ()=>
             });
         }
         let field = $("#form").prepend(aggregate);
-        let c = $("#course_name").val();
+        let c = course;
 
         $.getJSON(
             `/course/?c=${c}`,
@@ -115,8 +120,6 @@ const onEvent = ()=>
                 }
                 span += ali;
                 span += "</ul>";
-                console.log(subject);
-                console.log(span);
                 let subj = $('#sub');
                 if ($("#sub").html() !== undefined)
                 {

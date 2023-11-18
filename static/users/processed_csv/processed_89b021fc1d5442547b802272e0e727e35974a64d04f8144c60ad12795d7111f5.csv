@@ -1,0 +1,4 @@
+Full Name,Jamb,subject1,grade1,subject2,grade2,subject3,grade3,subject4,grade4,subject5,grade5,score,Qualified,Why
+Test User Name,250,English,A1,Mathematics,A1,Physics,C4,Further Mathematics,C5,Chemistry,B2,69.5,Yes,Passed Gracefully
+Test Name User,180,English,A1,Mathematics,A1,Physics,C4,Further Mathematics,C5,Geography,B2,59.0,No,There's an error with subject combination
+Oladeji Oyeniran Abdullahi,216,English,C4,Mathematics,A1,Physics,C4,Further Mathematics,B2,Chemistry,C6,60.4,Yes,Passed Gracefully

@@ -4,7 +4,38 @@
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/upload.css')}}">
 {% endblock %}
 {% block content %}
+<div class="processed-documents pd">
+	<p class="pclose">&times;</p>
+	<table class="ccpd" border="3px" cellpadding="3" cellspacing="3" >
+		<thead>
+			<tr>
+				<td align="center">Full Name</td>
+				<td align="center">Jamb Score</td>
+				<td align="center">Course</td>
+				<td align="center">Subject</td>
+				<td align="center">Grade</td>
+				<td align="center">Subject</td>
+				<td align="center">Grade</td>
+				<td align="center">Subject</td>
+				<td align="center">Grade</td>
+				<td align="center">Subject</td>
+				<td align="center">Grade</td>
+				<td align="center">Subject</td>
+				<td align="center">Grade</td>
+				<td align="center">Score</td>
+				<td align="center">Passed</td>
+				<td align="center">Why</td>
+			</tr>
+		</thead>
+		<tbody class="ccpdc">
+			
+		</tbody>
+		<button class="btn btn-secondary prev" type="button">Previous</button>
+		<button class="btn btn-secondary ml-3 next" type="button">Next</button>
+	</table>
+</div>
 <div id="form">
+	<a href="javascript:void(0)" class="text-info processed mb-3">View my processed files</a>
 	<fieldset>
 		<legend >
 			Match with file

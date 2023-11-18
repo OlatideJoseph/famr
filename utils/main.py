@@ -71,6 +71,9 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
         By following this order
         Name,Score,Qualified,Reason
     """
+    courses_count = {
+                        course.course_title: 0 for course in Course.query.all()
+                    }# adds all courses to take their count
     with open(path, 'r+', encoding="utf-8") as f:#open file that's being read
         reader = csv.DictReader(f)
         fname = to + "/processed_" + name #where the file will be saved
@@ -78,7 +81,7 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
             writer = csv.writer(pf)
             writer.writerow(
                 [
-                    'Full Name', 'Jamb', 'subject1', 'grade1',
+                    'Full Name', 'Jamb', 'Course', 'subject1', 'grade1',
                     'subject2', 'grade2', 'subject3', 'grade3',
                     'subject4', 'grade4', 'subject5', 'grade5',
                     "score", "Qualified", "Why",
@@ -104,27 +107,40 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                 jamb = int(row.get("jamb")) * 0.15
                 score = (waec + jamb)
                 prow = [
-                    row.get('full_name'), row.get('jamb'), row.get('subject1'),
-                    row.get('grade1'), row.get('subject2'), row.get('grade2'),
-                    row.get('subject3'), row.get('grade3'), row.get('subject4'),
-                    row.get('grade4'), row.get('subject5'), row.get('grade5'),
-                    score,
+                    row.get('full_name'), row.get('jamb'), row.get('course'),
+                    row.get('subject1'), row.get('grade1'), row.get('subject2'),
+                    row.get('grade2'), row.get('subject3'), row.get('grade3'),
+                    row.get('subject4'), row.get('grade4'), row.get('subject5'),
+                    row.get('grade5'), score,
                 ]
                 course = Course.query.filter_by(course_title=row.get("course")).first()
                 if course:
+                    max_cand = course.max_candidate
                     waec_sub = course.waec
                     sub_match = list(map(lambda x: (x.name in subjects), waec_sub))
+                    title = course.course_title
                     if all(sub_match):
-                        prow.append("Yes")
-                        prow.append("Passed Gracefully")
+                        if course.great(score):
+                            if courses_count[title] < max_cand:
+                                courses_count[title] += 1 
+                                prow.append("Yes")
+                                prow.append("Passed Gracefully")
+                            else:
+                                prow.append("Yes, but class is filled")
+                                prow.append("""\
+                                                Passed but department is filled, click on recommend for other courses
+                                            """.strip())
+                        else:
+                            prow.append("No")
+                            prow.append("Subject combination matched  but score was low")
                     else:
                         prow.append("No")
                         prow.append("There's an error with subject combination")
                 else:
                     prow.append("No")
                     prow.append("Course Does Not Exist")
-                print(prow)
                 writer.writerow(prow)
+                print(courses_count)
             pf.close()
         f.close()
 
