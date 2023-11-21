@@ -202,3 +202,8 @@ class MatchFileForm(FlaskForm):
             validators=[FileRequired(),
                 FileAllowed(['csv'], "csv file only"), FileSize((1024 * 1024) * 10)])
     submit = SubmitField("Upload And Recommend")
+
+class StudentExceptionForm(FlaskForm):
+    name = StringField("Student Name:", validators=[DataRequired()])
+    jamb_reg = StringField("Jamb Reg:", validators=[DataRequired()])
+    submit = SubmitField("Add Students")

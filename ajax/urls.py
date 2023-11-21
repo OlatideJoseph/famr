@@ -3,7 +3,7 @@ from utils.main import user_logged_in
 from flask import (render_template as render, current_app,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for, Response)
-from forms import AddCourseForm, AddSubjectForm, MatchForm, AddGradeForm
+from forms import AddCourseForm, AddSubjectForm, MatchForm, AddGradeForm, StudentExceptionForm
 from models import (Course, WaecSubject, Grade,
                 AdminJamb, Subject, User, Token, CourseCategory)
 from main import auth, db
@@ -394,6 +394,12 @@ def get_all_user():
     userlist['prev'] = obj.has_prev
     userlist['page'] = page
     return userlist
+
+@ajax.route('/admin/students-exception/', methods=['GET', 'POST'])
+@auth.login_required
+def sexception():
+    form = StudentExceptionForm()
+    return render("ajax/exception.html", form=form)
 
 @ajax.route("/get-grade-and-point/")
 @auth.login_required

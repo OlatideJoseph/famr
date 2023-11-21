@@ -17,7 +17,6 @@ const authLogin = ()=>{
             {
                 xhr.setRequestHeader("X-CSRFToken", $("#csrf_token").val());
             }
-            showLoader();
         },
 		success: function (data, textStatus, jqXHR){
 			if (data['is_admin'])

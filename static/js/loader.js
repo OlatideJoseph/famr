@@ -13,22 +13,33 @@ $(document).ready(function()
             $('.current').toggleClass('current');
             $('.subject').toggleClass('current');
             break;
+
         case ('/admin/grade-add/'):
         	loadScript("/static/js/gp.js/");
         	$('title').text('Grade Point');
             $('.current').toggleClass('current');
             $('.gp').toggleClass('current');
         	break;
+
         case ('/admin/add-form/'):
             loadScript("/static/js/addform.js/");
         	$('title').text('Add Lasustech course');
             $('.current').toggleClass('current');
             $('.course').toggleClass('current');
         	break;
+
+        case ('/admin/students-exceptions/'):
+            loadScript("/static/js/eception.js/");
+            $('title').text('Add an Exception');
+            $('.current').toggleClass('current');
+            $('.exception').toggleClass('current');
+            break;
+            
         case ('/admin/authenticate/'):
             $('title').text('Admin | Authenticate');
             loadScript("/static/js/admin/auth.js/");
             break;
+
         case ('/match-course/'):
             $('title').text('Match and Find');
             loadScript("/static/js/match.js/");

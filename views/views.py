@@ -180,18 +180,21 @@ class AdminSignUpView(SignUpView):
 
 		if ((request.method == "POST") and (
 			request.headers.get(xhr) == xhr_val)):
-			pro = self.xhr_form_processor()
-			if pro:
-				pass
-
-			return make_response({
-				"msg": [
-					f"User {pro.username} added successfully !", "success"
-				], 
-				"code": 201,
-				"redirect": url_for("admin.login")
-			}, 201)
-
+			user = self.xhr_form_processor()
+			if user:
+				user.is_admin = True
+				level = Level(role=role0, user=user)
+				level0 = Level(role=role, user=user)
+				level1 = Level(role=role1, user=user)
+				db.session.add_all([user, level1, level0, level])
+				db.session.commit()
+				return make_response({
+					"msg": [
+						f"User {pro.username} added successfully !", "success"
+					], 
+					"code": 201,
+					"redirect": url_for("admin.authenticate")
+				}, 201)
 		return render("admin/registration.html", form=form)
 
 

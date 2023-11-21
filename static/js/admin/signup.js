@@ -12,19 +12,29 @@ $(document).ready(
         $("form").on("submit", function(e)
         {
             // e.preventDefault();
-            let data = $(this).serialize();
+            let objData = {
+                
+            }
+            $(this).find('input').each(
+                function (...args) {
+                    let cu = $(args[1]);
+                    if (cu.attr('type') != 'submit')
+                        objData[cu.attr('name')] = cu.val();
+                }
+            );//gets each form in
+            objData = JSON.stringify(objData);
             $.ajax(
             {
                 url: `${window.location.pathname}`,
                 type:"POST",
-                data: data,
+                data: objData,
                 beforeSend: function(xhr, settings)
                 {
                     if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain)
                     {
                         xhr.setRequestHeader("X-CSRFToken", $("#csrf_token").val());
+                        xhr.setRequestHeader("Content-Type", "application/json");
                     }
-                    showLoader();
                 },
                 success: function(data, textStatus, jqXHR)
                 {
@@ -35,7 +45,6 @@ $(document).ready(
                 {
                     console.log(data.responseJSON);
                     let resp = data.responseJSON;
-                    hideLoader("Login", "/admin/authenticate/ua/");
                     showAlert( resp["msg"][0], resp["msg"][1]);
                 }
             });

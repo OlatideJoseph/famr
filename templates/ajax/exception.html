@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+{% block head%}
+<title>Add Exception</title>
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/admin/exception.css')}}">
+{% endblock %}
+{% block content%}
+<div class="form">
+	<fieldset class="mt-3">
+		<legend style="text-align: center;">Add student</legend>
+		<hr>
+		<form method="post" action="javascript:void(0);">
+			{{form.csrf_token()}}
+			{{form.name.label(class="form-label")}}
+			{{form.name(class="form-control")}}
+			{{form.jamb_reg.label(class="form-label mt-2")}}
+			{{form.jamb_reg(class="form-control")}}
+			{{form.submit(class="btn btn-outline-secondary mt-4")}}
+		</form>
+	</fieldset>
+</div>
+<script type="text/javascript" defer src="{{url_for('static', filename='js/loader.js')}}"></script>
+{% endblock %}

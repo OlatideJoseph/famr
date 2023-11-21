@@ -4,7 +4,6 @@
 	--abg-color:#150E28;
 }
 body{
-	background-color:var(--abg-color) !important;
 	color:#fff;
 	display: flex;
 	flex-direction: row;
@@ -175,6 +174,11 @@ li > a{
 .nav-link:hover{
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 0.336);
+}
+@media (prefers-color-scheme: dark){
+	body{
+		background-color:var(--abg-color) !important;
+	}
 }
 @media screen and (max-width:1070px){
 	body{

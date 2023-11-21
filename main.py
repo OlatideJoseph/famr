@@ -62,6 +62,7 @@ migrate.init_app(app, db)
 
 @app.cli.command("create-default")
 def create_default():
+    db.create_all()
     from models import UserRole as Role, CourseCategory as Category
     cat = Category.create_default()
     role = Role.create_default()

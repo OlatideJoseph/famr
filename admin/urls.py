@@ -20,21 +20,6 @@ def admin_protected_view(user):
 def home():
 	return render("admin/home.html")
 
-# @admin.route("/authenticate/", methods=["GET", "POST"])
-# def authenticate():
-# 	form = AdminLoginForm()
-# 	if form.validate_on_submit():
-# 		username = form.username.data
-# 		password = form.password.data
-# 		user = User.query.filter_by(username=username).first()
-# 		if user and user.check_pass(password):
-# 			token = Token.gen_token(user.pk)
-# 			return jsonify({
-# 				"refresh_token":token,
-# 				"is_admin": user.is_admin
-# 				})
-# 	return render("/admin/authenticate.html", form=AdminLoginForm())
-
 admin.add_url_rule("/authenticate/ua/", view_func=AdminLoginView.as_view("authenticate"))
 admin.add_url_rule("/register-admin-user/ua/", view_func=AdminSignUpView.as_view("sign_up"))
 
@@ -57,6 +42,10 @@ def grade_point():
 @admin.route("/list-users/")
 def list_user():
 	return render("admin/listuser.html")
+
+@admin.route("/students-exception/")
+def sexception():
+	return render('admin/exception.html')
 
 @admin.after_request
 def admin_last_seen(resp):

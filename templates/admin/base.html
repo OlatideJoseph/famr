@@ -56,13 +56,20 @@
       <p class="core">Core Configurations<span class="carat"><i class="fa-solid fa-chevron-down" style="color: #ffffff;"></i></span></p>
       <blockquote class="n b-ul">
         <ul>
-          <li class="current home"><a href="{{url_for('admin.home')}}">Home</a></li>
+          <li class="current home"><a href="{{url_for('admin.home')}}">Home</a>
+          </li>
           <hr>
-          <li class="subject"><a href="{{url_for('admin.add_subject')}}">Add Subjects</a></li>
+          <li class="subject">
+            <a href="{{url_for('admin.add_subject')}}">Add Subjects</a>
+          </li>
           <hr>
-          <li class="course"><a href="{{url_for('admin.add_form')}}">Add Lasustech Course</a></li>
+          <li class="course">
+            <a href="{{url_for('admin.add_form')}}">Add Lasustech Course</a>
+          </li>
           <hr>
-          <li class="gp"><a href="{{url_for('admin.grade_point')}}">Add Grade Point score</a></li>
+          <li class="gp">
+            <a href="{{url_for('admin.grade_point')}}">Add Grade Point score</a>
+          </li>
           <hr>
           <li><a href="{{url_for('school.match')}}">Visit User Page...</a></li>
           <hr>
@@ -71,15 +78,29 @@
       <p class="a-o">Admin Options<span class="a-carat"><i class="fa-solid fa-chevron-down" style="color: #ffffff;"></i></span></p>
       <blockquote class="c c-ul">
         <ul>
-          <li class="list-user"><a href="{{url_for('admin.list_user')}}">All User</a></li>
+          <li class="list-user">
+            <a href="{{url_for('admin.list_user')}}">All User</a>
+          </li>
           <hr>
-          <li class="subject"><a href="{{url_for('admin.sign_up')}}">Add User</a></li>
+          <li class="subject">
+            <a href="{{url_for('admin.sign_up')}}">Add User</a>
+          </li>
           <hr>
-          <li class="course"><a href="{{url_for('admin.add_form')}}">Suspend User</a></li>
+          <li class="course">
+            <a href="{{url_for('admin.add_form')}}">Suspend User</a>
+          </li>
           <hr>
-          <li class="gp"><a href="{{url_for('admin.grade_point')}}">Modify User Permissions</a></li>
+          <li class="gp">
+            <a href="{{url_for('admin.grade_point')}}">Modify User Permissions</a>
+          </li>
           <hr>
-          <li><a href="{{url_for('school.match')}}">Others...</a></li>
+          <li class="nav-item exception">
+                <a href="{{url_for('admin.sexception')}}">Student Exception</a>
+          </li>
+          <hr>
+          <li>
+            <a href="{{url_for('school.match')}}">Others...</a>
+          </li>
           <hr>
         </ul>
       </blockquote>
