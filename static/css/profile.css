@@ -7,9 +7,14 @@ body{
 	flex-wrap: wrap;
 	display: flex;
 	scroll-behavior: smooth;
-	flex-direction: row;
-	justify-content: space-evenly;
-	padding: 12px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+nav{
+	width: 100%;
 }
 h1{
 	margin: 10px;
@@ -32,6 +37,17 @@ label{
 input[type="submit"]{
 	margin-top: 5px;
 }
+img{
+	cursor: pointer;
+}
+.packer{
+	width: 100%;
+	display: flex;
+	padding-left: 30px;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
 .group{
 	margin: 0;
 	padding: 0;
@@ -42,7 +58,9 @@ input[type="submit"]{
 	border-radius: 10px;
 	box-shadow: 1px 1px 20px 5px #12121281;
 	margin: 7px;
+	justify-self: center;
 	max-width: 400px;
+	color: whitesmoke !important;
 }
 .pf{
 	overflow: auto;
@@ -133,7 +151,7 @@ input[type="submit"]{
 @media (prefers-color-scheme: dark){
 	body{
 		color: antiquewhite;
-		background: #121212;
+		background: #121212 !important;
 		
 	}
 	.pf{

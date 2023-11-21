@@ -48,6 +48,14 @@ $(".usr").on('click', function (e)
         type: "POST",
         data: formData,
         contentType: "application/json",
+        beforeSend: function(xhr, settings)
+        {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain)
+            {
+                xhr.setRequestHeader("X-CSRFToken", formData['csrf_token']);
+            }
+            showLoader();
+        },
         success: function(data){
             console.log(data);
         }
@@ -96,3 +104,21 @@ $(".ff").on('submit', function (e)
     });// gets user id
 });// the upload event handler
 
+$.ajax({
+    url: "/ajax/v1.0/get-auth-data/",
+    type: "get",
+    success: function (data) {
+        $(".email").text(data["email"]);
+        $(".first").text(data["first_name"]);
+        $(".last").text(data["last_name"]);
+        $(".mid").text(data["mid_name"]);
+        $(".dob").text(data["dob"]);
+        $(".bio-img").attr('src', `/static/img/${data["img_path"]}/`);
+        img.src = `/static/img/${data["img_path"]}/`;
+        img.alt = 'user-img';
+        img.className = "bio-img";
+    },
+    error: function () {
+        naShowAlert("Sorry, an error seems to have occured !", "danger");
+    }
+});
