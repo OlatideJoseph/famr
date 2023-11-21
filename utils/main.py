@@ -1,7 +1,7 @@
 from collections import Counter
 from flask import redirect, url_for, request, Response, abort
 from main import auth, BASE_DIR
-from models import Course
+from models import Course, AspirantException
 from PIL import Image
 import functools
 import threading
@@ -39,7 +39,7 @@ def admin_protected(func):
         return func(*args, **kwargs)
 
 def save_csv_file(obj: bin, path: str,
-                filename: str = secrets.token_hex() + '.csv') -> bool:
+                filename: str = secrets.token_hex(15) + '.csv') -> bool:
     """\
         Save a csv file to users csv folder
     """
@@ -74,6 +74,8 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
     courses_count = {
                         course.course_title: 0 for course in Course.query.all()
                     }# adds all courses to take their count
+    special_student = [aspirant.\
+                    jamb_reg for aspirant in AspirantException.query.all()]
     with open(path, 'r+', encoding="utf-8") as f:#open file that's being read
         reader = csv.DictReader(f)
         fname = to + "/processed_" + name #where the file will be saved
@@ -84,7 +86,7 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                     'Full Name', 'Jamb', 'Course', 'subject1', 'grade1',
                     'subject2', 'grade2', 'subject3', 'grade3',
                     'subject4', 'grade4', 'subject5', 'grade5',
-                    "score", "Qualified", "Why",
+                    "score", "qualified", "why", "special",
                 ]
             )
             for row in reader:
@@ -102,6 +104,7 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                     row.get('grade4'),
                     row.get('grade5'),
                 ]
+                jamb_reg = row.get('jamb_reg')
                 point = tuple(map(lambda x: get_point(x.title()), grades))
                 waec = sum(point)
                 jamb = int(row.get("jamb")) * 0.15
@@ -113,6 +116,14 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                     row.get('subject4'), row.get('grade4'), row.get('subject5'),
                     row.get('grade5'), score,
                 ]
+                #special students processing
+                if jamb_reg:
+                    prow.append("Yes")
+                    prow.append("Special Requirements Provided")
+                    prow.append("Yes")
+                    writer.writerow(prow)
+                    continue
+                #normal student processing
                 course = Course.query.filter_by(course_title=row.get("course")).first()
                 if course:
                     max_cand = course.max_candidate
@@ -125,22 +136,26 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                                 courses_count[title] += 1 
                                 prow.append("Yes")
                                 prow.append("Passed Gracefully")
+                                prow.append("No")
                             else:
                                 prow.append("Yes, but class is filled")
                                 prow.append("""\
                                                 Passed but department is filled, click on recommend for other courses
                                             """.strip())
+                                prow.append("No")
                         else:
                             prow.append("No")
                             prow.append("Subject combination matched  but score was low")
+                            prow.append("No")
                     else:
                         prow.append("No")
                         prow.append("There's an error with subject combination")
+                        prow.append("No")
                 else:
                     prow.append("No")
                     prow.append("Course Does Not Exist")
+                    prow.append("No")
                 writer.writerow(prow)
-                print(courses_count)
             pf.close()
         f.close()
 

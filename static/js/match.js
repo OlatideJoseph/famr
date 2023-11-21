@@ -64,8 +64,7 @@ const onEvent = ()=>
         let grade5 = document.getElementById('grade_5');
         let grade6 = document.getElementById('grade_6');
         let grade7 = document.getElementById('grade_7');
-
-
+        let subjects = new Array();
         let toInt = (a) =>
         {
             return Number.parseInt(a);
@@ -80,65 +79,54 @@ const onEvent = ()=>
             return (toInt(a) + toInt(b));
         }
 
+        $('select[id^="fie"]').each((n, e) => subjects.push($(e).val()));
         e.preventDefault();//Stop The Form Default Action
         let score = calculator(grade1.value, grade2.value, grade3.value,
             grade4.value,
             grade5.value);
         if (score){
-            $.getJSON(`/ajax/v1.0/recommend-course/?s=${score}&c=${course}`, function(json){
-                console.log(json);
+            $.getJSON(`/ajax/v1.0/recommend-course/?s=${score}&c=${course}`,
+            function(json){
+                let recommended = json['recommended'];
+                if (recommended)
+                {
+                    for (let obj of recommended)
+                    {
+                        if (obj)
+                        {
+                            for (let course of Object.keys(obj))
+                            {
+                                let span = `<span class='s-e'>${course}</span>`;
+                                $('.cc-alert').append(span);
+                                $('.rr').toggleClass('rr-show');
+                            }
+                        }
+                    }
+                }
             });
         }
-        let aggregate = $('#agg');
-        if ($("#agg").html() !== undefined)
-        {
-            let code = aggregate.children('code');
-            code.attr("class", "text-info");
-            code.first().text(score + "%");
-        } else
-        {
-            aggregate = $("<span>Aggregate: <code>" + score + "%</code></span>");
-            aggregate.attr({
-                class: "alert-primary alert card pt-3 p-3 mt-4 text-dark",
-                id: "agg"
-            });
-        }
-        let field = $("#form").prepend(aggregate);
-        let c = course;
-
         $.getJSON(
-            `/course/?c=${c}`,
+            `/course/?c=${course}`,
             function (data)
             {
-                let subject = data["subject"];
-                let span = "<ul>Subject: ";
-                let ali = "";
-                for (let i = 0; i <= subject.length - 1; i++)
+                let csubjects = data["subject"];
+                for (csub in csubjects)
                 {
-                    let li = "\n<li>" + Object.keys(subject[i])[0] + "</li>"
-                    ali += li;
+                    let sub = Object.keys(csubjects[csub])[0];
+                    if (sub)
+                    {
+                        if (!subjects.includes(sub))
+                        {
+                            showAlert(`${course} does not require Subject ${sub}`, "danger");
+                        }
+                    }
                 }
-                span += ali;
-                span += "</ul>";
-                let subj = $('#sub');
-                if ($("#sub").html() !== undefined)
-                {
-                    subj.html(span);
-                } else {
-                    subj = $(span);
-                    subj.attr({
-                        class: "bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
-                        id: "sub", display: "inline"
-                    });
-                    let field = $("#form").prepend(subj);
-                    return '';
-                }
-                subj.attr({
-                    class: "bg-primary card pt-3 pl-3 pb-3 text-dark mt-3",
-                    id: "sub", display: "inline"
-                });
             }
         );
+    });
+    $('.rr-close').off('click');
+    $('.rr-close').on('click', function(){
+        $('.rr').toggleClass('rr-show');
     });
 
 }

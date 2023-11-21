@@ -1,6 +1,13 @@
 body{
 	overflow: hidden;
 }
+header{
+	font-size: 28px;
+}
+header > span{
+	color: lightblue;
+	text-align: center;
+}
 .bio-data{
 	display: none;
 }
@@ -14,7 +21,6 @@ body{
 }
 .spd{
 	display: block;
-	color: white;
 	padding: 15px;
 	transform: translateY(0);
 	opacity: 1;
@@ -24,12 +30,14 @@ body{
 	bottom: 0;
 	height: 100vh;
 	width: 100vw;
-	background: #000000d9;
+	background: whitesmoke;
 }
 .pclose{
+	color: black;
 	font-weight: bold;
 	font-size: 30px;
 	cursor: pointer;
+	width: max-content;
 	display: block;
 	transition: .4s all ease;
 }

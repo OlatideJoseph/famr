@@ -302,21 +302,22 @@ def get_data():
 @ajax.get("/view-processed-file/")
 @auth.login_required
 def processed_file():
-    filename = auth.current_user().uploaded_csv[-1].filename
     page = request.args.get('page', 1, int)
     print(page)
-    per_page = 4
+    per_page = 5
     val = []
     try:
+        filename = auth.current_user().uploaded_csv[-1].filename
         if (filename and page):
             filename = 'processed_' + filename
             path = current_app.static_folder + '/users/processed_csv'
             pfile = os.path.join(path, filename)
             with open(pfile, 'r', encoding="utf-8") as f:
-                fileno = f.fileno()
                 prev_sect = (page - 1) * per_page
                 next_sect = (page * per_page)
                 dict_reader = csv.DictReader(f)
+                dict_reader = list(dict_reader)
+                fileno = len(list(dict_reader))
                 if (fileno != 0) and (fileno <= per_page):
                     #if file no is less than per_page
                     for i in dict_reader:
@@ -334,22 +335,25 @@ def processed_file():
                     count += 1
                     if (count <= prev_sect):
                         continue
-                    if (count > prev_sect) and (count <= next_sect) and (count < fileno):
+                    if (count > prev_sect) and (count <= next_sect):
                         val.append(student)
                         continue
                     break
-                has_next = (count < (fileno - 1))
-                print(count, fileno)
+                has_next = (count <= (fileno))
+                print(count, fileno, has_next, has_prev)
                 return {
                             "files": val, "has_next": has_next,
                             "page": page, "has_prev": has_prev,
+                            "fileno": fileno, "count": count
                         }
-
-                f.close()
     except FileNotFoundError as e:
         print(e)
         return jsonify(msg=[
-                    "The file you're try to access does not exists", "danger"
+                    "The file you're trying to access does not exists", "danger"
+                    ], exists=False)
+    except IndexError as e:
+        return jsonify(msg=[
+                    "You haven't uploaded any file !", "danger"
                     ], exists=False)
 
 @ajax.route("/get-user-all-data/")

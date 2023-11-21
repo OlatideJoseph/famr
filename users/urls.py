@@ -37,6 +37,8 @@ def list_users():
 def log_out():
     auth = request.args.get('token')
     if auth:
-        Token.log_out_from(auth)
-        return make_response(jsonify(msg="Logged out successfully !", code=200), 200)
-    return jsonify(msg = "An error occured !", status="danger")
+        token = Token.log_out_from(auth)
+        if token:
+            return make_response(jsonify(msg="Logged out successfully !", code=200, status="success"), 200)
+        return make_response(jsonify(msg="Token Expired", code=200, status="danger"), 200)
+    return jsonify(msg = "Auth token not specified", status="danger")

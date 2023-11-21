@@ -1,6 +1,7 @@
 const getProcessed = function(page=1){
     let processed = $('.processed-documents');
 	let p = $("<p></p>");
+	$.ajaxSetup({cache: false});
 	$.getJSON(`/ajax/v1.0/view-processed-file/?page=${page}`, function(data){
 		let file = data['files'];
 		if ($('.ccpdc').html()){

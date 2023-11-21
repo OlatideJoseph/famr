@@ -8,11 +8,17 @@ from main import db
 
 class BaseMixin:
     _id = db.Column(db.Integer, primary_key=True)
+    is_deleted = db.Column(db.Boolean, default=False)
 
 
     @property
     def pk(self):
         return self._id
+
+    @pk.setter
+    def set_id(self, value):
+        self._id = int(value)
+
     def __repr__(self) -> str:
         return f"{self.__class__.__name__} <{self.pk}>"
 
@@ -67,6 +73,7 @@ class User(db.Model, UserAdminMixin):
     level = db.relationship(Level, backref="user", lazy = True)
     created_on = db.Column(db.DateTime, default=datetime.utcnow)
     uploaded_csv = db.relationship("UploadedCsv", backref="user", lazy=True)
+    exception = db.relationship("AspirantException", backref="added_by", lazy=True)
 
 
     def __repr__(self) -> str:
@@ -195,8 +202,10 @@ class Token(db.Model, BaseMixin):
     @classmethod
     def log_out_from(cls, token: str) -> None:
         token = cls.query.filter_by(token=token).first()
-        token.log_out()
-        return None
+        if (token):
+            token.log_out()
+            return True
+        return False
 
 
 class CourseCategory(db.Model, BaseMixin):
@@ -289,3 +298,11 @@ def create_default_model():
     if role and dept:
         return True
     return False
+
+
+class AspirantException(db.Model, BaseMixin):
+    __tablename__ = "exceptions"
+    name = db.Column(db.String(50), nullable=False)
+    jamb_reg = db.Column(db.String(50), unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users._id'))
+    created_on = db.Column(db.DateTime, default=datetime.utcnow)
