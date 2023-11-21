@@ -8,6 +8,7 @@ from flask_httpauth import HTTPTokenAuth
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
 from sqlalchemy.exc import IntegrityError
+import click
 import os
 
 
@@ -58,6 +59,15 @@ app = create_app()
 db.init_app(app)
 csrf.init_app(app)
 migrate.init_app(app, db)
+
+@app.cli.command("create-default")
+def create_default():
+    from models import UserRole as Role, CourseCategory as Category
+    cat = Category.create_default()
+    role = Role.create_default()
+    if not (role and cat):
+        print("* They've been created before")
+
 #Request context processor
 @app.context_processor
 def context_processor():

@@ -31,6 +31,7 @@ To be able to run this program you'll have to the following installed
 pip install -r requirements.txt
 export FLASK_APP=app.py
 export FLASK_DEBUG=0
+flask create-default
 ```
 **To run the application**
 ```qterminal
