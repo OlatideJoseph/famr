@@ -325,11 +325,15 @@ def processed_file():
                     return {
                                 "files": val, "page": page,
                                 "has_next": False, "has_prev": False,
+                                "total_page": 1,
                             }
                 #iterates over the file till target
                 count = 0
                 has_next = True
                 has_prev = False
+                di = (fileno // per_page)
+                rem = (fileno % per_page)
+                total_page = (di) if rem == 0 else (di + 1) 
                 for (student) in (dict_reader):
                     has_prev = True if count > per_page else False
                     count += 1
@@ -344,7 +348,8 @@ def processed_file():
                 return {
                             "files": val, "has_next": has_next,
                             "page": page, "has_prev": has_prev,
-                            "fileno": fileno, "count": count
+                            "fileno": fileno, "count": count,
+                            "total_page": total_page,
                         }
     except FileNotFoundError as e:
         print(e)

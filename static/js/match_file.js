@@ -26,19 +26,22 @@ const getProcessed = function(page=1){
 	    		tr.append($(`<td align='center'>${student['subject5']}</td>`));
 	    		tr.append($(`<td align='center'>${student['grade5']}</td>`));
 	    		tr.append($(`<td align='center'>${student['score']}%</td>`));
-	    		tr.append($(`<td align='center'>${student['Qualified']}</td>`));
-	    		tr.append($(`<td align='center'>${student['Why']}</td>`));
-	    		$('.ccpdc').append(tr);
+	    		tr.append($(`<td align='center'>${student['qualified']}</td>`));
+	    		tr.append($(`<td align='center'>${student['why']}</td>`));
+	    		tr.append($(`<td align='center'>${student['special']}</td>`));
+	    		$('.ccpdc').prepend(tr);
+	    		$('.pg').text(file['page']);
+	    		$('.pgno').text(file['total_page']);
 	    	}
+	    	$('.next').attr('disabled', !data['has_next']);
+		    $('.prev').attr('disabled', !data['has_prev']) ;
 	    } else
 	    {
-	    	p.text("You haven't processed any file yet");
-	    	processed.html(p);
+	    	showAlert("You don't have any processed file", "warning");
 	    }
-	    $('.next').attr('disabled', !data['has_next']);
-	    $('.prev').attr('disabled', !data['has_prev']) ;
 	});
 }
+let img = $('img');
 $.ajax({
     url: "/ajax/v1.0/get-auth-data/",
     type: "get",
