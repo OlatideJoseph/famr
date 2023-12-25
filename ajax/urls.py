@@ -1,5 +1,5 @@
 from sqlalchemy.exc import IntegrityError, PendingRollbackError
-from utils.main import user_logged_in
+from utils import user_logged_in, Course as UtilCourse
 from flask import (render_template as render, current_app,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for, Response)
@@ -433,6 +433,7 @@ def ajx_subject():
         (sub.name, sub.name) for sub in \
                 Subject.query.order_by(Subject.name.asc()).all() if sub]
         )
+
 
 @ajax.after_request
 def user_required_config(resp):

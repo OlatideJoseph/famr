@@ -204,3 +204,46 @@ class AcceptedImage:
             self.img.save(path)
             return True
         return False
+
+
+class Course:
+    """\
+        A dummy class blueprint to store class data
+    """
+    def __init__(self, name: str, score: str, subjects: list=[], /):
+        if type(name) != str:
+            raise TypeError("name value must be of type string")
+        if type(score) != float:
+            raise TypeError("score must be of type float")
+        if len(subjects) != 5:
+            raise ValueError("Subjects: Passed in subjects must be equal to 5")
+        self.name = name
+        self.score = score
+        self.subjects = subjects
+
+    def __str__(self) -> str:
+        return f"{self.name.title()}"
+    
+    def __repr__(self) -> str:
+        return str(self)
+    
+    def __eq__(self, other) -> bool:
+        eq_name = (self.name == other.name)
+        eq_score = (self.score == other.score)
+        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
+        return (eq_name == eq_score) and eq_sub
+    
+    def __ge__(self, other) -> bool:
+        eq_name = (self.name == other.name)
+        eq_score = (self.score >= other.score)
+        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
+        return (eq_name == eq_score) and eq_sub
+    
+    def __le__(self, other) -> bool:
+        eq_name = (self.name == other.name)
+        eq_score = (self.score <= other.score)
+        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
+        return (eq_name == eq_score) and eq_sub
+    
+    def __ne__(self, other) -> bool:
+        return (self.name != other.name)
