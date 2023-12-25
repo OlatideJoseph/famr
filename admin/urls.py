@@ -23,11 +23,11 @@ def home():
 admin.add_url_rule("/authenticate/ua/", view_func=AdminLoginView.as_view("authenticate"))
 admin.add_url_rule("/register-admin-user/ua/", view_func=AdminSignUpView.as_view("sign_up"))
 
-@admin.route("/add-form/", methods = ["GET", "POST"])
+@admin.route("/add-form/", methods=["GET", "POST"])
 def add_form():
 	return render("admin/addform.html")
 
-@admin.route("/add-subject-waec/", methods = ["GET", "POST"])
+@admin.route("/add-subject-waec/", methods=["GET", "POST"])
 def add_subject():
    """\
 	   A request view that accept a request argument s and add it to the database

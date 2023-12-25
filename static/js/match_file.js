@@ -30,10 +30,10 @@ const getProcessed = function(page=1){
 	    		tr.append($(`<td align='center'>${student['why']}</td>`));
 	    		tr.append($(`<td align='center'>${student['special']}</td>`));
 	    		$('.ccpdc').prepend(tr);
-	    		$('.pg').text(file['page']);
-	    		$('.pgno').text(file['total_page']);
+	    		$('.pg').text(data['page']);
+	    		$('.pgno').text(data['total_page']);
 	    	}
-	    	$('.next').attr('disabled', !data['has_next']);
+	    	$('.next').attr('disabled', !(data['has_next']));
 		    $('.prev').attr('disabled', !data['has_prev']) ;
 	    } else
 	    {

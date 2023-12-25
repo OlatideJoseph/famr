@@ -343,7 +343,7 @@ def processed_file():
                         val.append(student)
                         continue
                     break
-                has_next = (count <= (fileno))
+                has_next = (page < (total_page))
                 print(count, fileno, has_next, has_prev)
                 return {
                             "files": val, "has_next": has_next,
@@ -404,6 +404,14 @@ def get_all_user():
 @auth.login_required
 def sexception():
     form = StudentExceptionForm()
+    if request.method == "POST":
+        form = StudentExceptionForm(**request.get_json())
+        if form.validate():
+            print(form.name.data, form.jamb_reg.data)
+            if form.errors:
+                return form.errors
+            return {"status": "success", "submitted": True,
+                    "status_code": 200, "msg": "Student Added As An Exception"}
     return render("ajax/exception.html", form=form)
 
 @ajax.route("/get-grade-and-point/")

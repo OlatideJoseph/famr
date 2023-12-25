@@ -28,7 +28,7 @@ $(document).ready(function()
             $('.course').toggleClass('current');
         	break;
 
-        case ('/admin/students-exceptions/'):
+        case ('/admin/students-exception/'):
             loadScript("/static/js/eception.js/");
             $('title').text('Add an Exception');
             $('.current').toggleClass('current');
