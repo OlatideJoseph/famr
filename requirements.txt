@@ -1,22 +1,8 @@
-blinker
-click
-dnspython
 email-validator
-Flask == 2.0.0
+Flask
 Flask-HTTPAuth
 Flask-SQLAlchemy
 Flask-WTF
-greenlet
 gunicorn
-idna
-itsdangerous
-Jinja
-MarkupSafe3
-packaging
 Pillow
 PyJWT
-SQLAlchemy
-typing_extensions
-Werkzeug
-WTForms
-gunicorn
