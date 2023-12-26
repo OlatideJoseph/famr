@@ -452,10 +452,11 @@ def r_course():
         if matched_courses:
             dict_list = []
             for course in matched_courses:
-                dict_list.append( {
-                    'Name': course.name,
-                    'min': course.score,
-                })
+                if score >= course.score:
+                    dict_list.append({
+                        'Name': course.name,
+                        'min': course.score,
+                    })
             return {"status": "success", "status_code": 200,
                     "msg": "Match Found", "results": dict_list}
         return {"status": "error", "status_code": 200,
