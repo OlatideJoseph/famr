@@ -1,4 +1,25 @@
 //data storage space
+function recommend(arr, score){
+    let objSub = {
+        "subjects": arr,
+        "score": score
+    }
+
+    jQuery.ajax({
+        url: '/ajax/v1.0/recommend-courses/',
+        type: 'POST',
+        headers: {"Content-Type": "application/json", "X-CSRFToken": $('#csrf_token').val()},
+        data: JSON.stringify(objSub),
+        success: (data, textStatus, jqXhr) => {
+            if (data['status'] === 'success'){
+                console.log(data['msg']);
+                showAlert(JSON.stringify(data['results']), 'warning');
+            } else {
+                showAlert(data['msg'], 'danger');
+            }
+        }
+    })
+}
 $(".bio-data").css("display", "block");
 $.getJSON("/ajax/v1.0/get-grade-and-point/", function(data){
     for (let i=0; i<data.length; i++){
@@ -85,25 +106,14 @@ const onEvent = ()=>
             grade4.value,
             grade5.value);
         if (score){
-            $.getJSON(`/ajax/v1.0/recommend-course/?s=${score}&c=${course}`,
-            function(json){
-                let recommended = json['recommended'];
-                if (recommended)
-                {
-                    for (let obj of recommended)
-                    {
-                        if (obj)
-                        {
-                            for (let course of Object.keys(obj))
-                            {
-                                let span = `<span class='s-e'>${course}</span>`;
-                                $('.cc-alert').append(span);
-                                $('.rr').toggleClass('rr-show');
-                            }
-                        }
-                    }
-                }
-            });
+            let field1 = $('#field1').val();
+            let field2 = $('#field2').val();
+            let field3 = $('#field3').val();
+            let field4 = $('#field4').val();
+            let field5 = $('#field5').val();
+            let arr = [field1, field2, field3, field4, field5]
+            console.log(arr);
+            recommend(arr, score)
         }
         $.getJSON(
             `/course/?c=${course}`,

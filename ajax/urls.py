@@ -435,13 +435,14 @@ def ajx_subject():
         )
 
 @ajax.post("/recommend-courses/")
+@auth.login_required
 def r_course():
     json = request.get_json()
     subjects = json.get('subjects')
-    score = json.get('score')
+    score = float(json.get('score'))
     if subjects and len(subjects):
-        courses_group = [Course(course.course_title, course.min_aggr,
-                                subjects=[
+        courses_group = [UtilCourse(course.course_title, course.min_aggr,
+                                [
                                     sub.name for sub in course.waec
                                 ]) for course in Course.query.all()]
         matched_courses = []
