@@ -1,6 +1,7 @@
 email-validator
 Flask
 Flask-HTTPAuth
+flask-migrate
 Flask-SQLAlchemy
 Flask-WTF
 gunicorn
