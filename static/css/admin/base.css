@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Lora&family=Poppins:wght@300&display=swap');
+
 :root{
 	--bg-purple:#3a1844;
 	--nav-bg:#17151b;
@@ -6,6 +8,7 @@
 body{
 	color:#fff;
 	display: flex;
+	font-family: 'Fira Code', monospace;
 	flex-direction: row;
 }
 fieldset{

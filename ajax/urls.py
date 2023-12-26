@@ -434,6 +434,37 @@ def ajx_subject():
                 Subject.query.order_by(Subject.name.asc()).all() if sub]
         )
 
+@ajax.post("/recommend-courses/")
+def r_course():
+    json = request.get_json()
+    subjects = json.get('subjects')
+    score = json.get('score')
+    if subjects and len(subjects):
+        courses_group = [Course(course.course_title, course.min_aggr,
+                                subjects=[
+                                    sub.name for sub in course.waec
+                                ]) for course in Course.query.all()]
+        matched_courses = []
+        #loops to filter the courses based on the subject submitted
+        for course in courses_group:
+            if sorted(course.subjects) == sorted(subjects):
+                matched_courses.append(course)
+        if matched_courses:
+            dict_list = []
+            for course in matched_courses:
+                dict_list.append( {
+                    'Name': course.name,
+                    'min': course.score,
+                })
+            return {"status": "success", "status_code": 200,
+                    "msg": "Match Found", "results": dict_list}
+        return {"status": "error", "status_code": 200,
+                "msg": "No matched course with that subject"}
+    return {
+        "status": "error", "status_code": 200,
+        "msg": "Error with the submitted sujects"
+    }
+    
 
 @ajax.after_request
 def user_required_config(resp):
