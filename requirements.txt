@@ -2,7 +2,7 @@ blinker
 click
 dnspython
 email-validator
-Flask
+Flask == 2.0.0
 Flask-HTTPAuth
 Flask-SQLAlchemy
 Flask-WTF
