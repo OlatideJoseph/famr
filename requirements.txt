@@ -19,3 +19,4 @@ SQLAlchemy
 typing_extensions
 Werkzeug
 WTForms
+gunicorn
