@@ -9,11 +9,121 @@ import secrets
 import os
 import csv
 
+
+
+
+class AcceptedImage:
+    """
+        it is a class meant to mimick the image module and
+        improve it
+    """
+    def __init__(self, byt, size: list[tuple, list] = (480, 480)):
+        self.image = byt
+        self.convert_image(size)
+
+    def generate_random_image_names(self) -> str:
+        """
+            generates random names for the image
+        """
+        return secrets.token_hex(10)+".jpg"
+
+    def convert_image(self, size: tuple):
+        """
+           converts the image size to the given size
+        """
+        self.size = size
+        self.img = Image.open(self.image)
+        self.img.thumbnail(size)
+        return self
+
+    def save_image(self, loc: str ='default') -> bool:
+        if loc == 'default':
+            name = self.generate_random_image_names()
+            self.filename = name
+            path = os.path.join(BASE_DIR+'/static/img/users', name)
+            self.img.save(path)
+            return True
+        else:
+            name = self.generate_random_image_names()
+            self.filename = name
+            path = os.path.join(loc, name)
+            self.img.save(path)
+            return True
+        return False
+
+
+class UtilCourse:
+    """\
+        A dummy class blueprint to store class data
+    """
+    def __init__(self, name: str, score: str, subjects: list=[], /):
+        if type(name) != str:
+            raise TypeError("name value must be of type string")
+        if type(score) != float:
+            raise TypeError("score must be of type float")
+        if len(subjects) != 5:
+            raise ValueError("Subjects: Passed in subjects must be equal to 5")
+        self.name = name
+        self.score = score
+        self.subjects = subjects
+
+    def __str__(self) -> str:
+        return f"{self.name.title()}"
+    
+    def __repr__(self) -> str:
+        return str(self)
+    
+    def __eq__(self, other) -> bool:
+        eq_name = (self.name == other.name)
+        eq_score = (self.score == other.score)
+        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
+        return (eq_name == eq_score) and eq_sub
+    
+    def __ge__(self, other) -> bool:
+        eq_name = (self.name == other.name)
+        eq_score = (self.score >= other.score)
+        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
+        return (eq_name == eq_score) and eq_sub
+    
+    def __le__(self, other) -> bool:
+        eq_name = (self.name == other.name)
+        eq_score = (self.score <= other.score)
+        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
+        return (eq_name == eq_score) and eq_sub
+    
+    def __ne__(self, other) -> bool:
+        return (self.name != other.name)
+
+# one-liner
+def calculate_score(j_score: int | float, grades: list): return ((j_score * 0.15) + sum(grades))
+# seperate
+def file_course_recommender(subjects: str, score: int | float) -> dict:
+    courses_group = [UtilCourse(course.course_title, course.min_aggr,
+                        [
+                            sub.name for sub in course.waec
+                        ]) for course in Course.query.all()]
+    matched_courses = []
+    #loops to filter the courses based on the subject submitted
+    for course in courses_group:
+        if sorted(course.subjects) == sorted(subjects):
+            matched_courses.append(course)
+    if matched_courses:
+        dict_list = []
+        for course in matched_courses:
+            if score >= course.score:
+                dict_list.append({
+                    'Name': course.name,
+                    'min': course.score,
+                })
+        return dict_list
+    return {}
+
+
 recorder = []
 def duplicate(val: list) -> list:
     pass
 
-def list_available_course():
+def list_available_course() -> None:
     pass
 
 
@@ -87,6 +197,7 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                     'subject2', 'grade2', 'subject3', 'grade3',
                     'subject4', 'grade4', 'subject5', 'grade5',
                     "score", "qualified", "why", "special",
+                    "recommendation",
                 ]
             )
             for row in reader:
@@ -155,6 +266,8 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                     prow.append("No")
                     prow.append("Course Does Not Exist")
                     prow.append("No")
+                sub_rec = list(file_course_recommender(subjects, score).keys())
+                prow.append(str(sub_rec).strip('[]'))
                 writer.writerow(prow)
             pf.close()
         f.close()
@@ -166,84 +279,3 @@ def process_csv_file_parallel(path: str, to: str, name: str):
     if r:
         return p
 
-class AcceptedImage:
-    """
-        it is a class meant to mimick the image module and
-        improve it
-    """
-    def __init__(self, byt, size: list[tuple, list] = (480, 480)):
-        self.image = byt
-        self.convert_image(size)
-
-    def generate_random_image_names(self) -> str:
-        """
-            generates random names for the image
-        """
-        return secrets.token_hex(10)+".jpg"
-
-    def convert_image(self, size: tuple):
-        """
-           converts the image size to the given size
-        """
-        self.size = size
-        self.img = Image.open(self.image)
-        self.img.thumbnail(size)
-        return self
-
-    def save_image(self, loc: str ='default') -> bool:
-        if loc == 'default':
-            name = self.generate_random_image_names()
-            self.filename = name
-            path = os.path.join(BASE_DIR+'/static/img/users', name)
-            self.img.save(path)
-            return True
-        else:
-            name = self.generate_random_image_names()
-            self.filename = name
-            path = os.path.join(loc, name)
-            self.img.save(path)
-            return True
-        return False
-
-
-class Course:
-    """\
-        A dummy class blueprint to store class data
-    """
-    def __init__(self, name: str, score: str, subjects: list=[], /):
-        if type(name) != str:
-            raise TypeError("name value must be of type string")
-        if type(score) != float:
-            raise TypeError("score must be of type float")
-        if len(subjects) != 5:
-            raise ValueError("Subjects: Passed in subjects must be equal to 5")
-        self.name = name
-        self.score = score
-        self.subjects = subjects
-
-    def __str__(self) -> str:
-        return f"{self.name.title()}"
-    
-    def __repr__(self) -> str:
-        return str(self)
-    
-    def __eq__(self, other) -> bool:
-        eq_name = (self.name == other.name)
-        eq_score = (self.score == other.score)
-        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
-        return (eq_name == eq_score) and eq_sub
-    
-    def __ge__(self, other) -> bool:
-        eq_name = (self.name == other.name)
-        eq_score = (self.score >= other.score)
-        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
-        return (eq_name == eq_score) and eq_sub
-    
-    def __le__(self, other) -> bool:
-        eq_name = (self.name == other.name)
-        eq_score = (self.score <= other.score)
-        eq_sub = (sorted(self.subjects) == sorted(other.subjects))
-        return (eq_name == eq_score) and eq_sub
-    
-    def __ne__(self, other) -> bool:
-        return (self.name != other.name)

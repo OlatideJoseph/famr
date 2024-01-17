@@ -1,5 +1,5 @@
 from sqlalchemy.exc import IntegrityError, PendingRollbackError
-from utils import user_logged_in, Course as UtilCourse
+from utils import user_logged_in, UtilCourse
 from flask import (render_template as render, current_app,
                 flash, request, make_response,
                 jsonify, redirect, abort, url_for, Response)
@@ -440,7 +440,7 @@ def r_course():
     json = request.get_json()
     subjects = json.get('subjects')
     score = float(json.get('score'))
-    if subjects and len(subjects):
+    if subjects and len(subjects) == 5:
         courses_group = [UtilCourse(course.course_title, course.min_aggr,
                                 [
                                     sub.name for sub in course.waec
