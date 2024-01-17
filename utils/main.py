@@ -111,12 +111,9 @@ def file_course_recommender(subjects: str, score: int | float) -> dict:
         dict_list = []
         for course in matched_courses:
             if score >= course.score:
-                dict_list.append({
-                    'Name': course.name,
-                    'min': course.score,
-                })
+                dict_list.append(course.name)
         return dict_list
-    return {}
+    return []
 
 
 recorder = []
@@ -266,8 +263,8 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                     prow.append("No")
                     prow.append("Course Does Not Exist")
                     prow.append("No")
-                sub_rec = list(file_course_recommender(subjects, score).keys())
-                prow.append(str(sub_rec).strip('[]'))
+                sub_rec = file_course_recommender(subjects, score)
+                prow.append(str(sub_rec).strip('[]') if sub_rec else 'No available course with that info')
                 writer.writerow(prow)
             pf.close()
         f.close()

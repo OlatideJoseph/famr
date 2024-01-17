@@ -29,6 +29,7 @@ const getProcessed = function(page=1){
 	    		tr.append($(`<td align='center'>${student['qualified']}</td>`));
 	    		tr.append($(`<td align='center'>${student['why']}</td>`));
 	    		tr.append($(`<td align='center'>${student['special']}</td>`));
+	    		tr.append($(`<td align='center'>${student['recommendation']}</td>`));
 	    		$('.ccpdc').prepend(tr);
 	    		$('.pg').text(data['page']);
 	    		$('.pgno').text(data['total_page']);

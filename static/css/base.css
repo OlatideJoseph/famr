@@ -91,6 +91,12 @@ body{
 #lli{
 	display: none;
 }
+table{
+	font-size: 18px;
+}
+td{
+	font-size: 12px !important;
+}
 @media screen and (max-width: 768px){
 	#nav-bnt{
 		margin: 0;
