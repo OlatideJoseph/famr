@@ -61,7 +61,6 @@ const showLoader = ()=>{
     body.addClass("body-loading");
     bloader.removeClass("bloader");
     content.hide(1);
-    console.log("Shown");
 };
 
 const hideLoader = (title, url)=>{
@@ -73,7 +72,6 @@ const hideLoader = (title, url)=>{
     window.history.pushState(null, null, url);
     content.show(1);
     body.removeClass("body-loading");
-    console.log("hidden");
 }// hides the loader icon
 const getHtml = (url, title, script)=>{
     $.ajax({
@@ -181,12 +179,7 @@ if (token !== null)
                 } //check if user is an admin
             }
         });// get the data of the authenticated user
-    } else
-    {
-        console.log("An Else statement");
     }
-    
-
 } else
 {
     let location = window.location.pathname;

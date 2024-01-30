@@ -1,5 +1,5 @@
 //data storage space
-function recommend(arr, score){
+function recommend(arr, score, course = ''){
     let objSub = {
         "subjects": arr,
         "score": score
@@ -12,8 +12,11 @@ function recommend(arr, score){
         data: JSON.stringify(objSub),
         success: (data, textStatus, jqXhr) => {
             if (data['status'] === 'success'){
-                console.log(data['msg']);
-                showAlert(JSON.stringify(data['results']), 'warning');
+                let rec_cour = []
+                const results = data['results'];
+                results.forEach((e) => {rec_cour.push(e.Name)});
+                if (rec_cour.includes(course)) showAlert("You passed Gracefully", 'success');
+                showAlert(rec_cour.join(', '), 'warning');
             } else {
                 showAlert(data['msg'], 'danger');
             }
@@ -111,9 +114,8 @@ const onEvent = ()=>
             let field3 = $('#field3').val();
             let field4 = $('#field4').val();
             let field5 = $('#field5').val();
-            let arr = [field1, field2, field3, field4, field5]
-            console.log(arr);
-            recommend(arr, score)
+            let arr = [field1, field2, field3, field4, field5];
+            recommend(arr, score, course);
         }
         $.getJSON(
             `/course/?c=${course}`,

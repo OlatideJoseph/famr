@@ -229,6 +229,9 @@ def process_csv_file(path: str, to: str, name: str) -> bool:
                     prow.append("Yes")
                     prow.append("Special Requirements Provided")
                     prow.append("Yes")
+                    sub_rec = file_course_recommender(subjects, score)
+                    prow.append(
+                        str(sub_rec).strip('[]') if sub_rec else 'No available course with that info')
                     writer.writerow(prow)
                     continue
                 #normal student processing

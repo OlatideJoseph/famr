@@ -6,7 +6,7 @@
 	--abg-color:#150E28;
 }
 body{
-	color:#fff;
+	color:#black;
 	display: flex;
 	font-family: 'Fira Code', monospace;
 	flex-direction: row;
@@ -80,6 +80,7 @@ blockquote{
 	margin-left: 10px;
 	padding: 0;
 	border-radius: 3px;
+	color: white;
 	padding: 12px;
 	display: flex;
 	transition: .5s all;
@@ -88,9 +89,11 @@ blockquote{
 }
 .carat{
 	transition: .7s all;
+	color: white;
 }
-.core:hover, .a-o:hover{
+.core:hover, .a-o:hover, .sign-out:hover{
 	background-color: var(--bs-dark);
+	color: white;
 }
 .c-r{
 	transform: rotateX(200deg);
@@ -141,7 +144,10 @@ li > a{
 }
 .sign-out{
 	text-decoration: none;
-	color: lightblue;
+	color: black;
+	padding: 5px;
+	border-radius: 3px;
+	transition: .5s all;
 }
 .home-header{
 	display: flex;
@@ -181,6 +187,10 @@ li > a{
 @media (prefers-color-scheme: dark){
 	body{
 		background-color:var(--abg-color) !important;
+		color: #fff;
+	}
+	.sign-out{
+		color: white;
 	}
 }
 @media screen and (max-width:1070px){
