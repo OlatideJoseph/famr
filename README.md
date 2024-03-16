@@ -14,7 +14,7 @@ note: only the first one wrote the project
 3. Isikalu Olajide Richard
 4. Olutayo Yetunde Opeyemi
 5. Adeyinka AbdulRahman Olabode
-6. ...
+6. Ogundeji Waliat Odunayo
 7. Babatunde Michael Adewale
 8. Adeyemi Oreoluwa Peter
 9. Sadiku Fawas Olorunkemi
@@ -34,6 +34,7 @@ export FLASK_DEBUG=0
 flask create-default
 ```
 **To run the application**
+You must be connected to the internet to download the necessary cdn for the user inter face.
 ```qterminal
 flask run
 ...
