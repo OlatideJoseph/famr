@@ -421,7 +421,7 @@ def ajx_grade():
     return jsonify(grades_choice)
 
 @ajax.route("/get-course-data/")
-@auth.login_required
+# @auth.login_required
 def ajx_course():
     course_choice = [[sub.course_title, sub.course_title] for sub in Course.query.all() if sub]
     return jsonify(course_choice)

@@ -6,6 +6,7 @@ from flask import (Flask, render_template as render,
 from flask_sqlalchemy import SQLAlchemy
 from flask_httpauth import HTTPTokenAuth
 from flask_migrate import Migrate
+from flask_cors import CORS
 from sqlalchemy import MetaData
 from sqlalchemy.exc import IntegrityError
 import click
@@ -26,6 +27,7 @@ migrate = Migrate()
 db = SQLAlchemy()
 auth = HTTPTokenAuth(scheme="Bearer")
 csrf = CSRF()
+cors = CORS()
 
 def create_app():
     app = Flask(__name__)
@@ -59,6 +61,12 @@ app = create_app()
 db.init_app(app)
 csrf.init_app(app)
 migrate.init_app(app, db)
+cors.init_app(app, resource={
+    r'/*': {
+        "origins": ['(http://localhost:5000)', '(https://famr-ui-react.vercel.app)']
+    }
+}, supports_credentials=True)
+
 
 @app.cli.command("create-default")
 def create_default():
