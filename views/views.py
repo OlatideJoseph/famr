@@ -9,6 +9,7 @@ from forms import (UserLoginForm, UserCreationForm,
 					UserCreationForm, EditProfileForm,
 					ImageForm, EditBioDataForm)
 from utils import AcceptedImage
+from main import csrf
 from datetime import datetime
 
 xhr = "X-Requested-With"
@@ -88,6 +89,7 @@ class SignUpView(View):
 class LoginView(MethodView):
 	template = "login.html"
 	form = UserLoginForm
+	decorators=[csrf.exempt]
 
 	def get(self):
 		return render(self.template, form=self.form())
@@ -95,6 +97,7 @@ class LoginView(MethodView):
 	def post(self):
 		form = self.form()
 		headers = {"Content-Type":"application/json"}
+		print(request.headers)
 		if ((request.headers.get(xhr) == xhr_val) and
 			(request.headers.get("Content-Type") == "application/json")):
 			js_data = request.get_json()
