@@ -38,6 +38,7 @@ def create_app():
     from school import school
     from ajax import  ajax
     from views import view
+    from auth import auth as app_auth
     from models import model as md
     from forms import form as fm
     from utils import Config
@@ -50,6 +51,7 @@ def create_app():
     app.register_blueprint(md, url_prefix="/models/")
     app.register_blueprint(view, url_prefix="/views/")
     app.register_blueprint(fm, url_prefix="/forms/")
+    app.register_blueprint(app_auth, url_prefix="/app_auth/")
 
     global BASE_DIR
 

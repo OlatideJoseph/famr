@@ -466,7 +466,30 @@ def r_course():
         "status": "error", "status_code": 200,
         "msg": "Error with the submitted sujects"
     }
-    
+
+@ajax.route("/offered-courses/")
+def offer():
+    page = request.args.get("page", 1, type=int)
+    paginated_obj = Course.query.order_by(Course.course_title.asc()).paginate(page=page)
+    courses = paginated_obj.items
+    resp = {
+        "courses": [
+            {
+                "title": course.course_title,
+                "requirements": [
+                    {"req": sub.name, "key": sub.pk}
+                    for sub in course.waec
+                ],
+                "score": course.min_aggr,
+                "key": course.pk
+            }
+            for course in courses
+        ],
+        "has_next": paginated_obj.has_next,
+        "has_prev": paginated_obj.has_prev,
+        "total": paginated_obj.total
+    }   
+    return resp
 
 @ajax.after_request
 def user_required_config(resp):
