@@ -10,15 +10,6 @@ It gives hope for the hopeless and provide other options for them, don't get me 
 **Students Involved**
 note: only the first one wrote the project
 1. Olatide Joseph Adeniyi
-2. Kolade Kehinde Samuel
-3. Isikalu Olajide Richard
-4. Olutayo Yetunde Opeyemi
-5. Adeyinka AbdulRahman Olabode
-6. Ogundeji Waliat Odunayo
-7. Babatunde Michael Adewale
-8. Adeyemi Oreoluwa Peter
-9. Sadiku Fawas Olorunkemi
-10. ...
 ## Prerequisities
 To be able to run this program you'll have to the following installed
 - A web browser
