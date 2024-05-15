@@ -18,6 +18,7 @@ xhr_val = "XMLHttpRequest"
 class SignUpView(View):
 	form = UserCreationForm
 	methods = ["GET", "POST"]
+	decorators = [csrf.exempt]
 	def dispatch_request(self):
 		form = UserCreationForm()
 		headers = {
